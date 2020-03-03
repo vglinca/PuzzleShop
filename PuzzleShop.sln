@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleShop", "PuzzleShop\PuzzleShop.csproj", "{7DC9753A-8468-47F5-B7BE-1C0D667FF53F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DC9753A-8468-47F5-B7BE-1C0D667FF53F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DC9753A-8468-47F5-B7BE-1C0D667FF53F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DC9753A-8468-47F5-B7BE-1C0D667FF53F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DC9753A-8468-47F5-B7BE-1C0D667FF53F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

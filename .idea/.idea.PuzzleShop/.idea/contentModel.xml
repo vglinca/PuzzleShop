@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Azathoth\.Rider2019.3\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\Azathoth\.Rider2019.3\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\Azathoth\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Azathoth\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_PuzzleShop.-1312540235.00" t="ExcludeRecursive" />
+    <e p="D:\dev\PuzzleShop\PuzzleShop" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="PuzzleShop" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include" />
+        <e p="DbContexts" t="Include">
+          <e p="PuzzleShopDbContext.cs" t="Include" />
+        </e>
+        <e p="Entities" t="Include">
+          <e p="BaseEntity.cs" t="Include" />
+          <e p="DifficultyLevel.cs" t="Include" />
+          <e p="Image.cs" t="Include" />
+          <e p="Manufacturer.cs" t="Include" />
+          <e p="PlasticColor.cs" t="Include" />
+          <e p="Puzzle.cs" t="Include" />
+          <e p="PuzzleType.cs" t="Include" />
+        </e>
+        <e p="Migrations" t="Include">
+          <e p="20200303190907_Initial.cs" t="Include" />
+          <e p="20200303190907_Initial.Designer.cs" t="Include" />
+          <e p="PuzzleShopDbContextModelSnapshot.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="PuzzleShop.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="PuzzleShop.csproj" t="IncludeRecursive" />
+        <e p="Repositories" t="Include">
+          <e p="Interfaces" t="Include">
+            <e p="IRepository.cs" t="Include" />
+          </e>
+          <e p="Repository.cs" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+      </e>
+      <e p="PuzzleShop.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
