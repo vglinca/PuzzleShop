@@ -1,54 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PuzzleShop.DbContexts;
 using PuzzleShop.Entities;
 using PuzzleShop.Repositories.Interfaces;
+// ReSharper disable All
 
 namespace PuzzleShop.Repositories
 {
-    public class Repository<T> : IRepository<T>, IDisposable where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly PuzzleShopDbContext _DbContext;
-
+        private readonly PuzzleShopDbContext _dbContext;
+        protected DbSet<T> _dbSet { get; set; }
+        
         public Repository(PuzzleShopDbContext dbContext)
         {
-            _DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbSet = _dbContext.Set<T>();
         }
 
-        public virtual Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public virtual Task<T> GetOne(long id)
+        public virtual async Task<T> FindById(long id)
         {
-            throw new System.NotImplementedException();
+            return await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public virtual void AddEntity(T entity)
         {
-            throw new System.NotImplementedException();
+            _dbSet.Add(entity);
         }
 
-        public void DeleteEntity(T entity)
+        public async void DeleteEntity(T entity)
         {
-            throw new System.NotImplementedException();
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            _dbSet.Remove(entity);
         }
 
-        public Task<bool> ExistsAsync(long id)
+        public async Task<bool> ExistsAsync(long id)
         {
-            throw new System.NotImplementedException();
+            return await _dbSet.AnyAsync(e => e.Id == id);
         }
 
-        public async Task<bool> SaveChangesAsync()
+        public async Task<bool> CommitAsync()
         {
-            return await _DbContext.SaveChangesAsync() >= 0;
+            return await _dbContext.SaveChangesAsync() >= 0;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _dbContext.Dispose();
         }
     }
 }
