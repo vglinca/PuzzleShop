@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using PuzzleShop.Domain.Entities;
+
 // ReSharper disable All
 
-#nullable enable
-namespace PuzzleShop.Entities
+namespace PuzzleShop.Domain.Entities
 {
-    public class Manufacturer : BaseEntity
+    public class DifficultyLevel : BaseEntity
     {
-        public string Name { get; set; }
-        public string? Description { get; set; }
+        [Required]
+        public string LevelName { get; set; }
 
         public ICollection<Puzzle> Puzzles { get; set; } = new List<Puzzle>();
     }
