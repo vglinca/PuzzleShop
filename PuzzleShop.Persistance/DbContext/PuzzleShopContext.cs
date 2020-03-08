@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PuzzleShop.Domain.Entities;
+using PuzzleShop.Persistance.Helpers;
 
 namespace PuzzleShop.Persistance.DbContext
 {
@@ -18,9 +20,19 @@ namespace PuzzleShop.Persistance.DbContext
         public DbSet<PlasticColor> PlasticColors { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<DifficultyLevel> Levels { get; set; }
+        
+        public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder =>
+            builder.AddFilter((category, lvl) => category == DbLoggerCategory.Database.Command.Name
+                                                 && lvl == LogLevel.Information)
+                .AddProvider(new LoggerProvider()));
 
         public PuzzleShopContext(DbContextOptions options) : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLoggerFactory(MyLoggerFactory);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

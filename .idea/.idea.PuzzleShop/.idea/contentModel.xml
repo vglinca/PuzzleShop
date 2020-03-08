@@ -14,12 +14,20 @@
         <e p="Controllers" t="Include">
           <e p="ManufacturersController.cs" t="Include" />
         </e>
+        <e p="Dtos" t="Include">
+          <e p="Manufacturers" t="Include">
+            <e p="ManufacturerDto.cs" t="Include" />
+          </e>
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
               <e p="PuzzleShop.Api.AssemblyInfo.cs" t="Include" />
             </e>
           </e>
+        </e>
+        <e p="Profiles" t="Include">
+          <e p="ManufacturerProfile.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
@@ -77,6 +85,9 @@
         </e>
         <e p="DbContext" t="Include">
           <e p="PuzzleShopContext.cs" t="Include" />
+        </e>
+        <e p="Helpers" t="Include">
+          <e p="LoggerProvider.cs" t="Include" />
         </e>
         <e p="Migrations" t="Include">
           <e p="20200305210556_Initial.cs" t="Include" />

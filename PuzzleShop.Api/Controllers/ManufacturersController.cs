@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PuzzleShop.Api.Dtos.Manufacturers;
 using PuzzleShop.Core;
 using PuzzleShop.Domain.Entities;
 
@@ -22,9 +23,10 @@ namespace PuzzleShop.Api.Controllers
         }
 
         [HttpGet(Name = "GetManufacturers")]
-        public ActionResult<Task<IEnumerable<Manufacturer>>> GetManufacturers()
+        public async Task<ActionResult<IEnumerable<ManufacturerDto>>> GetManufacturers()
         {
-            return Ok();
+            var manufacturers = await _manufacturersRepository.GetAllAsync();
+            return Ok(_mapper.Map<IEnumerable<ManufacturerDto>>(manufacturers));
         }
     }
 }
