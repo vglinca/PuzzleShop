@@ -28,5 +28,40 @@ namespace PuzzleShop.Api.Controllers
             var manufacturers = await _manufacturersRepository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<ManufacturerDto>>(manufacturers));
         }
+
+        [HttpGet("{manufacturerId}", Name = "GetManufacturer")]
+        public async Task<ActionResult<ManufacturerDto>> GetManufacturer(long manufacturerId)
+        {
+            var manufacturer = await _manufacturersRepository.FindById(manufacturerId);
+            if (manufacturer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<ManufacturerDto>(manufacturer));
+        }
+
+        [HttpPost(Name = "AddManufacturer")]
+        public async Task<ActionResult<ManufacturerDto>> AddManufacturer([FromBody] ManufacturerDto manufacturerDto)
+        {
+            var manufacturerEntity = _mapper.Map<Manufacturer>(manufacturerDto);
+            await _manufacturersRepository.AddEntity(manufacturerEntity);
+            var manufacturerDtoToReturn = _mapper.Map<ManufacturerDto>(manufacturerEntity);
+            
+            return CreatedAtRoute("GetManufacturer", 
+                new {manufacturerEntity.Id}, manufacturerDtoToReturn);
+        }
+
+        [HttpDelete("{manufacturerId}")]
+        public async Task<IActionResult> DeleteManufacturer(long manufacturerId)
+        {
+            var entityToDel = await _manufacturersRepository.FindById(manufacturerId);
+            if (entityToDel == null)
+            {
+                return NotFound();
+            }
+            await _manufacturersRepository.DeleteEntity(entityToDel);
+            return NoContent();
+        }
     }
 }

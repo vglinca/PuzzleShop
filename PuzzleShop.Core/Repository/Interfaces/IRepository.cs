@@ -10,7 +10,7 @@ namespace PuzzleShop.Core
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity> FindById(long id);
-        Task AddEntity(TEntity entity);
+        Task<TEntity> AddEntity(TEntity entity);
         Task UpdateEntity(TEntity entity);
         Task DeleteEntity(TEntity entity);
         Task<bool> ExistsAsync(long id);

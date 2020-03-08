@@ -28,7 +28,7 @@ namespace PuzzleShop.Core
             return await _ctx.FindAsync<TEntity>(id);
         }
 
-        public virtual async Task AddEntity(TEntity entity)
+        public virtual async Task<TEntity> AddEntity(TEntity entity)
         {
             if (entity == null)
             {
@@ -36,6 +36,7 @@ namespace PuzzleShop.Core
             }
             _ctx.Set<TEntity>().Add(entity);
             await _ctx.SaveChangesAsync();
+            return entity;
         }
 
         public virtual async Task UpdateEntity(TEntity entity)
