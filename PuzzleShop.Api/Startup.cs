@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PuzzleShop.Core;
+using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
 // ReSharper disable All
 
@@ -33,6 +35,7 @@ namespace PuzzleShop.Api
             var connString = Configuration["ConnectionStrings:PuzzleShopDbConnString"];
             services.AddDbContext<PuzzleShopContext>(
                 opt => opt.UseSqlServer(connString));
+            services.AddScoped<IRepository<BaseEntity>, Repository<BaseEntity>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

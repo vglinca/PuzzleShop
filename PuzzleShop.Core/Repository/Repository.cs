@@ -1,50 +1,92 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Domain.Entities;
+using PuzzleShop.Persistance.DbContext;
+
 // ReSharper disable All
 
 namespace PuzzleShop.Core
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        public Task<IEnumerable<T>> GetAllAsync()
+        private readonly PuzzleShopContext _ctx;
+
+        public Repository(PuzzleShopContext ctx)
         {
-            throw new System.NotImplementedException();
+            _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
         }
 
-        public Task<T> FindById(long id)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await _ctx.Set<TEntity>().ToListAsync();
         }
 
-        public void AddEntity(T entity)
+        public virtual async Task<TEntity> FindById(long id)
         {
-            throw new System.NotImplementedException();
+            return await _ctx.FindAsync<TEntity>(id);
         }
 
-        public void UpdateEntity(T entity)
+        public virtual async Task AddEntity(TEntity entity)
         {
-            throw new System.NotImplementedException();
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            _ctx.Set<TEntity>().Add(entity);
+            await _ctx.SaveChangesAsync();
         }
 
-        public void DeleteEntity(T entity)
+        public virtual async Task UpdateEntity(TEntity entity)
         {
-            throw new System.NotImplementedException();
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            _ctx.Entry(entity).State = EntityState.Modified;
+            await _ctx.SaveChangesAsync();
         }
 
-        public Task<bool> ExistsAsync(long id)
+        public virtual async Task DeleteEntity(TEntity entity)
         {
-            throw new System.NotImplementedException();
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            var entityToDel = _ctx.FindAsync<TEntity>(entity.Id);
+            if (entityToDel == null)
+            {
+                throw new Exception($"Entity with id {entity.Id} of type <{typeof(TEntity)}> could not be found.");
+            }
+            _ctx.Set<TEntity>().Remove(entity);
+            await _ctx.SaveChangesAsync();
         }
 
-        public Task<bool> CommitAsync()
+        public async Task<bool> ExistsAsync(long id)
         {
-            throw new System.NotImplementedException();
+            return await _ctx.Set<TEntity>().AnyAsync(e => e.Id == id);
+        }
+
+        public async Task<bool> CommitAsync()
+        {
+            return await _ctx.SaveChangesAsync() >= 0;
         }
         
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                
+            }
         }
     }
 }
