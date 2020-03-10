@@ -36,7 +36,8 @@ namespace PuzzleShop.Api
             var connString = Configuration["ConnectionStrings:PuzzleShopDbConnString"];
             services.AddDbContext<PuzzleShopContext>(
                 opt => opt.UseSqlServer(connString));
-            services.AddScoped<IRepository<Manufacturer>, Repository<Manufacturer>>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            //services.AddScoped<IRepository<Manufacturer>, Repository<Manufacturer>>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
@@ -47,8 +48,6 @@ namespace PuzzleShop.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-           // app.UseHttpsRedirection();
 
             app.UseRouting();
 

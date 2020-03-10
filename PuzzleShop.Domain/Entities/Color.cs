@@ -5,11 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PuzzleShop.Domain.Entities
 {
-    public class PlasticColor : BaseEntity
+    public class Color : BaseEntity
     {
-        [Required]
-        public string Color { get; set; }
-
+        public string Title { get; set; }
         public ICollection<Puzzle> Puzzles { get; set; } = new List<Puzzle>();
     }
 }

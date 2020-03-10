@@ -5,11 +5,11 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Persistance.Configuration
 {
-    public class DifficultyLevelConfiguration : IEntityTypeConfiguration<DifficultyLevel>
+    public class MaterialTypeConfiguration : IEntityTypeConfiguration<MaterialType>
     {
-        public void Configure(EntityTypeBuilder<DifficultyLevel> builder)
+        public void Configure(EntityTypeBuilder<MaterialType> builder)
         {
-            builder.Property(d => d.Title).IsRequired();
+            builder.Property(m => m.Title).IsRequired();
         }
     }
 }

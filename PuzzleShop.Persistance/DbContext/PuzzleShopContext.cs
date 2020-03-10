@@ -17,7 +17,7 @@ namespace PuzzleShop.Persistance.DbContext
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Puzzle> Puzzles { get; set; }
         public DbSet<PuzzleType> PuzzleTypes { get; set; }
-        public DbSet<PlasticColor> PlasticColors { get; set; }
+        public DbSet<Color> PlasticColors { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<DifficultyLevel> Levels { get; set; }
         
@@ -63,31 +63,31 @@ namespace PuzzleShop.Persistance.DbContext
                 {
                     Id = 3, TypeName = "5x5x5"
                 });
-            modelBuilder.Entity<PlasticColor>().HasData(
-                new PlasticColor
+            modelBuilder.Entity<Color>().HasData(
+                new Color
                 {
-                    Id = 1, Color = "White"
+                    Id = 1, Title = "White"
                 },
-                new PlasticColor
+                new Color
                 {
-                    Id = 2, Color = "Black"
+                    Id = 2, Title = "Black"
                 },
-                new PlasticColor
+                new Color
                 {
-                    Id = 3, Color = "Stickerless"
+                    Id = 3, Title = "Stickerless"
                 });
             modelBuilder.Entity<DifficultyLevel>().HasData(
                 new DifficultyLevel
                 {
-                    Id = 1, LevelName = "Low"
+                    Id = 1, Title = "Low"
                 },
                 new DifficultyLevel
                 {
-                    Id = 2, LevelName = "Middle"
+                    Id = 2, Title = "Middle"
                 },
                 new DifficultyLevel
                 {
-                    Id = 3, LevelName = "High"
+                    Id = 3, Title = "High"
                 });
             modelBuilder.Entity<Manufacturer>().HasData(
                 new Manufacturer
@@ -115,7 +115,7 @@ namespace PuzzleShop.Persistance.DbContext
                     DateWhenAdded = DateTimeOffset.Now, 
                     ManufacturerId = 1, 
                     PuzzleTypeId = 1,
-                    PlasticColorId = 3,
+                    ColorId = 3,
                     DifficultyLevelId = 2
                 },
                 new Puzzle
@@ -126,7 +126,7 @@ namespace PuzzleShop.Persistance.DbContext
                     DateWhenAdded = DateTimeOffset.Now, 
                     ManufacturerId = 1, 
                     PuzzleTypeId = 1,
-                    PlasticColorId = 1,
+                    ColorId = 1,
                     DifficultyLevelId = 2
                 },
                 new Puzzle
@@ -137,7 +137,7 @@ namespace PuzzleShop.Persistance.DbContext
                     DateWhenAdded = DateTimeOffset.Now, 
                     ManufacturerId = 2, 
                     PuzzleTypeId = 1,
-                    PlasticColorId = 3,
+                    ColorId = 3,
                     DifficultyLevelId = 2
                 });
             modelBuilder.Entity<Image>().HasData(

@@ -57,10 +57,11 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Entities" t="Include">
           <e p="BaseEntity.cs" t="Include" />
+          <e p="Color.cs" t="Include" />
           <e p="DifficultyLevel.cs" t="Include" />
           <e p="Image.cs" t="Include" />
           <e p="Manufacturer.cs" t="Include" />
-          <e p="PlasticColor.cs" t="Include" />
+          <e p="MaterialType.cs" t="Include" />
           <e p="Puzzle.cs" t="Include" />
           <e p="PuzzleType.cs" t="Include" />
         </e>
@@ -79,8 +80,9 @@
           <e p="DifficultyLevelConfiguration.cs" t="Include" />
           <e p="ImageConfiguration.cs" t="Include" />
           <e p="ManufacturerConfiguration.cs" t="Include" />
+          <e p="MaterialTypeConfiguration.cs" t="Include" />
+          <e p="PuzzleColorConfiguration.cs" t="Include" />
           <e p="PuzzleConfiguration.cs" t="Include" />
-          <e p="PuzzlePlasticColorConfiguration.cs" t="Include" />
           <e p="PuzzleTypeConfiguration.cs" t="Include" />
         </e>
         <e p="DbContext" t="Include">

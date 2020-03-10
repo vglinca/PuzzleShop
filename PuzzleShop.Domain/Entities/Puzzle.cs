@@ -19,10 +19,12 @@ namespace PuzzleShop.Domain.Entities
         public Manufacturer Manufacturer { get; set; }
         public long PuzzleTypeId { get; set; }
         public PuzzleType PuzzleType { get; set; }
-        public long PlasticColorId { get; set; }
-        public PlasticColor PlasticColor { get; set; }
+        public long ColorId { get; set; }
+        public Color Color { get; set; }
         public long DifficultyLevelId { get; set; }
         public DifficultyLevel  DifficultyLevel { get; set; }
+        public MaterialType MaterialType { get; set; }
+        public long MaterialTypeId { get; set; }
         public ICollection<Image> Images { get; set; } = new List<Image>();
     }
 }

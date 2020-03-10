@@ -26,9 +26,15 @@ namespace PuzzleShop.Persistance.Configuration
                 .IsRequired();
 
             builder
-                .HasOne(p => p.PlasticColor)
+                .HasOne(p => p.Color)
                 .WithMany(c => c.Puzzles)
-                .HasForeignKey(p => p.PlasticColorId)
+                .HasForeignKey(p => p.ColorId)
+                .IsRequired();
+
+            builder
+                .HasOne(p => p.MaterialType)
+                .WithMany(m => m.Puzzles)
+                .HasForeignKey(p => p.MaterialTypeId)
                 .IsRequired();
 
             builder
@@ -36,7 +42,6 @@ namespace PuzzleShop.Persistance.Configuration
                 .WithMany(d => d.Puzzles)
                 .HasForeignKey(p => p.DifficultyLevelId)
                 .IsRequired();
-
         }
     }
 }

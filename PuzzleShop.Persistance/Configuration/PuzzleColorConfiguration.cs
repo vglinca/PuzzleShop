@@ -5,11 +5,11 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Persistance.Configuration
 {
-    public class PuzzlePlasticColorConfiguration : IEntityTypeConfiguration<PlasticColor>
+    public class PuzzleColorConfiguration : IEntityTypeConfiguration<Color>
     {
-        public void Configure(EntityTypeBuilder<PlasticColor> builder)
+        public void Configure(EntityTypeBuilder<Color> builder)
         {
-            builder.Property(c => c.Color).IsRequired();
+            builder.Property(c => c.Title).IsRequired();
         }
     }
 }

@@ -7,7 +7,6 @@ namespace PuzzleShop.Domain.Entities
 {
     public class PuzzleType : BaseEntity
     {
-        [Required]
         public string TypeName { get; set; }
         public ICollection<Puzzle> Puzzles { get; set; } = new List<Puzzle>();
     }
