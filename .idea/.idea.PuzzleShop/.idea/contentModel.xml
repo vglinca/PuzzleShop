@@ -12,11 +12,23 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="ColorsController.cs" t="Include" />
+          <e p="DifficultyLevelController.cs" t="Include" />
           <e p="ManufacturersController.cs" t="Include" />
         </e>
         <e p="Dtos" t="Include">
+          <e p="Colors" t="Include">
+            <e p="ColorDto.cs" t="Include" />
+            <e p="ColorForCreateDto.cs" t="Include" />
+          </e>
+          <e p="DifficultyLevels" t="Include">
+            <e p="DifficultyLevelDto.cs" t="Include" />
+            <e p="DifficultyLevelForCreationDto.cs" t="Include" />
+          </e>
           <e p="Manufacturers" t="Include">
             <e p="ManufacturerDto.cs" t="Include" />
+            <e p="ManufacturerForCreateDto.cs" t="Include" />
+            <e p="ManufacturerForUpdateDto.cs" t="Include" />
           </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
@@ -27,6 +39,8 @@
           </e>
         </e>
         <e p="Profiles" t="Include">
+          <e p="ColorProfile.cs" t="Include" />
+          <e p="DifficultyLevelProfile.cs" t="Include" />
           <e p="ManufacturerProfile.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />
@@ -94,6 +108,8 @@
         <e p="Migrations" t="Include">
           <e p="20200305210556_Initial.cs" t="Include" />
           <e p="20200305210556_Initial.Designer.cs" t="Include" />
+          <e p="20200314175817_AddedPuzzleMaterialTypeMigration.cs" t="Include" />
+          <e p="20200314175817_AddedPuzzleMaterialTypeMigration.Designer.cs" t="Include" />
           <e p="PuzzleShopContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">

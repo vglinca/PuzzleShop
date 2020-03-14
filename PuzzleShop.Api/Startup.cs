@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using PuzzleShop.Core;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
@@ -31,8 +33,35 @@ namespace PuzzleShop.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            
+            services.AddControllers(cfg => cfg.ReturnHttpNotAcceptable = true)
+                .AddNewtonsoftJson(cfg =>
+                {
+                    cfg.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                })
+                //configure how the api controller should behave
+                //handle validation problems errors
+                .ConfigureApiBehaviorOptions(cfg =>
+                {
+                    //this factory will be execured when the model state is invalid
+                    cfg.InvalidModelStateResponseFactory = ctx =>
+                    {
+                        //translate model state into rfc format
+                        var problemDetails = new ValidationProblemDetails(ctx.ModelState)
+                        {
+                            Title = "One or more validation problems has occured.",
+                            Status = StatusCodes.Status422UnprocessableEntity,
+                            Detail = "See the errors property for details.",
+                            Instance = ctx.HttpContext.Request.Path
+                        };
+                        problemDetails.Extensions.Add("traceId", ctx.HttpContext.TraceIdentifier);
+                        
+                        return new UnprocessableEntityObjectResult(problemDetails)
+                        {
+                            ContentTypes = {"application/problem+json"}
+                        };
+                    };
+                });
+
             var connString = Configuration["ConnectionStrings:PuzzleShopDbConnString"];
             services.AddDbContext<PuzzleShopContext>(
                 opt => opt.UseSqlServer(connString));
