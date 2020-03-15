@@ -9,6 +9,6 @@ namespace PuzzleShop.Domain.Entities
     public class DifficultyLevel : BaseEntity
     {
         public string Title { get; set; }
-        public ICollection<Puzzle> Puzzles { get; set; } = new List<Puzzle>();
+        public ICollection<Puzzle> Puzzles { get; private set; } = new List<Puzzle>();
     }
 }

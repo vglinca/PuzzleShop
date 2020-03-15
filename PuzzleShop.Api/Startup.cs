@@ -38,10 +38,10 @@ namespace PuzzleShop.Api
                 {
                     cfg.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 })
-                //configure how the api controller should behave
-                //handle validation problems errors
                 .ConfigureApiBehaviorOptions(cfg =>
                 {
+                    //configure how the api controller should behave
+                    //handle validation problems errors
                     //this factory will be execured when the model state is invalid
                     cfg.InvalidModelStateResponseFactory = ctx =>
                     {
@@ -66,7 +66,6 @@ namespace PuzzleShop.Api
             services.AddDbContext<PuzzleShopContext>(
                 opt => opt.UseSqlServer(connString));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            //services.AddScoped<IRepository<Manufacturer>, Repository<Manufacturer>>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 

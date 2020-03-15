@@ -27,17 +27,17 @@ namespace PuzzleShop.Api.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpGet(Name = "GetManufacturers")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<ManufacturerDto>>> GetManufacturers()
         {
             var manufacturers = await _manufacturersRepository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<ManufacturerDto>>(manufacturers));
         }
 
-        [HttpGet("{manufacturerId}", Name = "GetManufacturer")]
+        [HttpGet("{manufacturerId}")]
         public async Task<ActionResult<ManufacturerDto>> GetManufacturer(long manufacturerId)
         {
-            var manufacturer = await _manufacturersRepository.FindById(manufacturerId);
+            var manufacturer = await _manufacturersRepository.FindByIdAsync(manufacturerId);
             if (manufacturer == null)
             {
                 return NotFound();
@@ -46,24 +46,40 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<ManufacturerDto>(manufacturer));
         }
 
-        [HttpPost(Name = "AddManufacturer")]
+        [HttpPost]
         public async Task<ActionResult<ManufacturerDto>> AddManufacturer(
            [FromBody] ManufacturerForCreateDto manufacturerForCreateDto)
         {
             var manufacturerEntity = _mapper.Map<Manufacturer>(manufacturerForCreateDto);
-            await _manufacturersRepository.AddEntity(manufacturerEntity);
+            await _manufacturersRepository.AddEntityAsync(manufacturerEntity);
             var manufacturerDtoToReturn = _mapper.Map<ManufacturerDto>(manufacturerEntity);
             
-            return CreatedAtRoute("GetManufacturer", 
+            return CreatedAtAction(nameof(GetManufacturer), 
                 new {manufacturerId = manufacturerEntity.Id}, manufacturerDtoToReturn);
         }
 
-        [HttpPatch("{manufacturerId}")]
+        [HttpPut("{manufacturerId}")]
         public async Task<IActionResult> UpdateManufacturer(long manufacturerId,
+            [FromBody] ManufacturerForUpdateDto manufacturerForUpdateDto)
+        {
+            var manufacturerFromRepo = await _manufacturersRepository.FindByIdAsync(manufacturerId);
+            if (manufacturerFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(manufacturerForUpdateDto, manufacturerFromRepo);
+            await _manufacturersRepository.UpdateEntityAsync(manufacturerFromRepo);
+
+            return NoContent();
+        }
+
+        [HttpPatch("{manufacturerId}")]
+        public async Task<IActionResult> PartiallyUpdateManufacturer(long manufacturerId,
             [FromBody] JsonPatchDocument<ManufacturerForUpdateDto> jsonPatchDocument)
         {
             //retrieve target manufacturer from storage
-            var manufacturerFromRepo = await _manufacturersRepository.FindById(manufacturerId);
+            var manufacturerFromRepo = await _manufacturersRepository.FindByIdAsync(manufacturerId);
             
             if (manufacturerFromRepo == null)
             {
@@ -81,7 +97,7 @@ namespace PuzzleShop.Api.Controllers
             //now manufacturerFromRepo contains updated fields
             _mapper.Map(manufacturerToPatch, manufacturerFromRepo);
             //update entity and save changes
-            await _manufacturersRepository.UpdateEntity(manufacturerFromRepo);
+            await _manufacturersRepository.UpdateEntityAsync(manufacturerFromRepo);
             
             return NoContent();
         }
@@ -89,12 +105,12 @@ namespace PuzzleShop.Api.Controllers
         [HttpDelete("{manufacturerId}")]
         public async Task<IActionResult> DeleteManufacturer(long manufacturerId)
         {
-            var entityToDel = await _manufacturersRepository.FindById(manufacturerId);
+            var entityToDel = await _manufacturersRepository.FindByIdAsync(manufacturerId);
             if (entityToDel == null)
             {
                 return NotFound();
             }
-            await _manufacturersRepository.DeleteEntity(entityToDel);
+            await _manufacturersRepository.DeleteEntityAsync(entityToDel);
             return NoContent();
         }
 

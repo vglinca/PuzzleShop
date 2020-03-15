@@ -32,7 +32,7 @@ namespace PuzzleShop.Api.Controllers
         [HttpGet("{colorId}", Name = "GetColor")]
         public async Task<ActionResult<ColorDto>> GetColor(long colorId)
         {
-            var colorFromRepo = await _colorRepository.FindById(colorId);
+            var colorFromRepo = await _colorRepository.FindByIdAsync(colorId);
             if (colorFromRepo == null)
             {
                 return NotFound();
@@ -45,7 +45,7 @@ namespace PuzzleShop.Api.Controllers
         {
             //create new color entity by mapping post dto to it
             var colorEntity = _mapper.Map<Color>(colorForCreateDto);
-            await _colorRepository.AddEntity(colorEntity);
+            await _colorRepository.AddEntityAsync(colorEntity);
             //map created entity to return dto
             var colorDtoToReturn = _mapper.Map<ColorDto>(colorEntity);
 
@@ -55,27 +55,27 @@ namespace PuzzleShop.Api.Controllers
         [HttpPut("{colorId}", Name = "UpdateColor")]
         public async Task<IActionResult> UpdateColor(long colorId, [FromBody] ColorForCreateDto colorForUpdateDto)
         {
-            var colorEntity = await _colorRepository.FindById(colorId);
+            var colorEntity = await _colorRepository.FindByIdAsync(colorId);
             if (colorEntity == null)
             {
                 return NotFound();
             }
 
             _mapper.Map<Color>(colorForUpdateDto);
-            await _colorRepository.UpdateEntity(colorEntity);
+            await _colorRepository.UpdateEntityAsync(colorEntity);
             return NoContent();
         }
 
         [HttpDelete("{colorId}", Name = "DeleteColor")]
         public async Task<IActionResult> DeleteColor(long colorId)
         {
-            var colorToDelete = await _colorRepository.FindById(colorId);
+            var colorToDelete = await _colorRepository.FindByIdAsync(colorId);
             if (colorToDelete == null)
             {
                 return NotFound();
             }
 
-            await _colorRepository.DeleteEntity(colorToDelete);
+            await _colorRepository.DeleteEntityAsync(colorToDelete);
             return NoContent();
         }
     }

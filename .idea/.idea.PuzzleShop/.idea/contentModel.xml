@@ -15,6 +15,8 @@
           <e p="ColorsController.cs" t="Include" />
           <e p="DifficultyLevelController.cs" t="Include" />
           <e p="ManufacturersController.cs" t="Include" />
+          <e p="MaterialTypeController.cs" t="Include" />
+          <e p="PuzzleTypeController.cs" t="Include" />
         </e>
         <e p="Dtos" t="Include">
           <e p="Colors" t="Include">
@@ -30,6 +32,13 @@
             <e p="ManufacturerForCreateDto.cs" t="Include" />
             <e p="ManufacturerForUpdateDto.cs" t="Include" />
           </e>
+          <e p="MaterialTypes" t="Include">
+            <e p="MaterialTypeDto.cs" t="Include" />
+          </e>
+          <e p="PuzzleTypes" t="Include">
+            <e p="PuzzleTypeDto.cs" t="Include" />
+            <e p="PuzzleTypeForCreationDto.cs" t="Include" />
+          </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -42,6 +51,8 @@
           <e p="ColorProfile.cs" t="Include" />
           <e p="DifficultyLevelProfile.cs" t="Include" />
           <e p="ManufacturerProfile.cs" t="Include" />
+          <e p="MaterialTypeProfile.cs" t="Include" />
+          <e p="PuzzleTypeProfile.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">

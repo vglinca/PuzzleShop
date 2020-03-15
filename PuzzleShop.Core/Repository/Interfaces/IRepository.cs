@@ -9,10 +9,10 @@ namespace PuzzleShop.Core
     public interface IRepository<TEntity> : IDisposable where TEntity : BaseEntity
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<TEntity> FindById(long id);
-        Task<TEntity> AddEntity(TEntity entity);
-        Task UpdateEntity(TEntity entity);
-        Task DeleteEntity(TEntity entity);
+        Task<TEntity> FindByIdAsync(long id);
+        Task<TEntity> AddEntityAsync(TEntity entity);
+        Task UpdateEntityAsync(TEntity entity);
+        Task DeleteEntityAsync(TEntity entity);
         Task<bool> ExistsAsync(long id);
         Task<bool> CommitAsync();
     }

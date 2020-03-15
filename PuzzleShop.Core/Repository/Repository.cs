@@ -23,12 +23,12 @@ namespace PuzzleShop.Core
             return await _ctx.Set<TEntity>().ToListAsync();
         }
 
-        public virtual async Task<TEntity> FindById(long id)
+        public virtual async Task<TEntity> FindByIdAsync(long id)
         {
             return await _ctx.FindAsync<TEntity>(id);
         }
 
-        public virtual async Task<TEntity> AddEntity(TEntity entity)
+        public virtual async Task<TEntity> AddEntityAsync(TEntity entity)
         {
             if (entity == null)
             {
@@ -39,7 +39,7 @@ namespace PuzzleShop.Core
             return entity;
         }
 
-        public virtual async Task UpdateEntity(TEntity entity)
+        public virtual async Task UpdateEntityAsync(TEntity entity)
         {
             if (entity == null)
             {
@@ -50,7 +50,7 @@ namespace PuzzleShop.Core
             await _ctx.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteEntity(TEntity entity)
+        public virtual async Task DeleteEntityAsync(TEntity entity)
         {
             if (entity == null)
             {

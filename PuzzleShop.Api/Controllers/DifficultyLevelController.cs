@@ -32,7 +32,7 @@ namespace PuzzleShop.Api.Controllers
         [HttpGet("{levelId}")]
         public async Task<ActionResult<DifficultyLevelDto>> GetDiffLevel(long levelId)
         {
-            var lvlEntity = await _difflvlRepository.FindById(levelId);
+            var lvlEntity = await _difflvlRepository.FindByIdAsync(levelId);
             if (lvlEntity == null)
             {
                 return NotFound();
@@ -45,7 +45,7 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<DifficultyLevelDto>> AddLevel([FromBody] DifficultyLevelForCreationDto incomingDto)
         {
             var lvlEntity = _mapper.Map<DifficultyLevel>(incomingDto);
-            await _difflvlRepository.AddEntity(lvlEntity);
+            await _difflvlRepository.AddEntityAsync(lvlEntity);
 
             return CreatedAtAction(nameof(GetDiffLevel), new {levelId = lvlEntity.Id},
                 _mapper.Map<DifficultyLevelDto>(lvlEntity));
@@ -54,27 +54,27 @@ namespace PuzzleShop.Api.Controllers
         [HttpPut("{levelId}")]
         public async Task<IActionResult> UpdateLevel(long levelId, [FromBody] DifficultyLevelForCreationDto incomingDto)
         {
-            var lvlEntity = await _difflvlRepository.FindById(levelId);
+            var lvlEntity = await _difflvlRepository.FindByIdAsync(levelId);
             if (lvlEntity == null)
             {
                 return NotFound();
             }
 
             _mapper.Map(incomingDto, lvlEntity);
-            await _difflvlRepository.UpdateEntity(lvlEntity);
+            await _difflvlRepository.UpdateEntityAsync(lvlEntity);
             return NoContent();
         }
 
         [HttpDelete("{levelId}")]
         public async Task<IActionResult> DeleteLevel(long levelId)
         {
-            var lvlEntity = await _difflvlRepository.FindById(levelId);
+            var lvlEntity = await _difflvlRepository.FindByIdAsync(levelId);
             if (lvlEntity == null)
             {
                 return NotFound();
             }
 
-            await _difflvlRepository.DeleteEntity(lvlEntity);
+            await _difflvlRepository.DeleteEntityAsync(lvlEntity);
             return NoContent();
         }
         

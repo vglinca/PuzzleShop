@@ -9,6 +9,6 @@ namespace PuzzleShop.Domain.Entities
     {
         public string Name { get; set; }
         public string? Description { get; set; }
-        public ICollection<Puzzle> Puzzles { get; set; } = new List<Puzzle>();
+        public ICollection<Puzzle> Puzzles { get; private set; } = new List<Puzzle>();
     }
 }
