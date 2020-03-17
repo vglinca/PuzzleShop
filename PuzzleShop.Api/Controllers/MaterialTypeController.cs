@@ -35,11 +35,6 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<MaterialTypeDto>> GetMaterialType(long materialTypeId)
         {
             var materialTypeEntity = await _materialTypeRepository.FindByIdAsync(materialTypeId);
-            if (materialTypeEntity == null)
-            {
-                return NotFound();
-            }
-
             return Ok(_mapper.Map<MaterialTypeDto>(materialTypeEntity));
         }
 
@@ -47,11 +42,7 @@ namespace PuzzleShop.Api.Controllers
         public async Task<IActionResult> DeleteMaterialType(long materialTypeId)
         {
             var materialTypeToDel = await _materialTypeRepository.FindByIdAsync(materialTypeId);
-            if (materialTypeToDel == null)
-            {
-                return NotFound();
-            }
-
+            
             await _materialTypeRepository.DeleteEntityAsync(materialTypeToDel);
             return NoContent();
         }

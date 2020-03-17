@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using PuzzleShop.Api.Middleware;
 using PuzzleShop.Core;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
@@ -76,6 +77,8 @@ namespace PuzzleShop.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseMiddleware<ExceptionHandler>();
 
             app.UseRouting();
 

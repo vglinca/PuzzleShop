@@ -28,55 +28,5 @@ namespace PuzzleShop.Api.Controllers
             var entities = await _difflvlRepository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<DifficultyLevelDto>>(entities));
         }
-
-        [HttpGet("{levelId}")]
-        public async Task<ActionResult<DifficultyLevelDto>> GetDiffLevel(long levelId)
-        {
-            var lvlEntity = await _difflvlRepository.FindByIdAsync(levelId);
-            if (lvlEntity == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<DifficultyLevelDto>(lvlEntity));
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<DifficultyLevelDto>> AddLevel([FromBody] DifficultyLevelForCreationDto incomingDto)
-        {
-            var lvlEntity = _mapper.Map<DifficultyLevel>(incomingDto);
-            await _difflvlRepository.AddEntityAsync(lvlEntity);
-
-            return CreatedAtAction(nameof(GetDiffLevel), new {levelId = lvlEntity.Id},
-                _mapper.Map<DifficultyLevelDto>(lvlEntity));
-        }
-
-        [HttpPut("{levelId}")]
-        public async Task<IActionResult> UpdateLevel(long levelId, [FromBody] DifficultyLevelForCreationDto incomingDto)
-        {
-            var lvlEntity = await _difflvlRepository.FindByIdAsync(levelId);
-            if (lvlEntity == null)
-            {
-                return NotFound();
-            }
-
-            _mapper.Map(incomingDto, lvlEntity);
-            await _difflvlRepository.UpdateEntityAsync(lvlEntity);
-            return NoContent();
-        }
-
-        [HttpDelete("{levelId}")]
-        public async Task<IActionResult> DeleteLevel(long levelId)
-        {
-            var lvlEntity = await _difflvlRepository.FindByIdAsync(levelId);
-            if (lvlEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _difflvlRepository.DeleteEntityAsync(lvlEntity);
-            return NoContent();
-        }
-        
     }
 }

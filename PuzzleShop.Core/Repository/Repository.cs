@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
 
@@ -25,7 +27,14 @@ namespace PuzzleShop.Core
 
         public virtual async Task<TEntity> FindByIdAsync(long id)
         {
-            return await _ctx.FindAsync<TEntity>(id);
+            var entity = //await _ctx.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
+                await _ctx.FindAsync<TEntity>(id);
+            if (entity == null)
+            {
+                throw new EntityNotFoundException(
+                    $"{typeof(TEntity).ToString().Split('.').Last()} with Id {id} not found.");
+            }
+            return entity;
         }
 
         public virtual async Task<TEntity> AddEntityAsync(TEntity entity)
@@ -60,7 +69,8 @@ namespace PuzzleShop.Core
             var entityToDel = _ctx.FindAsync<TEntity>(entity.Id);
             if (entityToDel == null)
             {
-                throw new Exception($"Entity with id {entity.Id} of type <{typeof(TEntity)}> could not be found.");
+                throw new EntityNotFoundException(
+                    $"{typeof(TEntity).ToString().Split('.').Last()} with Id {entity.Id} not found.");
             }
             _ctx.Set<TEntity>().Remove(entity);
             await _ctx.SaveChangesAsync();

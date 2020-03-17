@@ -38,11 +38,6 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<ManufacturerDto>> GetManufacturer(long manufacturerId)
         {
             var manufacturer = await _manufacturersRepository.FindByIdAsync(manufacturerId);
-            if (manufacturer == null)
-            {
-                return NotFound();
-            }
-
             return Ok(_mapper.Map<ManufacturerDto>(manufacturer));
         }
 
@@ -63,11 +58,7 @@ namespace PuzzleShop.Api.Controllers
             [FromBody] ManufacturerForUpdateDto manufacturerForUpdateDto)
         {
             var manufacturerFromRepo = await _manufacturersRepository.FindByIdAsync(manufacturerId);
-            if (manufacturerFromRepo == null)
-            {
-                return NotFound();
-            }
-
+            
             _mapper.Map(manufacturerForUpdateDto, manufacturerFromRepo);
             await _manufacturersRepository.UpdateEntityAsync(manufacturerFromRepo);
 
@@ -80,11 +71,7 @@ namespace PuzzleShop.Api.Controllers
         {
             //retrieve target manufacturer from storage
             var manufacturerFromRepo = await _manufacturersRepository.FindByIdAsync(manufacturerId);
-            
-            if (manufacturerFromRepo == null)
-            {
-                return NotFound();
-            }
+           
             //convert found manufacturerEntity to manufacturerForUpd DTO
             var manufacturerToPatch = _mapper.Map<ManufacturerForUpdateDto>(manufacturerFromRepo);
             jsonPatchDocument.ApplyTo(manufacturerToPatch, ModelState);
@@ -106,11 +93,8 @@ namespace PuzzleShop.Api.Controllers
         public async Task<IActionResult> DeleteManufacturer(long manufacturerId)
         {
             var entityToDel = await _manufacturersRepository.FindByIdAsync(manufacturerId);
-            if (entityToDel == null)
-            {
-                return NotFound();
-            }
             await _manufacturersRepository.DeleteEntityAsync(entityToDel);
+            
             return NoContent();
         }
 

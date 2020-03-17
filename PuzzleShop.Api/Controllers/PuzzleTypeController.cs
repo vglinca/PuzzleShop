@@ -32,11 +32,6 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<PuzzleTypeDto>> GetPuzzleType(long puzzleTypeId)
         {
             var puzzleTypeEntity = await _puzzleTypeRepository.FindByIdAsync(puzzleTypeId);
-            if (puzzleTypeEntity == null)
-            {
-                return NotFound();
-            }
-
             return Ok(_mapper.Map<PuzzleTypeDto>(puzzleTypeEntity));
         }
 
@@ -56,11 +51,7 @@ namespace PuzzleShop.Api.Controllers
         public async Task<IActionResult> DeletePuzzleType(long puzzleTypeId)
         {
             var entityToDel = await _puzzleTypeRepository.FindByIdAsync(puzzleTypeId);
-            if (entityToDel == null)
-            {
-                return NotFound();
-            }
-
+            
             await _puzzleTypeRepository.DeleteEntityAsync(entityToDel);
             return NoContent();
         }
