@@ -17,9 +17,10 @@ namespace PuzzleShop.Persistance.DbContext
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Puzzle> Puzzles { get; set; }
         public DbSet<PuzzleType> PuzzleTypes { get; set; }
-        public DbSet<Color> PlasticColors { get; set; }
+        public DbSet<Color> Colors { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<DifficultyLevel> Levels { get; set; }
+        public DbSet<MaterialType> MaterialTypes { get; set; }
         
         public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder =>
             builder.AddFilter((category, lvl) => category == DbLoggerCategory.Database.Command.Name

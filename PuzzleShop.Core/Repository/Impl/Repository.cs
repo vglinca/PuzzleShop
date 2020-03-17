@@ -41,7 +41,8 @@ namespace PuzzleShop.Core
         {
             if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity));
+                throw new BadRequestException($"{nameof(entity)} is null.");
+                //throw new ArgumentNullException(nameof(entity));
             }
             _ctx.Set<TEntity>().Add(entity);
             await _ctx.SaveChangesAsync();
@@ -52,7 +53,8 @@ namespace PuzzleShop.Core
         {
             if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity));
+                throw new BadRequestException($"{nameof(entity)} is null.");
+                //throw new ArgumentNullException(nameof(entity));
             }
 
             _ctx.Entry(entity).State = EntityState.Modified;
@@ -63,7 +65,8 @@ namespace PuzzleShop.Core
         {
             if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity));
+                throw new BadRequestException($"{nameof(entity)} is null.");
+                //throw new ArgumentNullException(nameof(entity));
             }
 
             var entityToDel = _ctx.FindAsync<TEntity>(entity.Id);
@@ -96,7 +99,6 @@ namespace PuzzleShop.Core
         {
             if (disposing)
             {
-                
             }
         }
     }

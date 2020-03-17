@@ -23,7 +23,7 @@ namespace PuzzleShop.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DifficultyLevelDto>>> GetDiffLevels()
+        public async Task<ActionResult<IEnumerable<DifficultyLevelDto>>> GetDifficultyLevels()
         {
             var entities = await _difflvlRepository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<DifficultyLevelDto>>(entities));

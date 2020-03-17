@@ -25,6 +25,9 @@ namespace PuzzleShop.Api.Middleware
             } catch (EntityNotFoundException e)
             {
                 await HandleException(ctx, e, HttpStatusCode.NotFound);
+            } catch (BadRequestException e)
+            {
+                await HandleException(ctx, e, HttpStatusCode.BadRequest);
             }
         }
 

@@ -47,10 +47,9 @@ namespace PuzzleShop.Api.Controllers
         {
             var manufacturerEntity = _mapper.Map<Manufacturer>(manufacturerForCreateDto);
             await _manufacturersRepository.AddEntityAsync(manufacturerEntity);
-            var manufacturerDtoToReturn = _mapper.Map<ManufacturerDto>(manufacturerEntity);
             
-            return CreatedAtAction(nameof(GetManufacturer), 
-                new {manufacturerId = manufacturerEntity.Id}, manufacturerDtoToReturn);
+            return CreatedAtAction(nameof(GetManufacturer), new {manufacturerId = manufacturerEntity.Id}, 
+                _mapper.Map<ManufacturerDto>(manufacturerEntity));
         }
 
         [HttpPut("{manufacturerId}")]

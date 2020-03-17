@@ -38,6 +38,17 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<MaterialTypeDto>(materialTypeEntity));
         }
 
+        [HttpPost]
+        public async Task<ActionResult<MaterialTypeDto>> AddMaterialType(
+            [FromBody] MaterialTypeForCreationDto materialTypeForCreationDto)
+        {
+            var entityToAdd = _mapper.Map<Domain.Entities.MaterialType>(materialTypeForCreationDto);
+            await _materialTypeRepository.AddEntityAsync(entityToAdd);
+
+            return CreatedAtAction(nameof(GetMaterialType), new {materialTypeId = entityToAdd.Id},
+                _mapper.Map<MaterialTypeDto>(entityToAdd));
+        }
+
         [HttpDelete("{materialTypeId}")]
         public async Task<IActionResult> DeleteMaterialType(long materialTypeId)
         {

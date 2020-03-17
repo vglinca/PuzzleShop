@@ -41,18 +41,17 @@ namespace PuzzleShop.Api.Controllers
         {
             var newPuzzleType = _mapper.Map<Domain.Entities.PuzzleType>(puzzleTypeForCreationDto);
             await _puzzleTypeRepository.AddEntityAsync(newPuzzleType);
-            var dtoToReturn = _mapper.Map<PuzzleTypeDto>(newPuzzleType);
             
-            return CreatedAtAction(nameof(GetPuzzleType), 
-                new {puzzleTypeId = newPuzzleType.Id}, dtoToReturn);
+            return CreatedAtAction(nameof(GetPuzzleType), new {puzzleTypeId = newPuzzleType.Id}, 
+                _mapper.Map<PuzzleTypeDto>(newPuzzleType));
         }
 
         [HttpDelete("{puzzleTypeId}")]
         public async Task<IActionResult> DeletePuzzleType(long puzzleTypeId)
         {
             var entityToDel = await _puzzleTypeRepository.FindByIdAsync(puzzleTypeId);
-            
             await _puzzleTypeRepository.DeleteEntityAsync(entityToDel);
+            
             return NoContent();
         }
     }
