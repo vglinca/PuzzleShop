@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using PuzzleShop.Api.Middleware;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Repository.Impl;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
 // ReSharper disable All
@@ -67,6 +68,7 @@ namespace PuzzleShop.Api
             services.AddDbContext<PuzzleShopContext>(
                 opt => opt.UseSqlServer(connString));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IPuzzleRepository, PuzzleRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 

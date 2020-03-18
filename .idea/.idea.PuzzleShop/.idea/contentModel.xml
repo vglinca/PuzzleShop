@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
+    <e p="C:\Users\Azathoth\.nuget\packages\microsoft.net.test.sdk\16.2.0\build\netcoreapp1.0" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="C:\Users\Azathoth\.nuget\packages\nunit3testadapter\3.15.1\build\netcoreapp2.0\nunit.engine.api.dll" t="Include" />
+    <e p="C:\Users\Azathoth\.nuget\packages\nunit3testadapter\3.15.1\build\netcoreapp2.0\nunit.engine.dll" t="Include" />
+    <e p="C:\Users\Azathoth\.nuget\packages\nunit3testadapter\3.15.1\build\netcoreapp2.0\NUnit3.TestAdapter.dll" t="Include" />
+    <e p="C:\Users\Azathoth\.nuget\packages\nunit3testadapter\3.15.1\build\netcoreapp2.0\NUnit3.TestAdapter.pdb" t="Include" />
     <e p="C:\Users\Azathoth\.Rider2019.3\config\consoles\db" t="IncludeRecursive" />
     <e p="C:\Users\Azathoth\.Rider2019.3\config\extensions" t="IncludeRecursive" />
     <e p="C:\Users\Azathoth\.Rider2019.3\system\extResources" t="IncludeRecursive" />
@@ -28,6 +35,9 @@
             <e p="DifficultyLevelDto.cs" t="Include" />
             <e p="DifficultyLevelForCreationDto.cs" t="Include" />
           </e>
+          <e p="Images" t="Include">
+            <e p="ImageDto.cs" t="Include" />
+          </e>
           <e p="Manufacturers" t="Include">
             <e p="ManufacturerDto.cs" t="Include" />
             <e p="ManufacturerForCreateDto.cs" t="Include" />
@@ -36,6 +46,10 @@
           <e p="MaterialTypes" t="Include">
             <e p="MaterialTypeDto.cs" t="Include" />
             <e p="MaterialTypeForCreationDto.cs" t="Include" />
+          </e>
+          <e p="Puzzles" t="Include">
+            <e p="PuzzleDto.cs" t="Include" />
+            <e p="PuzzleForCreationDto.cs" t="Include" />
           </e>
           <e p="PuzzleTypes" t="Include">
             <e p="PuzzleTypeDto.cs" t="Include" />
@@ -55,8 +69,10 @@
         <e p="Profiles" t="Include">
           <e p="ColorProfile.cs" t="Include" />
           <e p="DifficultyLevelProfile.cs" t="Include" />
+          <e p="ImageProfile.cs" t="Include" />
           <e p="ManufacturerProfile.cs" t="Include" />
           <e p="MaterialTypeProfile.cs" t="Include" />
+          <e p="PuzzleProfile.cs" t="Include" />
           <e p="PuzzleTypeProfile.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />
@@ -146,6 +162,18 @@
         <e p="PuzzleShop.Persistance.csproj" t="IncludeRecursive" />
       </e>
       <e p="PuzzleShop.sln" t="IncludeFlat" />
+      <e p="PuzzleShop.Tests" t="IncludeRecursive">
+        <e p="AutomapperTest.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="PuzzleShop.Tests.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="PuzzleShop.Tests.csproj" t="IncludeRecursive" />
+      </e>
     </e>
   </component>
 </project>

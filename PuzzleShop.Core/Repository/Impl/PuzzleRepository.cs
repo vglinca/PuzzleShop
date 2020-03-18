@@ -9,7 +9,7 @@ using PuzzleShop.Persistance.DbContext;
 
 namespace PuzzleShop.Core.Repository.Impl
 {
-    public class PuzzleRepository : IPuzzleRepository
+    public sealed class PuzzleRepository : IPuzzleRepository
     {
         private readonly PuzzleShopContext _ctx;
 
@@ -50,48 +50,52 @@ namespace PuzzleShop.Core.Repository.Impl
             return puzzle;
         }
 
-        public async Task<Puzzle> AddEntityAsync(Puzzle entity)
+        public async Task<Puzzle> AddEntityAsync(Puzzle puzzle)
         {
-            if (entity == null)
+            if (puzzle == null)
             {
-                throw new BadRequestException($"{nameof(entity)} is null.");
+                throw new BadRequestException($"{nameof(puzzle)} is null.");
             }
 
             var manufacturer = await _ctx.Manufacturers
-                .FirstOrDefaultAsync(m => m.Id == entity.ManufacturerId);
+                .FirstOrDefaultAsync(m => m.Id == puzzle.ManufacturerId);
             var color = await _ctx.Colors
-                .FirstOrDefaultAsync(c => c.Id == entity.ColorId);
+                .FirstOrDefaultAsync(c => c.Id == puzzle.ColorId);
             var puzzleType = await _ctx.PuzzleTypes
-                .FirstOrDefaultAsync(pt => pt.Id == entity.PuzzleTypeId);
+                .FirstOrDefaultAsync(pt => pt.Id == puzzle.PuzzleTypeId);
             var materialType = await _ctx.MaterialTypes
-                .FirstOrDefaultAsync(mt => mt.Id == entity.MaterialTypeId);
+                .FirstOrDefaultAsync(mt => mt.Id == puzzle.MaterialTypeId);
             var difficultyLevel = await _ctx.Levels
-                .FirstOrDefaultAsync(l => l.Id == entity.DifficultyLevelId);
+                .FirstOrDefaultAsync(l => l.Id == puzzle.DifficultyLevelId);
 
-            foreach (var image in entity.Images)
+            foreach (var image in puzzle.Images)
             {
+                image.Title = puzzle.Name;
                 image.FileName += Guid.NewGuid();//???
-                image.PuzzleId = entity.Id;
+                image.PuzzleId = puzzle.Id;
             }
-            await _ctx.Images.AddRangeAsync(entity.Images);
-            entity.Manufacturer = manufacturer;
-            entity.Color = color;
-            entity.PuzzleType = puzzleType;
-            entity.MaterialType = materialType;
-            entity.DifficultyLevel = difficultyLevel;
+            await _ctx.Images.AddRangeAsync(puzzle.Images);
+            
+            puzzle.Manufacturer = manufacturer;
+            puzzle.Color = color;
+            puzzle.PuzzleType = puzzleType;
+            puzzle.MaterialType = materialType;
+            puzzle.DifficultyLevel = difficultyLevel;
 
-            _ctx.Puzzles.Add(entity);
+            _ctx.Puzzles.Add(puzzle);
             await _ctx.SaveChangesAsync();
-            return entity;
+            return puzzle;
         }
 
-        public Task UpdateEntityAsync(Puzzle entity)
+        public async Task UpdateEntityAsync(Puzzle puzzle)
         {
-            if (entity == null)
+            if (puzzle == null)
             {
-                throw new BadRequestException($"{nameof(entity)} is null.");
+                throw new BadRequestException($"{nameof(puzzle)} is null.");
             }
-            return null;
+
+            _ctx.Entry(puzzle).State = EntityState.Modified;
+            await _ctx.SaveChangesAsync();
         }
 
         public async Task DeleteEntityAsync(Puzzle entity)
@@ -126,13 +130,12 @@ namespace PuzzleShop.Core.Repository.Impl
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
-        protected virtual void Dispose(bool disposing)
+
+        private void Dispose(bool disposing)
         {
             if (disposing)
             {
             }
         }
-
     }
 }

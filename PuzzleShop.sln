@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleShop.Core", "PuzzleSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleShop.Api", "PuzzleShop.Api\PuzzleShop.Api.csproj", "{CFBB5463-3B03-48EF-AA07-536063B8D481}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleShop.Tests", "PuzzleShop.Tests\PuzzleShop.Tests.csproj", "{F763C776-BCCB-491A-A2D4-0174AC02F25A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{CFBB5463-3B03-48EF-AA07-536063B8D481}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFBB5463-3B03-48EF-AA07-536063B8D481}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFBB5463-3B03-48EF-AA07-536063B8D481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F763C776-BCCB-491A-A2D4-0174AC02F25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F763C776-BCCB-491A-A2D4-0174AC02F25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F763C776-BCCB-491A-A2D4-0174AC02F25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F763C776-BCCB-491A-A2D4-0174AC02F25A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
