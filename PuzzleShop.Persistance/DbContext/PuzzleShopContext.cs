@@ -21,7 +21,10 @@ namespace PuzzleShop.Persistance.DbContext
         public DbSet<Image> Images { get; set; }
         public DbSet<DifficultyLevel> Levels { get; set; }
         public DbSet<MaterialType> MaterialTypes { get; set; }
-        
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<User> Users { get; set; }
+
         public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder =>
             builder.AddFilter((category, lvl) => category == DbLoggerCategory.Database.Command.Name
                                                  && lvl == LogLevel.Information)

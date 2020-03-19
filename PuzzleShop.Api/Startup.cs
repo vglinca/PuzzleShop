@@ -38,15 +38,7 @@ namespace PuzzleShop.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(cfg =>
-                {
-                    cfg.ReturnHttpNotAcceptable = true;
-                    //cfg.OutputFormatters.Clear();
-                    // cfg.OutputFormatters.Add(new NewtonsoftJsonOutputFormatter(new JsonSerializerSettings
-                    // {
-                    //     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                    // }, ArrayPool<char>.Shared, new MvcOptions()));
-                })
+            services.AddControllers(cfg => cfg.ReturnHttpNotAcceptable = true)
                 .AddNewtonsoftJson(cfg =>
                 {
                     cfg.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

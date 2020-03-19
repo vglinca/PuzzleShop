@@ -47,6 +47,12 @@ namespace PuzzleShop.Persistance.Configuration
                 .HasForeignKey(p => p.DifficultyLevelId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
+
+            builder
+                .HasOne(p => p.OrderItem)
+                .WithOne(oi => oi.Puzzle)
+                .HasForeignKey<OrderItem>(oi => oi.PuzzleId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

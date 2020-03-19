@@ -118,8 +118,12 @@
           <e p="Image.cs" t="Include" />
           <e p="Manufacturer.cs" t="Include" />
           <e p="MaterialType.cs" t="Include" />
+          <e p="Order.cs" t="Include" />
+          <e p="OrderItem.cs" t="Include" />
           <e p="Puzzle.cs" t="Include" />
           <e p="PuzzleType.cs" t="Include" />
+          <e p="User.cs" t="Include" />
+          <e p="UserRole.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -137,9 +141,12 @@
           <e p="ImageConfiguration.cs" t="Include" />
           <e p="ManufacturerConfiguration.cs" t="Include" />
           <e p="MaterialTypeConfiguration.cs" t="Include" />
+          <e p="OrderConfiguration.cs" t="Include" />
+          <e p="OrderItemConfiguration.cs" t="Include" />
           <e p="PuzzleColorConfiguration.cs" t="Include" />
           <e p="PuzzleConfiguration.cs" t="Include" />
           <e p="PuzzleTypeConfiguration.cs" t="Include" />
+          <e p="UserConfiguration.cs" t="Include" />
         </e>
         <e p="DbContext" t="Include">
           <e p="PuzzleShopContext.cs" t="Include" />
@@ -154,6 +161,8 @@
           <e p="20200314175817_AddedPuzzleMaterialTypeMigration.Designer.cs" t="Include" />
           <e p="20200319131609_CascadeRuleAddedMigration.cs" t="Include" />
           <e p="20200319131609_CascadeRuleAddedMigration.Designer.cs" t="Include" />
+          <e p="20200319180313_AddedUsersRolesOrderOrderItemsMigration.cs" t="Include" />
+          <e p="20200319180313_AddedUsersRolesOrderOrderItemsMigration.Designer.cs" t="Include" />
           <e p="PuzzleShopContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
