@@ -78,16 +78,6 @@ namespace PuzzleShop.Core
             _ctx.Set<TEntity>().Remove(entity);
             await _ctx.SaveChangesAsync();
         }
-
-        public async Task<bool> ExistsAsync(long id)
-        {
-            return await _ctx.Set<TEntity>().AnyAsync(e => e.Id == id);
-        }
-
-        public async Task<bool> CommitAsync()
-        {
-            return await _ctx.SaveChangesAsync() >= 0;
-        }
         
         public void Dispose()
         {

@@ -115,16 +115,6 @@ namespace PuzzleShop.Core.Repository.Impl
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task<bool> ExistsAsync(long id)
-        {
-            return await _ctx.Puzzles.AnyAsync(p => p.Id == id);
-        }
-
-        public async Task<bool> CommitAsync()
-        {
-            return await _ctx.SaveChangesAsync() >= 0;
-        }
-        
         public void Dispose()
         {
             Dispose(true);

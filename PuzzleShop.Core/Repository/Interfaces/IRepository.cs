@@ -13,7 +13,5 @@ namespace PuzzleShop.Core
         Task<TEntity> AddEntityAsync(TEntity entity);
         Task UpdateEntityAsync(TEntity entity);
         Task DeleteEntityAsync(TEntity entity);
-        Task<bool> ExistsAsync(long id);
-        Task<bool> CommitAsync();
     }
 }
