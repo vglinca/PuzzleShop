@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,11 +9,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PuzzleShop.Api.Middleware;
 using PuzzleShop.Core;
@@ -35,10 +38,19 @@ namespace PuzzleShop.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(cfg => cfg.ReturnHttpNotAcceptable = true)
+            services.AddControllers(cfg =>
+                {
+                    cfg.ReturnHttpNotAcceptable = true;
+                    //cfg.OutputFormatters.Clear();
+                    // cfg.OutputFormatters.Add(new NewtonsoftJsonOutputFormatter(new JsonSerializerSettings
+                    // {
+                    //     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    // }, ArrayPool<char>.Shared, new MvcOptions()));
+                })
                 .AddNewtonsoftJson(cfg =>
                 {
                     cfg.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    cfg.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 })
                 .ConfigureApiBehaviorOptions(cfg =>
                 {

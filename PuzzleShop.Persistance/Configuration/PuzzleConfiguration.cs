@@ -17,30 +17,35 @@ namespace PuzzleShop.Persistance.Configuration
                 .HasOne(p => p.Manufacturer)
                 .WithMany(m => m.Puzzles)
                 .HasForeignKey(p => p.ManufacturerId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             builder
                 .HasOne(p => p.PuzzleType)
                 .WithMany(t => t.Puzzles)
                 .HasForeignKey(p => p.PuzzleTypeId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             builder
                 .HasOne(p => p.Color)
                 .WithMany(c => c.Puzzles)
                 .HasForeignKey(p => p.ColorId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             builder
                 .HasOne(p => p.MaterialType)
                 .WithMany(m => m.Puzzles)
                 .HasForeignKey(p => p.MaterialTypeId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             builder
                 .HasOne(p => p.DifficultyLevel)
                 .WithMany(d => d.Puzzles)
                 .HasForeignKey(p => p.DifficultyLevelId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
         }
     }

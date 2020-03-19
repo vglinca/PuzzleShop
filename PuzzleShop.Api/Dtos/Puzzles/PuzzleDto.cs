@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using PuzzleShop.Api.Dtos.Images;
 using PuzzleShop.Domain.Entities;
 // ReSharper disable All
 
@@ -12,11 +14,11 @@ namespace PuzzleShop.Api.Dtos.Puzzles
         public decimal Price { get; set; }
         public bool IsWcaPuzzle { get; set; }
         public double Weight { get; set; }
-        public Manufacturer Manufacturer { get; set; }
-        public PuzzleType PuzzleType { get; set; }
-        public Color Color { get; set; }
-        public DifficultyLevel DifficultyLevel { get; set; }
-        public MaterialType MaterialType { get; set; }
-        public List<Image> Images { get; set; } = new List<Image>();
+        public string Manufacturer { get; set; }
+        public string PuzzleType { get; set; }
+        public string Color { get; set; }
+        public string DifficultyLevel { get; set; }
+        public string MaterialType { get; set; }
+        public List<ImageDto> Images { get; set; } = new List<ImageDto>();
     }
 }

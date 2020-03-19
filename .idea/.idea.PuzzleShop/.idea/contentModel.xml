@@ -50,6 +50,7 @@
           <e p="Puzzles" t="Include">
             <e p="PuzzleDto.cs" t="Include" />
             <e p="PuzzleForCreationDto.cs" t="Include" />
+            <e p="PuzzleForUpdateDto.cs" t="Include" />
           </e>
           <e p="PuzzleTypes" t="Include">
             <e p="PuzzleTypeDto.cs" t="Include" />
@@ -58,6 +59,7 @@
         </e>
         <e p="Middleware" t="Include">
           <e p="ExceptionHandler.cs" t="Include" />
+          <e p="ModelValidationAttribute.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -150,6 +152,8 @@
           <e p="20200305210556_Initial.Designer.cs" t="Include" />
           <e p="20200314175817_AddedPuzzleMaterialTypeMigration.cs" t="Include" />
           <e p="20200314175817_AddedPuzzleMaterialTypeMigration.Designer.cs" t="Include" />
+          <e p="20200319131609_CascadeRuleAddedMigration.cs" t="Include" />
+          <e p="20200319131609_CascadeRuleAddedMigration.Designer.cs" t="Include" />
           <e p="PuzzleShopContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">

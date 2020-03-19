@@ -26,7 +26,8 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<IEnumerable<PuzzleDto>>> GetPuzzles()
         {
             var puzzles = await _puzzleRepository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<PuzzleDto>>(puzzles));
+            var puzzlesToReturn = _mapper.Map<IEnumerable<PuzzleDto>>(puzzles);
+            return Ok(puzzlesToReturn);
         }
 
         [HttpGet("{puzzleId}")]
@@ -46,6 +47,15 @@ namespace PuzzleShop.Api.Controllers
                 _mapper.Map<PuzzleDto>(entityToAdd));
         }
 
+        [HttpPut("{puzzleId}")]
+        public async Task<IActionResult> UpdatePuzzle(long puzzleId, [FromBody] PuzzleForUpdateDto puzzleForUpdateDto)
+        {
+            var retrievedPuzzle = await _puzzleRepository.FindByIdAsync(puzzleId);
+            _mapper.Map(puzzleForUpdateDto, retrievedPuzzle);
+            await _puzzleRepository.UpdateEntityAsync(retrievedPuzzle);
+            return NoContent();
+        }
+        
         [HttpDelete("{puzzleId}")]
         public async Task<IActionResult> DeletePuzzle(long puzzleId)
         {
@@ -53,6 +63,5 @@ namespace PuzzleShop.Api.Controllers
             await _puzzleRepository.DeleteEntityAsync(puzzleToDelete);
             return NoContent();
         }
-        
     }
 }

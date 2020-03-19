@@ -39,7 +39,7 @@ namespace PuzzleShop.Core.Repository.Impl
                 .Include(p => p.PuzzleType)
                 .Include(p => p.MaterialType)
                 .Include(p => p.DifficultyLevel)
-                .Include(p => p.Images.OrderBy(i => i.Title))
+                .Include(p => p.Images)
                 .FirstOrDefaultAsync();
 
             if (puzzle == null)
