@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Middleware;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Repository.Impl;
@@ -38,6 +39,7 @@ namespace PuzzleShop.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers(cfg => cfg.ReturnHttpNotAcceptable = true)
                 .AddNewtonsoftJson(cfg =>
                 {
@@ -73,7 +75,11 @@ namespace PuzzleShop.Api
                 opt => opt.UseSqlServer(connString));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IPuzzleRepository, PuzzleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
+            var appSettings = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

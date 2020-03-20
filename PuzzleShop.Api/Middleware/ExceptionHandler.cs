@@ -31,6 +31,9 @@ namespace PuzzleShop.Api.Middleware
             } catch (UnauthorizedException e)
             {
                 await HandleException(ctx, e, HttpStatusCode.Unauthorized);
+            } catch (AuthenticationFailedException e)
+            {
+                await HandleException(ctx, e, HttpStatusCode.Unauthorized);
             }
         }
 

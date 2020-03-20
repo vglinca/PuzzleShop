@@ -10,7 +10,7 @@ namespace PuzzleShop.Core
         Task<User> Authenticate(string username, string password);
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetById(long userId);
-        Task<User> Create(User user, string password);
+        Task<User> Register(User user, string password);
         Task Update(User user, string password = null);
         Task Delete(long userId);
     }
