@@ -10,7 +10,7 @@ namespace PuzzleShop.Domain.Entities
     public class Puzzle : BaseEntity
     {
         public string Name { get; set; }
-        public string? Description { get; set; }
+        public string Description { get; set; }
         public decimal? Price { get; set; }
         public bool IsWcaPuzzle { get; set; }
         public double Weight { get; set; }

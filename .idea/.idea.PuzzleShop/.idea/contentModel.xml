@@ -61,6 +61,7 @@
             <e p="UserDto.cs" t="Include" />
             <e p="UserForAuthDto.cs" t="Include" />
             <e p="UserForRegistrationDto.cs" t="Include" />
+            <e p="UserForUpdateDto.cs" t="Include" />
           </e>
         </e>
         <e p="extensions" t="Include">

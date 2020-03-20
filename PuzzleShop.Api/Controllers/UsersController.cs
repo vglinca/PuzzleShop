@@ -7,27 +7,29 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PuzzleShop.Api.Dtos.Users;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
+using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api")]
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper, AppSettings appSettings)
+        public UsersController(IUserRepository userRepository, IMapper mapper, IOptions<AppSettings> appSettings)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _appSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
+            _appSettings = appSettings.Value ?? throw new ArgumentNullException(nameof(appSettings.Value));
         }
 
         [AllowAnonymous]
@@ -42,7 +44,8 @@ namespace PuzzleShop.Api.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.UserRole.Title)
                 }),
                 Expires = DateTime.UtcNow.AddDays(14),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), 
@@ -78,6 +81,15 @@ namespace PuzzleShop.Api.Controllers
         {
             var user = await _userRepository.GetById(userId);
             return Ok(_mapper.Map<UserDto>(user));
+        }
+
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> Update(long userId, [FromBody] UserForUpdateDto updateDto)
+        {
+            var user = _mapper.Map<User>(updateDto);
+            user.Id = userId;
+            await _userRepository.Update(user, updateDto.Password);
+            return NoContent();
         }
     }
 }

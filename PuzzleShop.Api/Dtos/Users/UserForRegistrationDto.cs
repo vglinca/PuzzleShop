@@ -7,7 +7,7 @@ namespace PuzzleShop.Api.Dtos.Users
     public class UserForRegistrationDto
     {
         [Required]
-        public string UserName { get; set; }
+        public string Username { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -21,5 +21,7 @@ namespace PuzzleShop.Api.Dtos.Users
         [Required]
         public DateTimeOffset BirthDate { get; set; }
         public string Phone { get; set; }
+        [Required]
+        public long UserRoleId { get; set; }
     }
 }

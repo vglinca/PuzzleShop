@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Dtos.Puzzles;
 using PuzzleShop.Core;
@@ -9,6 +10,7 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/puzzles")]
     public class PuzzlesController : ControllerBase
