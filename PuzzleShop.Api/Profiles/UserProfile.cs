@@ -8,19 +8,16 @@ namespace PuzzleShop.Api.Profiles
     {
         public UserProfile()
         {
-            CreateMap<Dtos.Users.UserForAuthDto, Domain.Entities.User>().ReverseMap();
-            CreateMap<Dtos.Users.UserForRegistrationDto, Domain.Entities.User>()
+            // CreateMap<Dtos.Users.UserForAuthDto, Domain.Entities.User>().ReverseMap();
+            CreateMap<Dtos.Users.UserForRegistrationDto, Domain.Entities.Auth.User>()
                 .ForMember(dest => dest.Age,
                     opt => opt.MapFrom(
-                        src => src.BirthDate.GetCurrentAge()))
-                .ForMember(dest => dest.RoleId,
-                    opt => opt.MapFrom(
-                        src => src.UserRoleId));
-            CreateMap<Domain.Entities.User, Dtos.Users.UserDto>()
+                        src => src.BirthDate.GetCurrentAge()));
+            CreateMap<Domain.Entities.Auth.User, Dtos.Users.UserDto>()
                 .ForMember(dest => dest.Name,
                     opt => opt.MapFrom(
                         src => $"{src.FirstName} {src.LastName}")).ReverseMap();
-            CreateMap<Dtos.Users.UserForUpdateDto, Domain.Entities.User>();
+            CreateMap<Dtos.Users.UserForUpdateDto, Domain.Entities.Auth.User>();
         }
     }
 }

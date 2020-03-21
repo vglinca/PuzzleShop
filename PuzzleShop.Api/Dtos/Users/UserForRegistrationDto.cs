@@ -13,6 +13,7 @@ namespace PuzzleShop.Api.Dtos.Users
         [Required]
         public string LastName { get; set; }
         [Required]
+        [MinLength(8, ErrorMessage = "Password should not be less than 8 characters.")]
         public string Password { get; set; }
         [Required]
         public string Email { get; set; }
@@ -20,8 +21,6 @@ namespace PuzzleShop.Api.Dtos.Users
         public string Address { get; set; }
         [Required]
         public DateTimeOffset BirthDate { get; set; }
-        public string Phone { get; set; }
-        [Required]
-        public long UserRoleId { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

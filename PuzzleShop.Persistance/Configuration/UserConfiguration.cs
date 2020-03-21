@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PuzzleShop.Domain.Entities;
+using PuzzleShop.Domain.Entities.Auth;
+
 // ReSharper disable All
 
 namespace PuzzleShop.Persistance.Configuration
@@ -9,11 +11,11 @@ namespace PuzzleShop.Persistance.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasOne(u => u.UserRole)
-                .WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired();
+            // builder.HasOne(u => u.UserRole)
+            //     .WithMany(r => r.Users)
+            //     .HasForeignKey(u => u.UserRoleId)
+            //     .OnDelete(DeleteBehavior.Cascade)
+            //     .IsRequired();
 
             builder.Property(u => u.FirstName)
                 .HasMaxLength(50)
@@ -23,8 +25,8 @@ namespace PuzzleShop.Persistance.Configuration
                 .HasMaxLength(50)
                 .IsRequired();
 
-            builder.Property(u => u.PasswordHash).IsRequired();
-            builder.Property(u => u.PasswordSalt).IsRequired();
+            // builder.Property(u => u.PasswordHash).IsRequired();
+            // builder.Property(u => u.PasswordSalt).IsRequired();
             builder.Property(u => u.Email).IsRequired();
         }
     }

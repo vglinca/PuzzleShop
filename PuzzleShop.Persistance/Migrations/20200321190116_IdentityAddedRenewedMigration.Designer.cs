@@ -10,8 +10,8 @@ using PuzzleShop.Persistance.DbContext;
 namespace PuzzleShop.Persistance.Migrations
 {
     [DbContext(typeof(PuzzleShopContext))]
-    [Migration("20200319180313_AddedUsersRolesOrderOrderItemsMigration")]
-    partial class AddedUsersRolesOrderOrderItemsMigration
+    [Migration("20200321190116_IdentityAddedRenewedMigration")]
+    partial class IdentityAddedRenewedMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,215 @@ namespace PuzzleShop.Persistance.Migrations
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.Role", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("Roles","Auth");
+                });
+
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.RoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RoleClaims","Auth");
+                });
+
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("Users","Auth");
+                });
+
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.UserClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserClaims","Auth");
+                });
+
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.UserLogin", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLogins","Auth");
+                });
+
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.UserRole", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UserRole","Auth");
+                });
+
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.UserToken", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("UserTokens","Auth");
+                });
 
             modelBuilder.Entity("PuzzleShop.Domain.Entities.Color", b =>
                 {
@@ -311,7 +520,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 1L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 598, DateTimeKind.Unspecified).AddTicks(441), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 78, DateTimeKind.Unspecified).AddTicks(4597), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 1L,
@@ -325,7 +534,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 2L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 600, DateTimeKind.Unspecified).AddTicks(5859), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 80, DateTimeKind.Unspecified).AddTicks(8021), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 1L,
@@ -339,7 +548,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 3L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 600, DateTimeKind.Unspecified).AddTicks(5969), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 80, DateTimeKind.Unspecified).AddTicks(8131), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 2L,
@@ -353,7 +562,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 4L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 600, DateTimeKind.Unspecified).AddTicks(5980), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 80, DateTimeKind.Unspecified).AddTicks(8138), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 5L,
@@ -367,7 +576,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 5L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 600, DateTimeKind.Unspecified).AddTicks(5988), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 80, DateTimeKind.Unspecified).AddTicks(8146), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 1L,
@@ -381,7 +590,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 6L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 600, DateTimeKind.Unspecified).AddTicks(5995), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 80, DateTimeKind.Unspecified).AddTicks(8154), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 3L,
@@ -395,7 +604,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 7L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 600, DateTimeKind.Unspecified).AddTicks(6003), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 80, DateTimeKind.Unspecified).AddTicks(8157), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 3L,
@@ -409,7 +618,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 8L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 600, DateTimeKind.Unspecified).AddTicks(6011), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 80, DateTimeKind.Unspecified).AddTicks(8165), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 1L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 3L,
@@ -423,7 +632,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 9L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 600, DateTimeKind.Unspecified).AddTicks(6018), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 80, DateTimeKind.Unspecified).AddTicks(8172), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 1L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 2L,
@@ -437,7 +646,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 10L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 19, 20, 3, 12, 600, DateTimeKind.Unspecified).AddTicks(6022), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 21, 21, 1, 16, 80, DateTimeKind.Unspecified).AddTicks(8176), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 2L,
@@ -501,69 +710,55 @@ namespace PuzzleShop.Persistance.Migrations
                         });
                 });
 
-            modelBuilder.Entity("PuzzleShop.Domain.Entities.User", b =>
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.RoleClaim", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("PasswordHash")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("UserRoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserRoleId");
-
-                    b.ToTable("Users");
+                    b.HasOne("PuzzleShop.Domain.Entities.Auth.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("PuzzleShop.Domain.Entities.UserRole", b =>
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.UserClaim", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasOne("PuzzleShop.Domain.Entities.Auth.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.UserLogin", b =>
+                {
+                    b.HasOne("PuzzleShop.Domain.Entities.Auth.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.HasKey("Id");
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.UserRole", b =>
+                {
+                    b.HasOne("PuzzleShop.Domain.Entities.Auth.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.ToTable("UserRole");
+                    b.HasOne("PuzzleShop.Domain.Entities.Auth.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.Auth.UserToken", b =>
+                {
+                    b.HasOne("PuzzleShop.Domain.Entities.Auth.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PuzzleShop.Domain.Entities.Image", b =>
@@ -577,7 +772,7 @@ namespace PuzzleShop.Persistance.Migrations
 
             modelBuilder.Entity("PuzzleShop.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("PuzzleShop.Domain.Entities.User", "User")
+                    b.HasOne("PuzzleShop.Domain.Entities.Auth.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -630,13 +825,6 @@ namespace PuzzleShop.Persistance.Migrations
                         .HasForeignKey("PuzzleTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PuzzleShop.Domain.Entities.User", b =>
-                {
-                    b.HasOne("PuzzleShop.Domain.Entities.UserRole", "UserRole")
-                        .WithMany("Users")
-                        .HasForeignKey("UserRoleId");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PuzzleShop.Domain.Entities.Auth;
 
 // ReSharper disable All
 

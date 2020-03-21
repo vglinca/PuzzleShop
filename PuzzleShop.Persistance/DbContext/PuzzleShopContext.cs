@@ -5,14 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PuzzleShop.Domain.Entities;
+using PuzzleShop.Domain.Entities.Auth;
 using PuzzleShop.Persistance.Helpers;
+using PuzzleShop.Persistance.Schema;
 
 namespace PuzzleShop.Persistance.DbContext
 {
-    public sealed class PuzzleShopContext : Microsoft.EntityFrameworkCore.DbContext
+    public sealed class PuzzleShopContext : IdentityDbContext<User, Role, long, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Puzzle> Puzzles { get; set; }
@@ -23,7 +26,7 @@ namespace PuzzleShop.Persistance.DbContext
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<User> Users { get; set; }
+        // public DbSet<User> Users { get; set; }
 
         public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder =>
             builder.AddFilter((category, lvl) => category == DbLoggerCategory.Database.Command.Name
@@ -41,6 +44,8 @@ namespace PuzzleShop.Persistance.DbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => !string.IsNullOrWhiteSpace(t.Namespace))
                 .Where(t => t.BaseType != null && t.BaseType.IsInterface
@@ -53,6 +58,8 @@ namespace PuzzleShop.Persistance.DbContext
                 dynamic configInstance = Activator.CreateInstance(type);
                 modelBuilder.ApplyConfiguration(configInstance);
             }
+
+            ApplyIdentityMapConfig(modelBuilder);
 
             modelBuilder.Entity<MaterialType>().HasData(
                 new MaterialType{Id = 1, Title = "Plastic"});
@@ -282,6 +289,17 @@ namespace PuzzleShop.Persistance.DbContext
                 {
                     Id = 2, FileName = "testfilename", PuzzleId = 2
                 });
+        }
+
+        private void ApplyIdentityMapConfig(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().ToTable("Roles", SchemaConsts.Auth);
+            modelBuilder.Entity<RoleClaim>().ToTable("RoleClaims", SchemaConsts.Auth);
+            modelBuilder.Entity<User>().ToTable("Users", SchemaConsts.Auth);
+            modelBuilder.Entity<UserClaim>().ToTable("UserClaims", SchemaConsts.Auth);
+            modelBuilder.Entity<UserLogin>().ToTable("UserLogins", SchemaConsts.Auth);
+            modelBuilder.Entity<UserRole>().ToTable("UserRole", SchemaConsts.Auth);
+            modelBuilder.Entity<UserToken>().ToTable("UserTokens", SchemaConsts.Auth);
         }
     }
 }

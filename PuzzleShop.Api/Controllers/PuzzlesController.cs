@@ -10,7 +10,7 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/puzzles")]
     public class PuzzlesController : ControllerBase
