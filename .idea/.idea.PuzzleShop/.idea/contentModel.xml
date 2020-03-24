@@ -106,6 +106,16 @@
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="PuzzleShop.Api.csproj" t="IncludeRecursive" />
+        <e p="Services" t="Include">
+          <e p="Impl" t="Include">
+            <e p="SigningInService.cs" t="Include" />
+            <e p="UserManagementService.cs" t="Include" />
+          </e>
+          <e p="Interfaces" t="Include">
+            <e p="ISigningInService.cs" t="Include" />
+            <e p="IUserManagementService.cs" t="Include" />
+          </e>
+        </e>
         <e p="Startup.cs" t="Include" />
       </e>
       <e p="PuzzleShop.Core" t="IncludeRecursive">

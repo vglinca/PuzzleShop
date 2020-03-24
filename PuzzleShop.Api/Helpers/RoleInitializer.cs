@@ -22,6 +22,10 @@ namespace PuzzleShop.Api.Helpers
             {
                 await roleManager.CreateAsync(new Role("user"));
             }
+            if (await roleManager.FindByNameAsync("banished") == null)
+            {
+                await roleManager.CreateAsync(new Role("banished"));
+            }
 
             var user = await userManager.FindByNameAsync("administrator");
             if (user == null)

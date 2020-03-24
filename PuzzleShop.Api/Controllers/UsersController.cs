@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Api.Dtos.Users;
-using PuzzleShop.Domain.Entities.Auth;
+using PuzzleShop.Api.Services.Interfaces;
 
 namespace PuzzleShop.Api.Controllers
 {
@@ -17,59 +13,53 @@ namespace PuzzleShop.Api.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
-        private readonly IMapper _mapper;
+        private readonly IUserManagementService _userManagementService;
 
-        public UsersController(UserManager<User> userManager, IMapper mapper, RoleManager<Role> roleManager)
+        public UsersController(IUserManagementService userManagementService)
         {
-            _userManager = userManager;
-            _mapper = mapper;
-            _roleManager = roleManager;
+            _userManagementService = userManagementService;
         }
 
         [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
-            var users = await _userManager.Users.ToListAsync();
-            return Ok(_mapper.Map<IEnumerable<UserDto>>(users));
+            return Ok(await _userManagementService.GetAll());
         }
         
         [Authorize(Roles = "admin")]
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserWithRolesDto>> GetUser(long userId)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user == null)
-            {
-                return NotFound();
-            }
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var userWithRolesDto = _mapper.Map<UserWithRolesDto>(user);
-            userWithRolesDto.Roles = userRoles;
-
-            return Ok(_mapper.Map<UserWithRolesDto>(user));
+            var user = await _userManagementService.GetUser(userId);
+            
+            return Ok(user);
         }
         
-
         [Authorize(Roles = "admin")]
-        [HttpPut("{userId}")]
+        [HttpPut("manageroles/{userId}")]
         public async Task<IActionResult> EditUserRoles(long userId, [FromBody] IEnumerable<string> roles)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user == null)
-            {
-                return NotFound();
-            }
+            var rolesAsArray = roles as string[] ?? roles.ToArray();
+            await _userManagementService.EditUserRoles(userId, rolesAsArray);
 
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var enumerable = roles as string[] ?? roles.ToArray();
-            var addedRoles = enumerable.Except(userRoles);
-            var removedRoles = userRoles.Except(enumerable);
+            return NoContent();
+        }
 
-            await _userManager.AddToRolesAsync(user, addedRoles);
-            await _userManager.RemoveFromRolesAsync(user, removedRoles);
+        [Authorize(Roles = "admin")]
+        [HttpPut("ban/{userId}")]
+        public async Task<IActionResult> BanUser(long userId)
+        {
+            await _userManagementService.BanUser(userId);
+
+            return NoContent();
+        }
+        
+        [Authorize(Roles = "admin")]
+        [HttpPut("unban/{userId}")]
+        public async Task<IActionResult> UnbanUser(long userId)
+        {
+            await _userManagementService.UnbanUser(userId);
 
             return NoContent();
         }
@@ -78,13 +68,8 @@ namespace PuzzleShop.Api.Controllers
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUser(long userId)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            await _userManager.DeleteAsync(user);
+            await _userManagementService.DeleteUser(userId);
+           
             return NoContent();
         }
     }

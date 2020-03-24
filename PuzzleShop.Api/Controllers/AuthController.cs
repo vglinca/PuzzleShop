@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PuzzleShop.Api.Dtos.Users;
 using PuzzleShop.Api.Helpers;
+using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Controllers
@@ -26,13 +27,15 @@ namespace PuzzleShop.Api.Controllers
         private readonly IMapper _mapper;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly ISigningInService _signingInService;
 
         public AuthController(IOptions<AuthOptions> authOptions, IMapper mapper, 
-            SignInManager<User> signInManager, UserManager<User> userManager)
+            SignInManager<User> signInManager, UserManager<User> userManager, ISigningInService signingInService)
         {
             _mapper = mapper;
             _signInManager = signInManager;
             _userManager = userManager;
+            _signingInService = signingInService;
             _authOptions = authOptions.Value;
         }
     
@@ -52,35 +55,12 @@ namespace PuzzleShop.Api.Controllers
                 await _signInManager.PasswordSignInAsync(userForAuthDto.UserName, userForAuthDto.Password, false,
                     false);
 
-            if (passwordResultCheck.Succeeded)
-            {
-                var user = await _userManager.FindByNameAsync(userForAuthDto.UserName);
-                var userRoles = await _userManager.GetRolesAsync(user);
-                var claims = userRoles
-                    .Select(role => new Claim(ClaimTypes.Role, role))
-                    .ToList();
-
-                var signInCredentials = new SigningCredentials(_authOptions.GetSymmetricSecurityKey(), 
-                    SecurityAlgorithms.HmacSha256);
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {    
-                    Subject = new ClaimsIdentity(claims),
-                    Issuer = _authOptions.Issuer,
-                    Audience = _authOptions.Audience,
-                    Expires = DateTime.Now.AddMinutes(_authOptions.TokenLifetime),
-                    SigningCredentials = signInCredentials
-                };
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var encodedToken = tokenHandler.WriteToken(token);
+            if (!passwordResultCheck.Succeeded) return Unauthorized();
+            
+            var jwtToken = await _signingInService.SignIn(_authOptions, userForAuthDto.UserName);
+            HttpContext.Session.SetString("JWToken", jwtToken);
                 
-                HttpContext.Session.SetString("JWToken", encodedToken);
-                
-                return Ok(new {AccessToken = encodedToken});
-            }
-
-            return Unauthorized();
+            return Ok(new {AccessToken = jwtToken});
         }
         
         [Authorize]
@@ -88,6 +68,7 @@ namespace PuzzleShop.Api.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            HttpContext.Session.Clear();
             return Ok();
         }
     }

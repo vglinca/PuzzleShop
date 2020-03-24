@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +26,8 @@ using Newtonsoft.Json.Serialization;
 using PuzzleShop.Api.Extensions;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Middleware;
+using PuzzleShop.Api.Services.Impl;
+using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Repository.Impl;
 using PuzzleShop.Domain.Entities;
@@ -58,21 +61,16 @@ namespace PuzzleShop.Api
             
             services.AddSession();
             
-            services.AddCors();
-            
-            var authOptionsSection = Configuration.GetSection("AuthOptions");
-            services.Configure<AuthOptions>(authOptionsSection);
-            var authOptions = authOptionsSection.Get<AuthOptions>();
-            services.AddJwtBearerAuthentication(authOptions);
-
-            services.AddAuthorization(
-            //     cfg =>
+            // services.ConfigureApplicationCookie(o =>
             // {
-            //     cfg.AddPolicy("admin", policyBuilder => { policyBuilder.RequireRole("admin"); });
-            //     cfg.AddPolicy("user", policyBuilder => { policyBuilder.RequireRole("user"); });
-            //     cfg.AddPolicy("moderator", policyBuilder => { policyBuilder.RequireRole("moderator"); });
-            // }
-                );
+            //     o.LoginPath = PathString.Empty;
+            //     o.Events.OnRedirectToAccessDenied = ctx =>
+            //     {
+            //         //ctx.Response.Headers["Location"] = ctx.RedirectUri;
+            //         ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+            //         return Task.CompletedTask;
+            //     };
+            // });
             
             services.AddIdentity<User, Role>(o =>
             {
@@ -90,15 +88,21 @@ namespace PuzzleShop.Api
                 o.Password.RequireNonAlphanumeric = false;
             });
             
-            services.ConfigureApplicationCookie(o =>
-            {
-                o.Events.OnRedirectToAccessDenied = ctx =>
-                {
-                    //ctx.Response.Headers["Location"] = ctx.RedirectUri;
-                    ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
-                    return Task.CompletedTask;
-                };
-            });
+            services.AddCors();
+            
+            var authOptionsSection = Configuration.GetSection("AuthOptions");
+            services.Configure<AuthOptions>(authOptionsSection);
+            var authOptions = authOptionsSection.Get<AuthOptions>();
+            services.AddJwtBearerAuthentication(authOptions);
+
+            services.AddAuthorization(
+                //     cfg =>
+                // {
+                //     cfg.AddPolicy("admin", policyBuilder => { policyBuilder.RequireRole("admin"); });
+                //     cfg.AddPolicy("user", policyBuilder => { policyBuilder.RequireRole("user"); });
+                //     cfg.AddPolicy("moderator", policyBuilder => { policyBuilder.RequireRole("moderator"); });
+                // }
+            );
             
             services.AddControllers(cfg =>
                 {
@@ -117,7 +121,6 @@ namespace PuzzleShop.Api
                     //this factory will be execured when the model state is invalid
                     cfg.InvalidModelStateResponseFactory = ctx =>
                     {
-                        //translate model state into rfc format
                         var problemDetails = new ValidationProblemDetails(ctx.ModelState)
                         {
                             Title = "One or more validation problems has occured.",
@@ -136,10 +139,10 @@ namespace PuzzleShop.Api
             
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IPuzzleRepository, PuzzleRepository>();
+            services.AddScoped<IUserManagementService, UserManagementService>();
+            services.AddScoped<ISigningInService, SigningInService>();
             
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
-            //services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
