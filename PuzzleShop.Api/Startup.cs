@@ -51,19 +51,36 @@ namespace PuzzleShop.Api
             services.AddDbContext<PuzzleShopContext>(
                 opt => opt.UseSqlServer(connString));
             
-           // services.AddDistributedMemoryCache();
-            // services.AddSession(options => {
-            //     options.IdleTimeout = TimeSpan.FromMinutes(1);
-            // });  
+           services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
+            });
+            
+            services.AddSession();
             
             services.AddCors();
-
             
+            var authOptionsSection = Configuration.GetSection("AuthOptions");
+            services.Configure<AuthOptions>(authOptionsSection);
+            var authOptions = authOptionsSection.Get<AuthOptions>();
+            services.AddJwtBearerAuthentication(authOptions);
 
+            services.AddAuthorization(
+            //     cfg =>
+            // {
+            //     cfg.AddPolicy("admin", policyBuilder => { policyBuilder.RequireRole("admin"); });
+            //     cfg.AddPolicy("user", policyBuilder => { policyBuilder.RequireRole("user"); });
+            //     cfg.AddPolicy("moderator", policyBuilder => { policyBuilder.RequireRole("moderator"); });
+            // }
+                );
+            
             services.AddIdentity<User, Role>(o =>
             {
                 o.Password.RequiredLength = 8;
-            }).AddEntityFrameworkStores<PuzzleShopContext>();
+                o.User.RequireUniqueEmail = true;
+            }).AddRoles<Role>()
+                .AddEntityFrameworkStores<PuzzleShopContext>()
+                .AddRoleManager<RoleManager<Role>>();
             
             services.Configure<IdentityOptions>(o =>
             {
@@ -72,12 +89,16 @@ namespace PuzzleShop.Api
                 o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
             });
-
-            var authOptionsSection = Configuration.GetSection("AuthOptions");
-            services.Configure<AuthOptions>(authOptionsSection);
-            var authOptions = authOptionsSection.Get<AuthOptions>();
-            services.AddJwtBearerAuthentication(authOptions);
             
+            services.ConfigureApplicationCookie(o =>
+            {
+                o.Events.OnRedirectToAccessDenied = ctx =>
+                {
+                    //ctx.Response.Headers["Location"] = ctx.RedirectUri;
+                    ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    return Task.CompletedTask;
+                };
+            });
             
             services.AddControllers(cfg =>
                 {
@@ -113,15 +134,10 @@ namespace PuzzleShop.Api
                     };
                 });
             
-            //services.AddSession();
-
-            
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IPuzzleRepository, PuzzleRepository>();
             
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
-            
             
             //services.AddScoped<IUserRepository, UserRepository>();
         }
@@ -136,18 +152,18 @@ namespace PuzzleShop.Api
             
             app.UseMiddleware<ExceptionHandler>();
 
-            // app.UseSession();
-            //
-            // app.Use(async (ctx, next) =>
-            // {
-            //     var token = ctx.Session.GetString("JWToken");
-            //     if (! string.IsNullOrWhiteSpace(token))
-            //     {
-            //         ctx.Request.Headers.Add("Authorization", $"Bearer {token}");
-            //     }
-            //
-            //     await next();
-            // });
+            app.UseSession();
+            
+            app.Use(async (ctx, next) =>
+            {
+                var token = ctx.Session.GetString("JWToken");
+                if (! string.IsNullOrWhiteSpace(token))
+                {
+                    ctx.Request.Headers.Add("Authorization", $"Bearer {token}");
+                }
+            
+                await next();
+            });
             
             app.UseRouting();
             

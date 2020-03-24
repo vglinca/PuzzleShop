@@ -11,7 +11,7 @@ using PuzzleShop.Domain.Entities;
 namespace PuzzleShop.Api.Controllers
 {
     [ApiController]
-    [Route("api/materialtypes")]
+    [Route("api/[controller]")]
     public class MaterialTypeController : ControllerBase
     {
         private readonly IRepository<MaterialType> _materialTypeRepository;

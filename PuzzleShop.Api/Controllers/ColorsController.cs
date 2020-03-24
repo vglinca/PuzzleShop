@@ -12,7 +12,7 @@ namespace PuzzleShop.Api.Controllers
 {
     [Authorize(Roles = "admin")]
     [ApiController]
-    [Route("api/colors")]
+    [Route("api/[controller]")]
     public class ColorsController: ControllerBase
     {
         private readonly IRepository<Color> _colorRepository;

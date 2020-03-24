@@ -21,7 +21,7 @@
         <e p="Controllers" t="Include">
           <e p="AuthController.cs" t="Include" />
           <e p="ColorsController.cs" t="Include" />
-          <e p="DifficultyLevelsController.cs" t="Include" />
+          <e p="LookupController.cs" t="Include" />
           <e p="ManufacturersController.cs" t="Include" />
           <e p="MaterialTypesController.cs" t="Include" />
           <e p="PuzzlesController.cs" t="Include" />
@@ -58,11 +58,16 @@
             <e p="PuzzleTypeDto.cs" t="Include" />
             <e p="PuzzleTypeForCreationDto.cs" t="Include" />
           </e>
+          <e p="Roles" t="Include">
+            <e p="RoleDto.cs" t="Include" />
+          </e>
           <e p="Users" t="Include">
             <e p="UserDto.cs" t="Include" />
             <e p="UserForAuthDto.cs" t="Include" />
+            <e p="UserForChangingRolesDto.cs" t="Include" />
             <e p="UserForRegistrationDto.cs" t="Include" />
             <e p="UserForUpdateDto.cs" t="Include" />
+            <e p="UserWithRolesDto.cs" t="Include" />
           </e>
         </e>
         <e p="extensions" t="Include">
@@ -72,6 +77,7 @@
         <e p="Helpers" t="Include">
           <e p="AppSettings.cs" t="Include" />
           <e p="AuthOptions.cs" t="Include" />
+          <e p="RoleInitializer.cs" t="Include" />
         </e>
         <e p="Middleware" t="Include">
           <e p="ExceptionHandler.cs" t="Include" />
@@ -92,6 +98,7 @@
           <e p="MaterialTypeProfile.cs" t="Include" />
           <e p="PuzzleProfile.cs" t="Include" />
           <e p="PuzzleTypeProfile.cs" t="Include" />
+          <e p="RoleProfile.cs" t="Include" />
           <e p="UserProfile.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />
@@ -175,7 +182,6 @@
           <e p="PuzzleConfiguration.cs" t="Include" />
           <e p="PuzzleTypeConfiguration.cs" t="Include" />
           <e p="UserConfiguration.cs" t="Include" />
-          <e p="UserRoleConfiguration.cs" t="Include" />
         </e>
         <e p="DbContext" t="Include">
           <e p="PuzzleShopContext.cs" t="Include" />

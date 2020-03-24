@@ -10,9 +10,9 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
-    [Route("api/puzzles")]
+    [Route("api/[controller]")]
     public class PuzzlesController : ControllerBase
     {
         private readonly IPuzzleRepository _puzzleRepository;

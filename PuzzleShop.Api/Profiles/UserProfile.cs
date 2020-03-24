@@ -18,6 +18,10 @@ namespace PuzzleShop.Api.Profiles
                     opt => opt.MapFrom(
                         src => $"{src.FirstName} {src.LastName}")).ReverseMap();
             CreateMap<Dtos.Users.UserForUpdateDto, Domain.Entities.Auth.User>();
+            CreateMap<Domain.Entities.Auth.User, Dtos.Users.UserWithRolesDto>()
+                .ForMember(dest => dest.Name,
+                    opt => opt.MapFrom(
+                        src => $"{src.FirstName} {src.LastName}"));
         }
     }
 }

@@ -9,13 +9,13 @@ using PuzzleShop.Domain.Entities;
 namespace PuzzleShop.Api.Controllers
 {
     [ApiController]
-    [Route("api/puzzletypes")]
-    public class PuzzleTypeController : ControllerBase
+    [Route("api/[controller]")]
+    public class PuzzleTypesController : ControllerBase
     {
         private readonly IRepository<PuzzleType> _puzzleTypeRepository;
         private readonly IMapper _mapper;
 
-        public PuzzleTypeController(IRepository<PuzzleType> puzzleTypeRepository, IMapper mapper)
+        public PuzzleTypesController(IRepository<PuzzleType> puzzleTypeRepository, IMapper mapper)
         {
             _puzzleTypeRepository = puzzleTypeRepository ?? throw new ArgumentNullException(nameof(puzzleTypeRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

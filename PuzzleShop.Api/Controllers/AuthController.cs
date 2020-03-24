@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -33,12 +35,13 @@ namespace PuzzleShop.Api.Controllers
             _userManager = userManager;
             _authOptions = authOptions.Value;
         }
-
+    
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserForRegistrationDto userForRegistrationDto)
         {
             var user = _mapper.Map<User>(userForRegistrationDto);
             await _userManager.CreateAsync(user, userForRegistrationDto.Password);
+            await _userManager.AddToRoleAsync(user, "user");
             return Ok();
         }
 
@@ -51,12 +54,18 @@ namespace PuzzleShop.Api.Controllers
 
             if (passwordResultCheck.Succeeded)
             {
+                var user = await _userManager.FindByNameAsync(userForAuthDto.UserName);
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var claims = userRoles
+                    .Select(role => new Claim(ClaimTypes.Role, role))
+                    .ToList();
+
                 var signInCredentials = new SigningCredentials(_authOptions.GetSymmetricSecurityKey(), 
                     SecurityAlgorithms.HmacSha256);
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {    
-                    Subject = new ClaimsIdentity(new List<Claim>()),
+                    Subject = new ClaimsIdentity(claims),
                     Issuer = _authOptions.Issuer,
                     Audience = _authOptions.Audience,
                     Expires = DateTime.Now.AddMinutes(_authOptions.TokenLifetime),
@@ -65,13 +74,16 @@ namespace PuzzleShop.Api.Controllers
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var encodedToken = tokenHandler.WriteToken(token);
-
+                
+                HttpContext.Session.SetString("JWToken", encodedToken);
+                
                 return Ok(new {AccessToken = encodedToken});
             }
 
             return Unauthorized();
         }
-
+        
+        [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {

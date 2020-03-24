@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PuzzleShop.Api.Extensions;
+using PuzzleShop.Api.Helpers;
+using PuzzleShop.Domain.Entities.Auth;
 using PuzzleShop.Persistance.DbContext;
 // ReSharper disable All
 
@@ -25,6 +28,9 @@ namespace PuzzleShop.Api
                 {
                     var ctx = scope.ServiceProvider.GetService<PuzzleShopContext>();
                     ctx.Database.Migrate();
+                    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+                    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                    await RoleInitializer.InitializeAsync(roleManager, userManager);
                 }
                 catch (Exception ex)
                 {
