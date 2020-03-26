@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Core.Dtos.Puzzles;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Core.ResourceParameters;
 using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
@@ -43,8 +40,7 @@ namespace PuzzleShop.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PuzzleDto>> AddPuzzle(
-            [FromBody] PuzzleForCreationDto puzzleForCreationDto)
+        public async Task<ActionResult<PuzzleDto>> AddPuzzle([FromBody] PuzzleForCreationDto puzzleForCreationDto)
         {
             var entityToAdd = _mapper.Map<Puzzle>(puzzleForCreationDto);
             await _puzzleRepository.AddEntityAsync(entityToAdd);

@@ -21,6 +21,7 @@ namespace PuzzleShop.Core.PaginationModels
             CurrentPage = currentPage;
             PageSize = pageSize;
             TotalPages = (int) Math.Ceiling(totalItems / (double) pageSize);
+            TotalItems = totalItems;
             Items = items;
         }
     }

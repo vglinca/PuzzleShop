@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Domain.Entities;
+// ReSharper disable All
 
 namespace PuzzleShop.Core.Extensions
 {
@@ -15,22 +16,18 @@ namespace PuzzleShop.Core.Extensions
         public static async Task<PagedResponse<TDto>> CreatePagedResultAsync<TEntity, TDto>(this IQueryable<TEntity> src,
             PagedRequest request, IMapper mapper) where TEntity : BaseEntity where TDto : class
         {
-            var items = src.ApplyFilters(request.RequestFilters);
-            var totalItems = await items.CountAsync();
+            var puzzles = src.ProjectTo<TDto>(mapper.ConfigurationProvider);
+            puzzles = puzzles.ApplyFilters(request.RequestFilters);
+            var itemsCount = await puzzles.CountAsync();
+            puzzles = puzzles.Paginate(request.PageNumber, request.PageSize);
+            puzzles = puzzles.ApplySort(request.OrderBy, request.OrderByDirection);
+            var puzzlesList = await puzzles.ToListAsync();
 
-            var paginatedItems = src.Paginate(request.PageNumber, request.PageSize);
-
-            var mappedItems = paginatedItems.ProjectTo<TDto>(mapper.ConfigurationProvider);
-            
-            mappedItems = mappedItems.ApplySort(request.OrderBy, request.OrderByDirection);
-
-            var sortedPaginatedItemsList = await mappedItems.ToListAsync();
-
-            return new PagedResponse<TDto>(request.PageNumber, request.PageSize, totalItems,
-                sortedPaginatedItemsList);
+            return new PagedResponse<TDto>(request.PageNumber, request.PageSize, itemsCount,
+                puzzlesList);
         }
 
-        private static IQueryable<T> ApplyFilters<T>(this IQueryable<T> src, RequestFilters filters) where T : BaseEntity
+        private static IQueryable<T> ApplyFilters<T>(this IQueryable<T> src, RequestFilters filters) where T : class
         {
             var predicate = new StringBuilder();
 
@@ -50,7 +47,7 @@ namespace PuzzleShop.Core.Extensions
             if (filters.Filters.Count > 0 && 
                 filters.Filters.All(f => !string.IsNullOrWhiteSpace(f.PropertyValue)))
             {
-                var propertyValues = filters.Filters.Select(f => f.PropertyValue).ToList();
+                var propertyValues = filters.Filters.Select(f => f.PropertyValue).ToArray();
                 src = src.Where(predicate.ToString(), propertyValues);
             }
 
@@ -58,7 +55,7 @@ namespace PuzzleShop.Core.Extensions
         }
 
         private static IQueryable<T> Paginate<T>(this IQueryable<T> src, int pageNumber, int pageSize)
-            where T : BaseEntity
+            where T : class
         {
             return src.Skip((pageNumber - 1) * pageSize).Take(pageSize);
         }
