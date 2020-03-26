@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PuzzleShop.Api.Dtos.Puzzles;
-using PuzzleShop.Core;
+using PuzzleShop.Core.Dtos.Puzzles;
+using PuzzleShop.Core.PaginationModels;
+using PuzzleShop.Core.Repository.Interfaces;
+using PuzzleShop.Core.ResourceParameters;
 using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
@@ -25,11 +29,10 @@ namespace PuzzleShop.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PuzzleDto>>> GetPuzzles()
+        public async Task<ActionResult<IEnumerable<PuzzleDto>>> GetPuzzles([FromBody] PagedRequest pagedRequest)
         {
-            var puzzles = await _puzzleRepository.GetAllAsync();
-            var puzzlesToReturn = _mapper.Map<IEnumerable<PuzzleDto>>(puzzles);
-            return Ok(puzzlesToReturn);
+            var puzzlesPagedResponse = await _puzzleRepository.GetAllAsync(pagedRequest, _mapper);
+            return Ok(puzzlesPagedResponse);
         }
 
         [HttpGet("{puzzleId}")]

@@ -30,6 +30,7 @@ using PuzzleShop.Api.Services.Impl;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Repository.Impl;
+using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Domain.Entities.Auth;
 using PuzzleShop.Persistance.DbContext;
@@ -136,12 +137,11 @@ namespace PuzzleShop.Api
                         };
                     };
                 });
-            
+
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IPuzzleRepository, PuzzleRepository>();
             services.AddScoped<IUserManagementService, UserManagementService>();
             services.AddScoped<ISigningInService, SigningInService>();
-            
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 

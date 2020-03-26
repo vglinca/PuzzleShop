@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PuzzleShop.Api.Dtos.Colors;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Dtos.Colors;
 using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers

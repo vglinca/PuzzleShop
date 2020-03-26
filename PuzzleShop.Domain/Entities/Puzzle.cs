@@ -16,16 +16,16 @@ namespace PuzzleShop.Domain.Entities
         public double Weight { get; set; }
         public DateTimeOffset DateWhenAdded { get; set; }
         public long ManufacturerId { get; set; }
-        public Manufacturer Manufacturer { get; set; }
+        public virtual Manufacturer Manufacturer { get; set; }
         public long PuzzleTypeId { get; set; }
-        public PuzzleType PuzzleType { get; set; }
+        public virtual PuzzleType PuzzleType { get; set; }
         public long ColorId { get; set; }
-        public Color Color { get; set; }
+        public virtual Color Color { get; set; }
         public long DifficultyLevelId { get; set; }
-        public DifficultyLevel  DifficultyLevel { get; set; }
-        public MaterialType MaterialType { get; set; }
+        public virtual DifficultyLevel  DifficultyLevel { get; set; }
+        public virtual MaterialType MaterialType { get; set; }
         public long MaterialTypeId { get; set; }
-        public ICollection<Image> Images { get; private set; } = new List<Image>();
-        public virtual OrderItem OrderItem { get; set; }
+        public virtual ICollection<Image> Images { get; private set; }
+       // public virtual OrderItem OrderItem { get; set; }
     }
 }

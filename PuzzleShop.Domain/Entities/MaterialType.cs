@@ -6,6 +6,6 @@ namespace PuzzleShop.Domain.Entities
     public class MaterialType : BaseEntity
     {
         public string Title { get; set; }
-        public ICollection<Puzzle> Puzzles { get; private set; } = new List<Puzzle>();
+        public virtual ICollection<Puzzle> Puzzles { get; private set; }
     }
 }

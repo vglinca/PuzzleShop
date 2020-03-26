@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using PuzzleShop.Api.Dtos.Users;
+using PuzzleShop.Core.Dtos.Users;
 
 namespace PuzzleShop.Api.Services.Interfaces
 {

@@ -19,15 +19,56 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
-          <e p="AuthController.cs" t="Include" />
           <e p="ColorsController.cs" t="Include" />
+          <e p="Identity" t="Include">
+            <e p="AuthController.cs" t="Include" />
+            <e p="UsersController.cs" t="Include" />
+          </e>
           <e p="LookupController.cs" t="Include" />
           <e p="ManufacturersController.cs" t="Include" />
           <e p="MaterialTypesController.cs" t="Include" />
+          <e p="OrdersController.cs" t="Include" />
           <e p="PuzzlesController.cs" t="Include" />
           <e p="PuzzleTypesController.cs" t="Include" />
-          <e p="UsersController.cs" t="Include" />
         </e>
+        <e p="extensions" t="Include">
+          <e p="ServiceExtensions.cs" t="Include" />
+        </e>
+        <e p="Helpers" t="Include">
+          <e p="AppSettings.cs" t="Include" />
+          <e p="AuthOptions.cs" t="Include" />
+          <e p="RoleInitializer.cs" t="Include" />
+        </e>
+        <e p="Middleware" t="Include">
+          <e p="ExceptionHandler.cs" t="Include" />
+          <e p="ModelValidationAttribute.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="PuzzleShop.Api.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="PuzzleShop.Api.csproj" t="IncludeRecursive" />
+        <e p="Services" t="Include">
+          <e p="Impl" t="Include">
+            <e p="SigningInService.cs" t="Include" />
+            <e p="UserManagementService.cs" t="Include" />
+          </e>
+          <e p="Interfaces" t="Include">
+            <e p="ISigningInService.cs" t="Include" />
+            <e p="IUserManagementService.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Startup.cs" t="Include" />
+      </e>
+      <e p="PuzzleShop.Core" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
         <e p="Dtos" t="Include">
           <e p="Colors" t="Include">
             <e p="ColorDto.cs" t="Include" />
@@ -70,25 +111,32 @@
             <e p="UserWithRolesDto.cs" t="Include" />
           </e>
         </e>
+        <e p="Exceptions" t="Include">
+          <e p="AuthenticationFailedException.cs" t="Include" />
+          <e p="BadREquestException.cs" t="Include" />
+          <e p="EntityNotFoundException.cs" t="Include" />
+          <e p="UnauthorizedException.cs" t="Include" />
+        </e>
         <e p="extensions" t="Include">
           <e p="DateTimeOffsetExtensions.cs" t="Include" />
-          <e p="ServiceExtensions.cs" t="Include" />
+          <e p="QueryableExtensions.cs" t="Include" />
         </e>
         <e p="Helpers" t="Include">
-          <e p="AppSettings.cs" t="Include" />
-          <e p="AuthOptions.cs" t="Include" />
-          <e p="RoleInitializer.cs" t="Include" />
-        </e>
-        <e p="Middleware" t="Include">
-          <e p="ExceptionHandler.cs" t="Include" />
-          <e p="ModelValidationAttribute.cs" t="Include" />
+          <e p="PagedList.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
-              <e p="PuzzleShop.Api.AssemblyInfo.cs" t="Include" />
+              <e p="PuzzleShop.Core.AssemblyInfo.cs" t="Include" />
             </e>
           </e>
+        </e>
+        <e p="PaginationModels" t="Include">
+          <e p="Filter.cs" t="Include" />
+          <e p="LogicalOperator.cs" t="Include" />
+          <e p="PagedRequest.cs" t="Include" />
+          <e p="PagedResponse.cs" t="Include" />
+          <e p="RequestFilters.cs" t="Include" />
         </e>
         <e p="Profiles" t="Include">
           <e p="ColorProfile.cs" t="Include" />
@@ -101,50 +149,20 @@
           <e p="RoleProfile.cs" t="Include" />
           <e p="UserProfile.cs" t="Include" />
         </e>
-        <e p="Program.cs" t="Include" />
-        <e p="Properties" t="Include">
-          <e p="launchSettings.json" t="Include" />
-        </e>
-        <e p="PuzzleShop.Api.csproj" t="IncludeRecursive" />
-        <e p="Services" t="Include">
-          <e p="Impl" t="Include">
-            <e p="SigningInService.cs" t="Include" />
-            <e p="UserManagementService.cs" t="Include" />
-          </e>
-          <e p="Interfaces" t="Include">
-            <e p="ISigningInService.cs" t="Include" />
-            <e p="IUserManagementService.cs" t="Include" />
-          </e>
-        </e>
-        <e p="Startup.cs" t="Include" />
-      </e>
-      <e p="PuzzleShop.Core" t="IncludeRecursive">
-        <e p="bin" t="ExcludeRecursive" />
-        <e p="Exceptions" t="Include">
-          <e p="AuthenticationFailedException.cs" t="Include" />
-          <e p="BadREquestException.cs" t="Include" />
-          <e p="EntityNotFoundException.cs" t="Include" />
-          <e p="UnauthorizedException.cs" t="Include" />
-        </e>
-        <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="netcoreapp3.1" t="Include">
-              <e p="PuzzleShop.Core.AssemblyInfo.cs" t="Include" />
-            </e>
-          </e>
-        </e>
         <e p="PuzzleShop.Core.csproj" t="IncludeRecursive" />
         <e p="Repository" t="Include">
           <e p="Impl" t="Include">
             <e p="PuzzleRepository.cs" t="Include" />
             <e p="Repository.cs" t="Include" />
-            <e p="UserRepository.cs" t="Include" />
           </e>
           <e p="Interfaces" t="Include">
+            <e p="IEfCoreRepository.cs" t="Include" />
             <e p="IPuzzleRepository.cs" t="Include" />
             <e p="IRepository.cs" t="Include" />
-            <e p="IUserRepository.cs" t="Include" />
           </e>
+        </e>
+        <e p="ResourceParameters" t="Include">
+          <e p="PuzzleResourceParameters.cs" t="Include" />
         </e>
       </e>
       <e p="PuzzleShop.Domain" t="IncludeRecursive">
@@ -167,6 +185,7 @@
           <e p="MaterialType.cs" t="Include" />
           <e p="Order.cs" t="Include" />
           <e p="OrderItem.cs" t="Include" />
+          <e p="OrderStatus.cs" t="Include" />
           <e p="Puzzle.cs" t="Include" />
           <e p="PuzzleType.cs" t="Include" />
         </e>
@@ -188,6 +207,7 @@
           <e p="MaterialTypeConfiguration.cs" t="Include" />
           <e p="OrderConfiguration.cs" t="Include" />
           <e p="OrderItemConfiguration.cs" t="Include" />
+          <e p="OrderStatusConfiguration.cs" t="Include" />
           <e p="PuzzleColorConfiguration.cs" t="Include" />
           <e p="PuzzleConfiguration.cs" t="Include" />
           <e p="PuzzleTypeConfiguration.cs" t="Include" />
@@ -202,6 +222,8 @@
         <e p="Migrations" t="Include">
           <e p="20200321190116_IdentityAddedRenewedMigration.cs" t="Include" />
           <e p="20200321190116_IdentityAddedRenewedMigration.Designer.cs" t="Include" />
+          <e p="20200324170238_OrderStatusAddedMigration.cs" t="Include" />
+          <e p="20200324170238_OrderStatusAddedMigration.Designer.cs" t="Include" />
           <e p="PuzzleShopContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">

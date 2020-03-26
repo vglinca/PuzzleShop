@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PuzzleShop.Api.Dtos.MaterialTypes;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Dtos.MaterialTypes;
 using PuzzleShop.Domain.Entities;
 // ReSharper disable All
 

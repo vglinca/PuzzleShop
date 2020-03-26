@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PuzzleShop.Api.Dtos.Users;
 using PuzzleShop.Api.Services.Interfaces;
+using PuzzleShop.Core.Dtos.Users;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Domain.Entities.Auth;
 

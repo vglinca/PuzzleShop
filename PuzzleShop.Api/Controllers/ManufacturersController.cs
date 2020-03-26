@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using PuzzleShop.Api.Dtos.Manufacturers;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Dtos.Manufacturers;
 using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers

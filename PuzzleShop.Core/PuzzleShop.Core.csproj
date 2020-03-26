@@ -9,4 +9,9 @@
       <ProjectReference Include="..\PuzzleShop.Persistance\PuzzleShop.Persistance.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+      <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.23" />
+    </ItemGroup>
+
 </Project>

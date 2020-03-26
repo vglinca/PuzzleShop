@@ -48,11 +48,11 @@ namespace PuzzleShop.Persistance.Configuration
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
-            builder
-                .HasOne(p => p.OrderItem)
-                .WithOne(oi => oi.Puzzle)
-                .HasForeignKey<OrderItem>(oi => oi.PuzzleId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //builder
+            //    //.HasOne(p => p.OrderItem)
+            //    .WithOne(oi => oi.Puzzle)
+            //    .HasForeignKey<OrderItem>(oi => oi.PuzzleId)
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

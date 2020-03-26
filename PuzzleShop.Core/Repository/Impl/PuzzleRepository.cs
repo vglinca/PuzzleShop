@@ -1,9 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PuzzleShop.Core.Dtos.Puzzles;
 using PuzzleShop.Core.Exceptions;
+using PuzzleShop.Core.Extensions;
+using PuzzleShop.Core.Helpers;
+using PuzzleShop.Core.PaginationModels;
+using PuzzleShop.Core.Repository.Interfaces;
+using PuzzleShop.Core.ResourceParameters;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
 
@@ -18,28 +26,16 @@ namespace PuzzleShop.Core.Repository.Impl
             _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
         }
 
-        public async Task<IEnumerable<Puzzle>> GetAllAsync()
+        public async Task<PagedResponse<PuzzleDto>> GetAllAsync(PagedRequest pagedRequest, IMapper mapper)
         {
-            return await _ctx.Puzzles
-                .Include(p => p.Manufacturer)
-                .Include(p => p.Color)
-                .Include(p => p.PuzzleType)
-                .Include(p => p.MaterialType)
-                .Include(p => p.DifficultyLevel)
-                .Include(p => p.Images)
-                .ToListAsync();
+            var puzzles = _ctx.Puzzles;
+            return await puzzles.CreatePagedResultAsync<Puzzle, PuzzleDto>(pagedRequest, mapper);
         }
 
         public async Task<Puzzle> FindByIdAsync(long id)
         {
             var puzzle = await _ctx.Puzzles
                 .Where(p => p.Id == id)
-                .Include(p => p.Manufacturer)
-                .Include(p => p.Color)
-                .Include(p => p.PuzzleType)
-                .Include(p => p.MaterialType)
-                .Include(p => p.DifficultyLevel)
-                .Include(p => p.Images)
                 .FirstOrDefaultAsync();
 
             if (puzzle == null)

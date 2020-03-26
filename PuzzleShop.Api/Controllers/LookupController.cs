@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PuzzleShop.Api.Dtos.DifficultyLevels;
-using PuzzleShop.Api.Dtos.Roles;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Dtos.DifficultyLevels;
+using PuzzleShop.Core.Dtos.Roles;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Domain.Entities.Auth;
 

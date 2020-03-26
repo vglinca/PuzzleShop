@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using NUnit.Framework;
-using PuzzleShop.Api.Profiles;
+using PuzzleShop.Core.Profiles;
 using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Tests

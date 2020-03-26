@@ -26,7 +26,7 @@ namespace PuzzleShop.Persistance.DbContext
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Order> Orders { get; set; }
-        // public DbSet<User> Users { get; set; }
+        public DbSet<OrderStatus> OrdeStatusList { get; set; }
 
         public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder =>
             builder.AddFilter((category, lvl) => category == DbLoggerCategory.Database.Command.Name
@@ -39,7 +39,9 @@ namespace PuzzleShop.Persistance.DbContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLoggerFactory(MyLoggerFactory);
+            optionsBuilder
+                .UseLoggerFactory(MyLoggerFactory)
+                .UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -65,89 +67,33 @@ namespace PuzzleShop.Persistance.DbContext
                 new MaterialType{Id = 1, Title = "Plastic"});
 
             modelBuilder.Entity<PuzzleType>().HasData(
-                new PuzzleType
-                {
-                    Id = 1, TypeName = "3x3x3"
-                },
-                new PuzzleType
-                {
-                    Id = 2, TypeName = "4x4x4"
-                },
-                new PuzzleType
-                {
-                    Id = 3, TypeName = "5x5x5"
-                },
-                new PuzzleType
-                {
-                    Id = 4, TypeName = "6x6x6"
-                },
-                new PuzzleType
-                {
-                    Id = 5, TypeName = "skewb"
-                },
-                new PuzzleType
-                {
-                    Id = 6, TypeName = "square-1"
-                },
-                new PuzzleType
-                {
-                    Id = 7, TypeName = "Megaminx"
-                });
+                new PuzzleType {Id = 1, TypeName = "3x3x3"},
+                new PuzzleType {Id = 2, TypeName = "4x4x4"},
+                new PuzzleType {Id = 3, TypeName = "5x5x5"},
+                new PuzzleType {Id = 4, TypeName = "6x6x6"},
+                new PuzzleType {Id = 5, TypeName = "skewb"},
+                new PuzzleType {Id = 6, TypeName = "square-1"},
+                new PuzzleType {Id = 7, TypeName = "Megaminx"});
+            
             modelBuilder.Entity<Color>().HasData(
-                new Color
-                {
-                    Id = 1, Title = "White"
-                },
-                new Color
-                {
-                    Id = 2, Title = "Black"
-                },
-                new Color
-                {
-                    Id = 3, Title = "Stickerless"
-                },
-                new Color
-                {
-                    Id = 4, Title = "Pink"
-                });
+                new Color {Id = 1, Title = "White"},
+                new Color {Id = 2, Title = "Black"},
+                new Color {Id = 3, Title = "Stickerless"},
+                new Color {Id = 4, Title = "Pink"});
+            
             modelBuilder.Entity<DifficultyLevel>().HasData(
-                new DifficultyLevel
-                {
-                    Id = 1, Title = "Low"
-                },
-                new DifficultyLevel
-                {
-                    Id = 2, Title = "Middle"
-                },
-                new DifficultyLevel
-                {
-                    Id = 3, Title = "High"
-                });
+                new DifficultyLevel {Id = 1, Title = "Low"},
+                new DifficultyLevel {Id = 2, Title = "Middle"},
+                new DifficultyLevel {Id = 3, Title = "High"});
+            
             modelBuilder.Entity<Manufacturer>().HasData(
-                new Manufacturer
-                {
-                    Id = 1, Name = "Gan"
-                },
-                new Manufacturer
-                {
-                    Id = 2, Name = "MoYu"
-                },
-                new Manufacturer
-                {
-                    Id = 3, Name = "QiYi"
-                },
-                new Manufacturer
-                {
-                    Id = 4, Name = "Rubics"
-                },
-                new Manufacturer
-                {
-                    Id = 5, Name = "DaYan"
-                },
-                new Manufacturer
-                {
-                    Id = 6, Name = "YJ"
-                });
+                new Manufacturer {Id = 1, Name = "Gan"},
+                new Manufacturer {Id = 2, Name = "MoYu"},
+                new Manufacturer {Id = 3, Name = "QiYi"},
+                new Manufacturer {Id = 4, Name = "Rubics"},
+                new Manufacturer {Id = 5, Name = "DaYan"},
+                new Manufacturer {Id = 6, Name = "YJ"});
+            
             modelBuilder.Entity<Puzzle>().HasData(
                 new Puzzle
                 {
@@ -281,14 +227,16 @@ namespace PuzzleShop.Persistance.DbContext
                     MaterialTypeId = 1
                 });
             modelBuilder.Entity<Image>().HasData(
-                new Image
-                {
-                    Id = 1, FileName = "testfilename", PuzzleId = 1
-                },
-                new Image
-                {
-                    Id = 2, FileName = "testfilename", PuzzleId = 2
-                });
+                new Image {Id = 1, FileName = "testfilename", PuzzleId = 1},
+                new Image {Id = 2, FileName = "testfilename", PuzzleId = 2});
+
+            modelBuilder.Entity<OrderStatus>().HasData(new List<OrderStatus>
+            {
+                new OrderStatus{Id = 1, Title = "NotSubmited"},
+                new OrderStatus{Id = 2, Title = "Submited"},
+                new OrderStatus{Id = 3, Title = "Dispatched"},
+                new OrderStatus{Id = 4, Title = "Arrived"}
+            });
         }
 
         private void ApplyIdentityMapConfig(ModelBuilder modelBuilder)

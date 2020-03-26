@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PuzzleShop.Api.Dtos.PuzzleTypes;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Dtos.PuzzleTypes;
 using PuzzleShop.Domain.Entities;
 namespace PuzzleShop.Api.Controllers
 {

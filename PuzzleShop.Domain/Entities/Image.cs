@@ -6,9 +6,9 @@ namespace PuzzleShop.Domain.Entities
 {
     public class Image : BaseEntity
     {
-        public string? Title { get; set; }
+        public string Title { get; set; }
         public string FileName { get; set; }
         public long PuzzleId { get; set; }
-        public Puzzle Puzzle { get; set; }
+        public virtual Puzzle Puzzle { get; set; }
     }
 }
