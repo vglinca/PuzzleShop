@@ -14,7 +14,7 @@ namespace PuzzleShop.Domain.Entities
         public int TotalItems { get; set; }
         public decimal TotalCost { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
-        public long? StatusId { get; set; }
+        public OrderStatusId OrderStatusId { get; set; }
         public virtual OrderStatus OrderStatus { get; set; }
     }
 }

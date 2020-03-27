@@ -26,7 +26,7 @@ namespace PuzzleShop.Persistance.DbContext
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderStatus> OrdeStatusList { get; set; }
+        public DbSet<OrderStatus> OrdeStatuses { get; set; }
 
         public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder =>
             builder.AddFilter((category, lvl) => category == DbLoggerCategory.Database.Command.Name
@@ -230,13 +230,16 @@ namespace PuzzleShop.Persistance.DbContext
                 new Image {Id = 1, FileName = "testfilename", PuzzleId = 1},
                 new Image {Id = 2, FileName = "testfilename", PuzzleId = 2});
 
-            modelBuilder.Entity<OrderStatus>().HasData(new List<OrderStatus>
-            {
-                new OrderStatus{Id = 1, Title = "NotSubmited"},
-                new OrderStatus{Id = 2, Title = "Submited"},
-                new OrderStatus{Id = 3, Title = "Dispatched"},
-                new OrderStatus{Id = 4, Title = "Arrived"}
-            });
+            modelBuilder.Entity<OrderStatus>()
+                .HasData(
+                    Enum.GetValues(typeof(OrderStatusId))
+                    .Cast<OrderStatusId>()
+                    .Select(o => new OrderStatus
+                    {
+                        OrderStatusId = o,
+                        Name = o.ToString()
+                    })
+                );
         }
 
         private void ApplyIdentityMapConfig(ModelBuilder modelBuilder)

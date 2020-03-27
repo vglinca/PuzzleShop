@@ -90,6 +90,15 @@
             <e p="MaterialTypeDto.cs" t="Include" />
             <e p="MaterialTypeForCreationDto.cs" t="Include" />
           </e>
+          <e p="OrderItems" t="Include">
+            <e p="OrderItemDto.cs" t="Include" />
+            <e p="OrderItemForCreationDto.cs" t="Include" />
+          </e>
+          <e p="Orders" t="Include">
+            <e p="OrderDto.cs" t="Include" />
+            <e p="OrderForCreationDto.cs" t="Include" />
+            <e p="OrderStatusDto.cs" t="Include" />
+          </e>
           <e p="Puzzles" t="Include">
             <e p="PuzzleDto.cs" t="Include" />
             <e p="PuzzleForCreationDto.cs" t="Include" />
@@ -144,6 +153,8 @@
           <e p="ImageProfile.cs" t="Include" />
           <e p="ManufacturerProfile.cs" t="Include" />
           <e p="MaterialTypeProfile.cs" t="Include" />
+          <e p="OrderItemProfile.cs" t="Include" />
+          <e p="OrderProfile.cs" t="Include" />
           <e p="PuzzleProfile.cs" t="Include" />
           <e p="PuzzleTypeProfile.cs" t="Include" />
           <e p="RoleProfile.cs" t="Include" />
@@ -152,11 +163,13 @@
         <e p="PuzzleShop.Core.csproj" t="IncludeRecursive" />
         <e p="Repository" t="Include">
           <e p="Impl" t="Include">
+            <e p="OrderRepository.cs" t="Include" />
             <e p="PuzzleRepository.cs" t="Include" />
             <e p="Repository.cs" t="Include" />
           </e>
           <e p="Interfaces" t="Include">
             <e p="IEfCoreRepository.cs" t="Include" />
+            <e p="IOrderRepository.cs" t="Include" />
             <e p="IPuzzleRepository.cs" t="Include" />
             <e p="IRepository.cs" t="Include" />
           </e>
@@ -186,6 +199,7 @@
           <e p="Order.cs" t="Include" />
           <e p="OrderItem.cs" t="Include" />
           <e p="OrderStatus.cs" t="Include" />
+          <e p="OrderStatusId.cs" t="Include" />
           <e p="Puzzle.cs" t="Include" />
           <e p="PuzzleType.cs" t="Include" />
         </e>
@@ -224,6 +238,10 @@
           <e p="20200321190116_IdentityAddedRenewedMigration.Designer.cs" t="Include" />
           <e p="20200324170238_OrderStatusAddedMigration.cs" t="Include" />
           <e p="20200324170238_OrderStatusAddedMigration.Designer.cs" t="Include" />
+          <e p="20200327115728_OrderStatusTableRemovedMigration.cs" t="Include" />
+          <e p="20200327115728_OrderStatusTableRemovedMigration.Designer.cs" t="Include" />
+          <e p="20200327121335_OrderStatusChangedToEnumMigration.cs" t="Include" />
+          <e p="20200327121335_OrderStatusChangedToEnumMigration.Designer.cs" t="Include" />
           <e p="PuzzleShopContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">

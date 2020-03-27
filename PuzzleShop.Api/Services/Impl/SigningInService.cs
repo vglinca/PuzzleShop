@@ -27,6 +27,8 @@ namespace PuzzleShop.Api.Services.Impl
             var claims = userRoles
                 .Select(role => new Claim(ClaimTypes.Role, role))
                 .ToList();
+            
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
             var signInCredentials = new SigningCredentials(authOptions.GetSymmetricSecurityKey(), 
                 SecurityAlgorithms.HmacSha256);

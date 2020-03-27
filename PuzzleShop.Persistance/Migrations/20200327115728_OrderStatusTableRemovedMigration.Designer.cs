@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PuzzleShop.Persistance.DbContext;
 
 namespace PuzzleShop.Persistance.Migrations
 {
     [DbContext(typeof(PuzzleShopContext))]
-    partial class PuzzleShopContextModelSnapshot : ModelSnapshot
+    [Migration("20200327115728_OrderStatusTableRemovedMigration")]
+    partial class OrderStatusTableRemovedMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -417,9 +419,6 @@ namespace PuzzleShop.Persistance.Migrations
                     b.Property<DateTimeOffset>("OrderDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<long>("OrderStatusId")
-                        .HasColumnType("bigint");
-
                     b.Property<decimal>("TotalCost")
                         .HasColumnType("decimal(18,2)");
 
@@ -430,8 +429,6 @@ namespace PuzzleShop.Persistance.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderStatusId");
 
                     b.HasIndex("UserId");
 
@@ -461,61 +458,6 @@ namespace PuzzleShop.Persistance.Migrations
                     b.HasIndex("PuzzleId");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("PuzzleShop.Domain.Entities.OrderStatus", b =>
-                {
-                    b.Property<long>("OrderStatusId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OrderStatusId");
-
-                    b.ToTable("OrdeStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderStatusId = 0L,
-                            Name = "Pending"
-                        },
-                        new
-                        {
-                            OrderStatusId = 1L,
-                            Name = "AwaitingPayment"
-                        },
-                        new
-                        {
-                            OrderStatusId = 2L,
-                            Name = "ConfirmedPayment"
-                        },
-                        new
-                        {
-                            OrderStatusId = 3L,
-                            Name = "AwaitingShipment"
-                        },
-                        new
-                        {
-                            OrderStatusId = 4L,
-                            Name = "Completed"
-                        },
-                        new
-                        {
-                            OrderStatusId = 5L,
-                            Name = "Cancelled"
-                        },
-                        new
-                        {
-                            OrderStatusId = 6L,
-                            Name = "Declined"
-                        },
-                        new
-                        {
-                            OrderStatusId = 7L,
-                            Name = "Refunded"
-                        });
                 });
 
             modelBuilder.Entity("PuzzleShop.Domain.Entities.Puzzle", b =>
@@ -577,7 +519,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 1L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 769, DateTimeKind.Unspecified).AddTicks(3069), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 786, DateTimeKind.Unspecified).AddTicks(2834), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 1L,
@@ -591,7 +533,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 2L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 772, DateTimeKind.Unspecified).AddTicks(5602), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 788, DateTimeKind.Unspecified).AddTicks(6973), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 1L,
@@ -605,7 +547,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 3L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 772, DateTimeKind.Unspecified).AddTicks(5768), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 788, DateTimeKind.Unspecified).AddTicks(7094), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 2L,
@@ -619,7 +561,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 4L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 772, DateTimeKind.Unspecified).AddTicks(5787), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 788, DateTimeKind.Unspecified).AddTicks(7165), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 5L,
@@ -633,7 +575,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 5L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 772, DateTimeKind.Unspecified).AddTicks(5795), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 788, DateTimeKind.Unspecified).AddTicks(7169), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 1L,
@@ -647,7 +589,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 6L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 772, DateTimeKind.Unspecified).AddTicks(5802), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 788, DateTimeKind.Unspecified).AddTicks(7177), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 3L,
@@ -661,7 +603,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 7L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 772, DateTimeKind.Unspecified).AddTicks(5814), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 788, DateTimeKind.Unspecified).AddTicks(7184), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 3L,
@@ -675,7 +617,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 8L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 772, DateTimeKind.Unspecified).AddTicks(5821), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 788, DateTimeKind.Unspecified).AddTicks(7188), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 1L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 3L,
@@ -689,7 +631,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 9L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 772, DateTimeKind.Unspecified).AddTicks(5832), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 788, DateTimeKind.Unspecified).AddTicks(7195), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 1L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 2L,
@@ -703,7 +645,7 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 10L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 14, 13, 34, 772, DateTimeKind.Unspecified).AddTicks(5844), new TimeSpan(0, 2, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 3, 27, 13, 57, 27, 788, DateTimeKind.Unspecified).AddTicks(7203), new TimeSpan(0, 2, 0, 0, 0)),
                             DifficultyLevelId = 2L,
                             IsWcaPuzzle = true,
                             ManufacturerId = 2L,
@@ -829,12 +771,6 @@ namespace PuzzleShop.Persistance.Migrations
 
             modelBuilder.Entity("PuzzleShop.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("PuzzleShop.Domain.Entities.OrderStatus", "OrderStatus")
-                        .WithMany("Orders")
-                        .HasForeignKey("OrderStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PuzzleShop.Domain.Entities.Auth.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")

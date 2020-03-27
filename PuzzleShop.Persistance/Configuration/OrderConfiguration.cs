@@ -17,10 +17,8 @@ namespace PuzzleShop.Persistance.Configuration
                 .IsRequired();
 
             builder
-                .HasOne(o => o.OrderStatus)
-                .WithMany(s => s.Orders)
-                .HasForeignKey(o => o.StatusId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .Property(o => o.OrderStatusId)
+                .HasConversion<long>();
 
             builder.Property(o => o.OrderItems).IsRequired();
             builder.Property(o => o.TotalCost).IsRequired();

@@ -55,7 +55,6 @@ namespace PuzzleShop.Core
             if (entity == null)
             {
                 throw new BadRequestException($"{nameof(entity)} is null.");
-                //throw new ArgumentNullException(nameof(entity));
             }
 
             _ctx.Entry(entity).State = EntityState.Modified;
@@ -67,7 +66,6 @@ namespace PuzzleShop.Core
             if (entity == null)
             {
                 throw new BadRequestException($"{nameof(entity)} is null.");
-                //throw new ArgumentNullException(nameof(entity));
             }
 
             var entityToDel = _ctx.FindAsync<TEntity>(entity.Id);

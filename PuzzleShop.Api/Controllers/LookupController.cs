@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.DifficultyLevels;
+using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.Dtos.Roles;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Domain.Entities.Auth;
@@ -20,13 +21,15 @@ namespace PuzzleShop.Api.Controllers
     {
         private readonly IRepository<DifficultyLevel> _difflvlRepository;
         private readonly RoleManager<Role> _roleManager;
+        private readonly IRepository<OrderStatus> _orderStatusRepository; 
         private readonly IMapper _mapper;
 
-        public LookupController(IRepository<DifficultyLevel> difflvlRepository, IMapper mapper, RoleManager<Role> roleManager)
+        public LookupController(IRepository<DifficultyLevel> difflvlRepository, IMapper mapper, RoleManager<Role> roleManager, IRepository<OrderStatus> orderStatusRepository)
         {
             _difflvlRepository = difflvlRepository;
             _mapper = mapper;
             _roleManager = roleManager;
+            _orderStatusRepository = orderStatusRepository;
         }
         
         [HttpGet("difficultylevels")]
@@ -41,6 +44,13 @@ namespace PuzzleShop.Api.Controllers
         {
             var roles = await _roleManager.Roles.ToListAsync();
             return Ok(_mapper.Map<IEnumerable<RoleDto>>(roles));
+        }
+
+        [HttpGet("orderstatuslist")]
+        public async Task<ActionResult<IEnumerable<OrderStatusDto>>> GetOrderStatusList()
+        {
+            var orderStatusList = await _orderStatusRepository.GetAllAsync();
+            return Ok(_mapper.Map<IEnumerable<OrderStatusDto>>(orderStatusList));
         }
     }
 }
