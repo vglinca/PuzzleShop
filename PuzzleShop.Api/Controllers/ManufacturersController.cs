@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -12,6 +13,7 @@ using PuzzleShop.Api.Dtos.Manufacturers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Manufacturers;
 using PuzzleShop.Domain.Entities;
+using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Controllers
 {
@@ -42,6 +44,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<ManufacturerDto>(manufacturer));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPost]
         public async Task<ActionResult<ManufacturerDto>> AddManufacturer(
            [FromBody] ManufacturerForCreateDto manufacturerForCreateDto)
@@ -53,6 +57,8 @@ namespace PuzzleShop.Api.Controllers
                 _mapper.Map<ManufacturerDto>(manufacturerEntity));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPut("{manufacturerId}")]
         public async Task<IActionResult> UpdateManufacturer(long manufacturerId,
             [FromBody] ManufacturerForUpdateDto manufacturerForUpdateDto)
@@ -65,6 +71,8 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPatch("{manufacturerId}")]
         public async Task<IActionResult> PartiallyUpdateManufacturer(long manufacturerId,
             [FromBody] JsonPatchDocument<ManufacturerForUpdateDto> jsonPatchDocument)
@@ -89,6 +97,8 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpDelete("{manufacturerId}")]
         public async Task<IActionResult> DeleteManufacturer(long manufacturerId)
         {

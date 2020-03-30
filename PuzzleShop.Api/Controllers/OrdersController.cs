@@ -35,26 +35,67 @@ namespace PuzzleShop.Api.Controllers
             _orderingService = orderingService;
         }
 
-        [HttpGet(nameof(GetPendingOrder))]
-        public async Task<ActionResult<OrderDto>> GetPendingOrder()
+        [HttpGet(nameof(GetCart))]
+        public async Task<ActionResult<OrderDto>> GetCart()
         {
-            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await _userManager.FindByIdAsync(userId);
-            
+            var user = await GetCurrentUser();
             var pendingOrder = await _orderingService.GetOrderByStatusAsync(user.Id, OrderStatusId.Pending);
 
             return Ok(_mapper.Map<OrderDto>(pendingOrder));
         }
 
-        [HttpGet(nameof(GetOrders))]
-        public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders()
+        [HttpGet(nameof(GetAllOrders))]
+        public async Task<ActionResult<IEnumerable<OrderDto>>> GetAllOrders()
         {
-            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await GetCurrentUser();
             var orders = await _orderingService.GetUserOrdersAsync(user.Id);
             return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
         }
+        
+        [HttpPost(nameof(AddToCart))]
+        public async Task<IActionResult> AddToCart([FromBody] OrderItemForCreationDto orderItemForCreationDto)
+        {
+            var user = await GetCurrentUser();
+            
+            var orderItem = _mapper.Map<OrderItem>(orderItemForCreationDto);
+            await _orderingService.AddToCartAsync(orderItem, user.Id);
 
+            return NoContent();
+        }
+        
+        [HttpPut(nameof(ConfirmOrder))]
+        public async Task<IActionResult> ConfirmOrder()
+        {
+            var user = await GetCurrentUser();
+
+            await _orderingService.UpdateOrderStatusFromOldOneAsync(user.Id, OrderStatusId.Pending,
+                OrderStatusId.AwaitingPayment);
+
+            return NoContent();
+        }
+        
+        [HttpPut(nameof(PlaceOrder))]
+        public async Task<IActionResult> PlaceOrder([FromBody] UserDataForProcessOrderDto userData)
+        {
+            //some logic with user data
+            var user = await GetCurrentUser();
+
+            await _orderingService.UpdateOrderStatusFromOldOneAsync(user.Id, OrderStatusId.AwaitingPayment,
+                OrderStatusId.ConfirmedPayment);
+
+            return NoContent();
+        }
+
+        [HttpDelete("removeItemFromOrder/{itemId}")]
+        public async Task<IActionResult> RemoveItemFromOrder(long itemId)
+        {
+            var user = await GetCurrentUser();
+
+            await _orderingService.RemoveOrderItemAsync(user.Id, itemId);
+            
+            return NoContent();
+        }
+        
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         [HttpGet("getUserOrders/{userId}")]
@@ -74,52 +115,11 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
 
-        [HttpPost(nameof(AddToCart))]
-        public async Task<IActionResult> AddToCart([FromBody] OrderItemForCreationDto orderItemForCreationDto)
+        [NonAction]
+        private async Task<User> GetCurrentUser()
         {
             var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await _userManager.FindByIdAsync(userId);
-            
-            var orderItem = _mapper.Map<OrderItem>(orderItemForCreationDto);
-            await _orderingService.AddToCartAsync(orderItem, user.Id);
-
-            return NoContent();
-        }
-
-        [HttpPut(nameof(PlaceOrder))]
-        public async Task<IActionResult> PlaceOrder([FromBody] UserDataForProcessOrderDto userData)
-        {
-            //some logic with user data
-            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await _userManager.FindByIdAsync(userId);
-
-            await _orderingService.UpdateOrderStatusFromOldOneAsync(user.Id, OrderStatusId.AwaitingPayment,
-                OrderStatusId.ConfirmedPayment);
-
-            return NoContent();
-        }
-
-        [HttpPut(nameof(ConfirmOrder))]
-        public async Task<IActionResult> ConfirmOrder()
-        {
-            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await _userManager.FindByIdAsync(userId);
-
-            await _orderingService.UpdateOrderStatusFromOldOneAsync(user.Id, OrderStatusId.Pending,
-                OrderStatusId.AwaitingPayment);
-
-            return NoContent();
-        }
-
-        [HttpDelete("removeItemFromOrder/{itemId}")]
-        public async Task<IActionResult> RemoveItemFromOrder(long itemId)
-        {
-            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var user = await _userManager.FindByIdAsync(userId);
-
-            await _orderingService.RemoveOrderItemAsync(user.Id, itemId);
-            
-            return NoContent();
+            return await _userManager.FindByIdAsync(userId);
         }
     }
 }

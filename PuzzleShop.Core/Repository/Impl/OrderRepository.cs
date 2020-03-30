@@ -77,7 +77,7 @@ namespace PuzzleShop.Core.Repository.Impl
         {
             var order = await _ctx.Orders
                 .FirstOrDefaultAsync(o => o.UserId == userId && o.OrderStatusId == statusId);
-            if (order == null)
+            if (order == null && statusId != OrderStatusId.Pending)
             {
                 throw new EntityNotFoundException($"Order not found.");
             }

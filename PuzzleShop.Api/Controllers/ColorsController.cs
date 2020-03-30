@@ -10,7 +10,6 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {
-    [Authorize(Roles = "admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class ColorsController: ControllerBase
@@ -38,6 +37,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<ColorDto>(colorFromRepo));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         public async Task<ActionResult<ColorDto>> AddColor([FromBody] ColorForCreateDto colorForCreateDto)
         {
             var colorEntity = _mapper.Map<Color>(colorForCreateDto);
@@ -47,6 +48,8 @@ namespace PuzzleShop.Api.Controllers
                 _mapper.Map<ColorDto>(colorEntity));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPut("{colorId}", Name = "UpdateColor")]
         public async Task<IActionResult> UpdateColor(long colorId, [FromBody] ColorForCreateDto colorForUpdateDto)
         {
@@ -56,6 +59,8 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpDelete("{colorId}", Name = "DeleteColor")]
         public async Task<IActionResult> DeleteColor(long colorId)
         {

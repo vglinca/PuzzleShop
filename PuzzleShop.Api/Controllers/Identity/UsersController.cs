@@ -8,7 +8,8 @@ using PuzzleShop.Core.Dtos.Users;
 
 namespace PuzzleShop.Api.Controllers.Identity
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "moderator")]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -20,14 +21,12 @@ namespace PuzzleShop.Api.Controllers.Identity
             _userManagementService = userManagementService;
         }
 
-        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             return Ok(await _userManagementService.GetAll());
         }
         
-        [Authorize(Roles = "admin")]
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserWithRolesDto>> GetUser(long userId)
         {
@@ -36,7 +35,6 @@ namespace PuzzleShop.Api.Controllers.Identity
             return Ok(user);
         }
         
-        [Authorize(Roles = "admin")]
         [HttpPut("manageroles/{userId}")]
         public async Task<IActionResult> EditUserRoles(long userId, [FromBody] IEnumerable<string> roles)
         {
@@ -46,7 +44,6 @@ namespace PuzzleShop.Api.Controllers.Identity
             return NoContent();
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPut("ban/{userId}")]
         public async Task<IActionResult> BanUser(long userId)
         {
@@ -55,7 +52,6 @@ namespace PuzzleShop.Api.Controllers.Identity
             return NoContent();
         }
         
-        [Authorize(Roles = "admin")]
         [HttpPut("unban/{userId}")]
         public async Task<IActionResult> UnbanUser(long userId)
         {
@@ -64,7 +60,6 @@ namespace PuzzleShop.Api.Controllers.Identity
             return NoContent();
         }
 
-        [Authorize(Roles = "admin")]
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUser(long userId)
         {

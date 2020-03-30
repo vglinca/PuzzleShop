@@ -61,18 +61,7 @@ namespace PuzzleShop.Api
             });
             
             services.AddSession();
-            
-            // services.ConfigureApplicationCookie(o =>
-            // {
-            //     o.LoginPath = PathString.Empty;
-            //     o.Events.OnRedirectToAccessDenied = ctx =>
-            //     {
-            //         //ctx.Response.Headers["Location"] = ctx.RedirectUri;
-            //         ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
-            //         return Task.CompletedTask;
-            //     };
-            // });
-            
+          
             services.AddIdentity<User, Role>(o =>
             {
                 o.Password.RequiredLength = 8;

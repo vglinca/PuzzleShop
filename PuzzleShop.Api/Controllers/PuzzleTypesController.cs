@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.PuzzleTypes;
@@ -35,6 +36,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<PuzzleTypeDto>(puzzleTypeEntity));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPost]
         public async Task<ActionResult<PuzzleTypeDto>> AddPuzzleType(
             [FromBody] PuzzleTypeForCreationDto puzzleTypeForCreationDto)
@@ -46,6 +49,8 @@ namespace PuzzleShop.Api.Controllers
                 _mapper.Map<PuzzleTypeDto>(newPuzzleType));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpDelete("{puzzleTypeId}")]
         public async Task<IActionResult> DeletePuzzleType(long puzzleTypeId)
         {

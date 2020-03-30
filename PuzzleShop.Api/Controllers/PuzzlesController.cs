@@ -11,7 +11,6 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PuzzlesController : ControllerBase
@@ -39,6 +38,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<PuzzleDto>(puzzle));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPost]
         public async Task<ActionResult<PuzzleDto>> AddPuzzle([FromBody] PuzzleForCreationDto puzzleForCreationDto)
         {
@@ -48,6 +49,8 @@ namespace PuzzleShop.Api.Controllers
                 _mapper.Map<PuzzleDto>(entityToAdd));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPut("{puzzleId}")]
         public async Task<IActionResult> UpdatePuzzle(long puzzleId, [FromBody] PuzzleForUpdateDto puzzleForUpdateDto)
         {
@@ -57,6 +60,8 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
         
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpDelete("{puzzleId}")]
         public async Task<IActionResult> DeletePuzzle(long puzzleId)
         {

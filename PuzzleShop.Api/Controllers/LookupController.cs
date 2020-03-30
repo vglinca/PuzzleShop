@@ -14,7 +14,6 @@ using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Controllers
 {
-    [Authorize(Roles = "admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class LookupController : ControllerBase
@@ -39,6 +38,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<IEnumerable<DifficultyLevelDto>>(entities));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpGet("roles")]
         public async Task<ActionResult<IEnumerable<RoleDto>>> GetRoles()
         {
@@ -46,6 +47,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<IEnumerable<RoleDto>>(roles));
         }
 
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpGet("orderstatuslist")]
         public async Task<ActionResult<IEnumerable<OrderStatusDto>>> GetOrderStatusList()
         {
