@@ -8,9 +8,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.OrderItems;
 using PuzzleShop.Core.Dtos.Orders;
+using PuzzleShop.Core.Dtos.Users;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Domain.Entities.Auth;
@@ -22,19 +24,15 @@ namespace PuzzleShop.Api.Controllers
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderRepository _ordersRepository;
-        private readonly IRepository<OrderItem> _orderItemsRepository;
-        private readonly IRepository<OrderStatus> _orderStatusRepository;
+        private readonly IOrderingService _orderingService;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public OrdersController(IOrderRepository ordersRepository, IMapper mapper, UserManager<User> userManager, IRepository<OrderItem> orderItemsRepository, IRepository<OrderStatus> orderStatusRepository)
+        public OrdersController(IMapper mapper, UserManager<User> userManager, IOrderingService orderingService)
         {
-            _ordersRepository = ordersRepository;
             _mapper = mapper;
             _userManager = userManager;
-            _orderItemsRepository = orderItemsRepository;
-            _orderStatusRepository = orderStatusRepository;
+            _orderingService = orderingService;
         }
 
         [HttpGet(nameof(GetPendingOrder))]
@@ -42,7 +40,8 @@ namespace PuzzleShop.Api.Controllers
         {
             var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = await _userManager.FindByIdAsync(userId);
-            var pendingOrder = await _ordersRepository.FindByUserIdAsync(user.Id, OrderStatusId.Pending);
+            
+            var pendingOrder = await _orderingService.GetOrderByStatusAsync(user.Id, OrderStatusId.Pending);
 
             return Ok(_mapper.Map<OrderDto>(pendingOrder));
         }
@@ -52,8 +51,7 @@ namespace PuzzleShop.Api.Controllers
         {
             var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = await _userManager.FindByIdAsync(userId);
-            var orders = await _ordersRepository.FindAllOrdersByUserId(user.Id);
-            orders = orders.Where(o => o.OrderStatusId != OrderStatusId.Pending);
+            var orders = await _orderingService.GetUserOrdersAsync(user.Id);
             return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
         }
 
@@ -62,19 +60,16 @@ namespace PuzzleShop.Api.Controllers
         [HttpGet("getUserOrders/{userId}")]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetUserOrders(long userId)
         {
-            var orders = await _ordersRepository.FindAllOrdersByUserId(userId);
+            var orders = await _orderingService.GetUserOrdersAsync(userId);
             return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
         }
 
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         [HttpPut("changeOrderStatus/{orderId}")]
-        public async Task<IActionResult> ChangeOrderStatus(long orderId, [FromBody] long statusId)
+        public async Task<IActionResult> ChangeOrderStatus(long orderId, [FromBody] OrderStatusForSettingDto statusDto)
         {
-            var order = await _ordersRepository.FindByIdAsync(orderId);
-            var status = await _orderStatusRepository.FindByIdAsync(statusId);
-            order.OrderStatusId = status.OrderStatusId;
-            await _ordersRepository.UpdateEntityAsync(order);
+            await _orderingService.UpdateOrderStatusAsync(orderId, (OrderStatusId) statusDto.StatusId);
             
             return NoContent();
         }
@@ -86,33 +81,33 @@ namespace PuzzleShop.Api.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             
             var orderItem = _mapper.Map<OrderItem>(orderItemForCreationDto);
-           
-            var order = await _ordersRepository.FindByUserIdAsync(user.Id, OrderStatusId.Pending);
-            if (order == null)
-            {
-                order = new Order
-                {
-                    OrderStatusId = OrderStatusId.Pending,
-                    OrderDate = DateTimeOffset.Now,
-                    UserId = user.Id,
-                    TotalCost = 0,
-                    TotalItems = 0
-                };
-                
-                order.TotalCost += orderItem.Cost;
-                order.TotalItems++;
+            await _orderingService.AddToCartAsync(orderItem, user.Id);
 
-                await _ordersRepository.AddEntityAsync(order);
-            } else
-            {
-                order.TotalCost += orderItem.Cost;
-                order.TotalItems++;
+            return NoContent();
+        }
 
-                await _ordersRepository.UpdateEntityAsync(order);
-            }
-            orderItem.OrderId = order.Id;
-            await _orderItemsRepository.AddEntityAsync(orderItem);
-            
+        [HttpPut(nameof(PlaceOrder))]
+        public async Task<IActionResult> PlaceOrder([FromBody] UserDataForProcessOrderDto userData)
+        {
+            //some logic with user data
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userManager.FindByIdAsync(userId);
+
+            await _orderingService.UpdateOrderStatusFromOldOneAsync(user.Id, OrderStatusId.AwaitingPayment,
+                OrderStatusId.ConfirmedPayment);
+
+            return NoContent();
+        }
+
+        [HttpPut(nameof(ConfirmOrder))]
+        public async Task<IActionResult> ConfirmOrder()
+        {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userManager.FindByIdAsync(userId);
+
+            await _orderingService.UpdateOrderStatusFromOldOneAsync(user.Id, OrderStatusId.Pending,
+                OrderStatusId.AwaitingPayment);
+
             return NoContent();
         }
 
@@ -121,21 +116,9 @@ namespace PuzzleShop.Api.Controllers
         {
             var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = await _userManager.FindByIdAsync(userId);
-            var order = await _ordersRepository.FindByUserIdAsync(user.Id, OrderStatusId.Pending);
 
-            var orderItem = await _orderItemsRepository.FindByIdAsync(itemId);
-            await _orderItemsRepository.DeleteEntityAsync(orderItem);
-
-            order.TotalItems--;
-            order.TotalCost -= orderItem.Cost;
-
-            if (order.TotalItems > 0)
-            {
-                await _ordersRepository.UpdateEntityAsync(order);
-            } else
-            {
-                await _ordersRepository.DeleteEntityAsync(order);
-            }
+            await _orderingService.RemoveOrderItemAsync(user.Id, itemId);
+            
             return NoContent();
         }
     }

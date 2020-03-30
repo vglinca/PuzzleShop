@@ -8,7 +8,10 @@ namespace PuzzleShop.Core.Profiles
     {
         public OrderProfile()
         {
-            CreateMap<Order, OrderDto>();
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.OrderStatus,
+                    opt => opt.MapFrom(
+                        src => src.OrderStatus.OrderStatusId.ToString()));
             CreateMap<OrderStatus, OrderStatusDto>();
         }
     }

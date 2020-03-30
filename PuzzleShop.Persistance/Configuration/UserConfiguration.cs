@@ -11,6 +11,8 @@ namespace PuzzleShop.Persistance.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.HasIndex(u => u.Email)
+                .IsUnique();
             builder.Property(u => u.FirstName)
                 .HasMaxLength(50)
                 .IsRequired();

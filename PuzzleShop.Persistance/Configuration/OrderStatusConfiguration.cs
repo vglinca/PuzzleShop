@@ -11,10 +11,12 @@ namespace PuzzleShop.Persistance.Configuration
 	{
 		public void Configure(EntityTypeBuilder<OrderStatus> builder)
 		{
+
 			builder.Ignore(p => p.Id);
 			builder
 				.Property(os => os.OrderStatusId)
 				.HasConversion<long>();
+			builder.HasKey(os => os.OrderStatusId);
 		}
 	}
 }

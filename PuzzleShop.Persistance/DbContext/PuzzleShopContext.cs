@@ -231,11 +231,13 @@ namespace PuzzleShop.Persistance.DbContext
                 new Image {Id = 2, FileName = "testfilename", PuzzleId = 2});
 
             modelBuilder.Entity<OrderStatus>()
+                .Ignore(s => s.Id)
                 .HasData(
                     Enum.GetValues(typeof(OrderStatusId))
                     .Cast<OrderStatusId>()
                     .Select(o => new OrderStatus
                     {
+                        //Id = (long) o,
                         OrderStatusId = o,
                         Name = o.ToString()
                     })

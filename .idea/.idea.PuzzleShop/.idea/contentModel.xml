@@ -57,10 +57,12 @@
         <e p="PuzzleShop.Api.csproj" t="IncludeRecursive" />
         <e p="Services" t="Include">
           <e p="Impl" t="Include">
+            <e p="OrderingService.cs" t="Include" />
             <e p="SigningInService.cs" t="Include" />
             <e p="UserManagementService.cs" t="Include" />
           </e>
           <e p="Interfaces" t="Include">
+            <e p="IOrderingService.cs" t="Include" />
             <e p="ISigningInService.cs" t="Include" />
             <e p="IUserManagementService.cs" t="Include" />
           </e>
@@ -112,6 +114,8 @@
             <e p="RoleDto.cs" t="Include" />
           </e>
           <e p="Users" t="Include">
+            <e p="OrderStatusForSettingDto.cs" t="Include" />
+            <e p="UserDataForProcessOrderDto.cs" t="Include" />
             <e p="UserDto.cs" t="Include" />
             <e p="UserForAuthDto.cs" t="Include" />
             <e p="UserForChangingRolesDto.cs" t="Include" />
@@ -242,6 +246,8 @@
           <e p="20200327115728_OrderStatusTableRemovedMigration.Designer.cs" t="Include" />
           <e p="20200327121335_OrderStatusChangedToEnumMigration.cs" t="Include" />
           <e p="20200327121335_OrderStatusChangedToEnumMigration.Designer.cs" t="Include" />
+          <e p="20200327171233_AddUniqueConstraintToEmailMigration.cs" t="Include" />
+          <e p="20200327171233_AddUniqueConstraintToEmailMigration.Designer.cs" t="Include" />
           <e p="PuzzleShopContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">

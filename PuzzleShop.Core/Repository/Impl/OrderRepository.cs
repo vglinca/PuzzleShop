@@ -85,7 +85,7 @@ namespace PuzzleShop.Core.Repository.Impl
             return order;
         }
 
-        public async Task<IEnumerable<Order>> FindAllOrdersByUserId(long userId)
+        public async Task<IEnumerable<Order>> FindAllOrdersByUserIdAsync(long userId)
         {
             var orders = await _ctx.Orders
                 .Where(o => o.UserId == userId).ToListAsync();

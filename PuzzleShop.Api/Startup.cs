@@ -143,6 +143,7 @@ namespace PuzzleShop.Api
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IUserManagementService, UserManagementService>();
             services.AddScoped<ISigningInService, SigningInService>();
+            services.AddScoped<IOrderingService, OrderingService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
