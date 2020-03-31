@@ -143,8 +143,10 @@ namespace PuzzleShop.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
-            app.UseMiddleware<ExceptionHandler>();
+
+            app.UseExceptionMiddleware();
+
+            //app.UseMiddleware<RequestResponseLogger>();
 
             app.UseSession();
             

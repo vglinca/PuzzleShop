@@ -12,6 +12,7 @@ using PuzzleShop.Domain.Entities;
 namespace PuzzleShop.Api.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     public class MaterialTypeController : ControllerBase
     {

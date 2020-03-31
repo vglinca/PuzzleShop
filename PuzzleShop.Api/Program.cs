@@ -38,12 +38,16 @@ namespace PuzzleShop.Api
                     logger.LogError(ex, "An error occurred while migrating the database.");
                 }
             }
-
             await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+            .ConfigureLogging(logger =>
+            {
+                logger.ClearProviders();
+                logger.AddConsole();
+            });
     }
 }

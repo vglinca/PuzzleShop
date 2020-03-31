@@ -18,6 +18,7 @@ using PuzzleShop.Domain.Entities.Auth;
 namespace PuzzleShop.Api.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     public class ManufacturersController : ControllerBase
     {
