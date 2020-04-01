@@ -1,10 +1,9 @@
-﻿using AutoMapper.Configuration;
+﻿//using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PuzzleShop.Api.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace PuzzleShop.Api.Extensions
 {
@@ -32,6 +31,14 @@ namespace PuzzleShop.Api.Extensions
                         IssuerSigningKey = authOptions.GetSymmetricSecurityKey()
                     };
                 });
+        }
+
+        public static AuthOptions ConfigureAuthOptions(this IServiceCollection services, IConfiguration configuration)
+        {
+            var authOptionsConfigurationSection = configuration.GetSection("AuthOptions");
+            services.Configure<AuthOptions>(authOptionsConfigurationSection);
+            var authOptions = authOptionsConfigurationSection.Get<AuthOptions>();
+            return authOptions;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace PuzzleShop.Api.Extensions
 
 		public static void UseTokenInsertionMiddleware(this IApplicationBuilder app)
 		{
-			app.Use(async (ctx, next) =>
+			app.Use(async (ctx, nxt) =>
 			{
 				var token = ctx.Session.GetString("JWToken");
 				if (! string.IsNullOrWhiteSpace(token))
@@ -26,7 +26,15 @@ namespace PuzzleShop.Api.Extensions
 					ctx.Request.Headers.Add("Authorization", $"Bearer {token}");
 				}
             
-				await next();
+				await nxt();
+			});
+		}
+
+		public static void UseSwaggerUIMiddleware(this IApplicationBuilder app)
+		{
+			app.UseSwaggerUI(sa =>
+			{
+				sa.SwaggerEndpoint("/swagger/PuzzleShopOpenApiSpecs/swagger.json", "PuzzleShop API");
 			});
 		}
 	}

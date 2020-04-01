@@ -40,6 +40,7 @@ namespace PuzzleShop.Api.Controllers
 
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
+        [HttpPost]
         public async Task<ActionResult<ColorDto>> AddColor([FromBody] ColorForCreateDto colorForCreateDto)
         {
             var colorEntity = _mapper.Map<Color>(colorForCreateDto);

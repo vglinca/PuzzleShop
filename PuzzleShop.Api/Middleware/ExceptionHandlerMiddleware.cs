@@ -8,44 +8,53 @@ using PuzzleShop.Core.Exceptions;
 
 namespace PuzzleShop.Api.Middleware
 {
-    public class ExceptionHandlerMiddleware
-    {
-        private readonly RequestDelegate _requestDelegate;
+	public class ExceptionHandlerMiddleware
+	{
+		private readonly RequestDelegate _nxt;
 
-        public ExceptionHandlerMiddleware(RequestDelegate requestDelegate)
-        {
-            _requestDelegate = requestDelegate;
-        }
+		public ExceptionHandlerMiddleware(RequestDelegate requestDelegate)
+		{
+			_nxt = requestDelegate;
+		}
 
-        public async Task Invoke(HttpContext ctx)
-        {
-            try
-            {
-                await _requestDelegate.Invoke(ctx);
-            } catch (EntityNotFoundException e)
-            {
-                await HandleException(ctx, e, HttpStatusCode.NotFound);
-            } catch (BadRequestException e)
-            {
-                await HandleException(ctx, e, HttpStatusCode.BadRequest);
-            } catch (UnauthorizedException e)
-            {
-                await HandleException(ctx, e, HttpStatusCode.Unauthorized);
-            } catch (AuthenticationFailedException e)
-            {
-                await HandleException(ctx, e, HttpStatusCode.Unauthorized);
-            }
-        }
+		public async Task Invoke(HttpContext ctx)
+		{
+			try
+			{
+				await _nxt.Invoke(ctx);
+			}
+			catch (EntityNotFoundException e)
+			{
+				await HandleException(ctx, e, HttpStatusCode.NotFound);
+			}
+			catch (BadRequestException e)
+			{
+				await HandleException(ctx, e, HttpStatusCode.BadRequest);
+			}
+			catch (UnauthorizedException e)
+			{
+				await HandleException(ctx, e, HttpStatusCode.Unauthorized);
+			}
+			catch (AuthenticationFailedException e)
+			{
+				await HandleException(ctx, e, HttpStatusCode.Unauthorized);
+			}
+			catch (Exception e)
+			{
+				await HandleException(ctx, e, HttpStatusCode.InternalServerError);
+			}
+		}
 
-        private async Task HandleException(HttpContext ctx, Exception ex, HttpStatusCode statusCode)
-        {
-            var response = ctx.Response;
-            response.ContentType = "application/json";
-            response.StatusCode = (int) statusCode;
-            await response.WriteAsync(JsonConvert.SerializeObject(new
-            {
-                Error = ex.Message
-            }));
-        }
-    }
+		private async Task HandleException(HttpContext ctx, Exception ex, HttpStatusCode statusCode)
+		{
+			var response = ctx.Response;
+			response.ContentType = "application/problem+json";
+			response.StatusCode = (int) statusCode;
+			await response.WriteAsync(JsonConvert.SerializeObject(new
+			{
+				StatusCode = (int) statusCode,
+				Error = ex.Message
+			}));
+		}
+	}
 }
