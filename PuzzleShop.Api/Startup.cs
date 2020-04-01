@@ -57,15 +57,14 @@ namespace PuzzleShop.Api
             
            services.AddDistributedMemoryCache();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
             
-            services.AddSession();
-          
             services.AddIdentity<User, Role>(o =>
             {
                 o.Password.RequiredLength = 8;
                 o.User.RequireUniqueEmail = true;
+                
             }).AddRoles<Role>()
                 .AddEntityFrameworkStores<PuzzleShopContext>()
                 .AddRoleManager<RoleManager<Role>>();
@@ -146,20 +145,11 @@ namespace PuzzleShop.Api
 
             app.UseExceptionMiddleware();
 
-            //app.UseMiddleware<RequestResponseLogger>();
+            app.UseLoggingMiddleware();
 
             app.UseSession();
             
-            app.Use(async (ctx, next) =>
-            {
-                var token = ctx.Session.GetString("JWToken");
-                if (! string.IsNullOrWhiteSpace(token))
-                {
-                    ctx.Request.Headers.Add("Authorization", $"Bearer {token}");
-                }
-            
-                await next();
-            });
+            app.UseTokenInsertionMiddleware();
             
             app.UseRouting();
             
@@ -167,10 +157,7 @@ namespace PuzzleShop.Api
             
             app.UseAuthorization();
             
-            app.UseCors(b => 
-                b.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+            app.UseCors(b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

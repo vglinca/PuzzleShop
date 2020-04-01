@@ -8,11 +8,11 @@ using PuzzleShop.Core.Exceptions;
 
 namespace PuzzleShop.Api.Middleware
 {
-    public class ExceptionHandler
+    public class ExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _requestDelegate;
 
-        public ExceptionHandler(RequestDelegate requestDelegate)
+        public ExceptionHandlerMiddleware(RequestDelegate requestDelegate)
         {
             _requestDelegate = requestDelegate;
         }

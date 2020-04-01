@@ -32,6 +32,7 @@
           <e p="PuzzleTypesController.cs" t="Include" />
         </e>
         <e p="extensions" t="Include">
+          <e p="ApplicationBuilderExtensions.cs" t="Include" />
           <e p="ServiceExtensions.cs" t="Include" />
         </e>
         <e p="Helpers" t="Include">
@@ -40,8 +41,8 @@
           <e p="RoleInitializer.cs" t="Include" />
         </e>
         <e p="Middleware" t="Include">
-          <e p="ExceptionHandler.cs" t="Include" />
-          <e p="ModelValidationAttribute.cs" t="Include" />
+          <e p="ExceptionHandlerMiddleware.cs" t="Include" />
+          <e p="LoggingMiddleware.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
