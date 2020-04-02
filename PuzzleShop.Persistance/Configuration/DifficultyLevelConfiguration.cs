@@ -9,7 +9,10 @@ namespace PuzzleShop.Persistance.Configuration
     {
         public void Configure(EntityTypeBuilder<DifficultyLevel> builder)
         {
-            builder.Property(d => d.Title).IsRequired();
+            builder.Ignore(p => p.Id);
+            builder.Property(p => p.DifficultyLevelId)
+                .HasConversion<long>();
+            builder.HasKey(p => p.DifficultyLevelId);
         }
     }
 }

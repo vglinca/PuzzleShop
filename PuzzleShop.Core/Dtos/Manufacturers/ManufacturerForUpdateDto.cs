@@ -6,10 +6,10 @@ namespace PuzzleShop.Api.Dtos.Manufacturers
 {
     public class ManufacturerForUpdateDto
     {
-        [Required]
+        [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
         
-        [Required]
+        [Required(ErrorMessage = "Description is required.")]
         public string Description { get; set; }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Core.Exceptions;
-using PuzzleShop.Core.ResourceParameters;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
 

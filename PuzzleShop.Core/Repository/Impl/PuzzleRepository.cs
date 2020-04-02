@@ -11,7 +11,6 @@ using PuzzleShop.Core.Extensions;
 using PuzzleShop.Core.Helpers;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Core.ResourceParameters;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
 
@@ -61,8 +60,8 @@ namespace PuzzleShop.Core.Repository.Impl
                 .FirstOrDefaultAsync(pt => pt.Id == puzzle.PuzzleTypeId);
             var materialType = await _ctx.MaterialTypes
                 .FirstOrDefaultAsync(mt => mt.Id == puzzle.MaterialTypeId);
-            var difficultyLevel = await _ctx.Levels
-                .FirstOrDefaultAsync(l => l.Id == puzzle.DifficultyLevelId);
+            var difficultyLevel = await _ctx.DifficultyLevels
+                .FirstOrDefaultAsync(l => l.Id == (long) puzzle.DifficultyLevelId);
 
             foreach (var image in puzzle.Images)
             {

@@ -4,7 +4,7 @@ namespace PuzzleShop.Core.Dtos.Manufacturers
 {
     public class ManufacturerForCreateDto
     {
-        [Required]
+        [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
         public string Description { get; set; }
     }

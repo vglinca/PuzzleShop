@@ -19,7 +19,7 @@ namespace PuzzleShop.Core.Profiles
                         src => src.Color.Title))
                 .ForMember(dest => dest.DifficultyLevel,
                     opt => opt.MapFrom(
-                        src => src.DifficultyLevel.Title))
+                        src => src.DifficultyLevel.DifficultyLevelId.ToString()))
                 .ForMember(dest => dest.MaterialType,
                     opt => opt.MapFrom(
                         src => src.MaterialType.Title))

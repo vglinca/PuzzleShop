@@ -8,25 +8,25 @@ namespace PuzzleShop.Core.Dtos.Puzzles
 {
     public class PuzzleForCreationDto
     {
-        [Required]
+        [Required(ErrorMessage ="PuzzleName is required.")]
         public string Name { get; set; }
         [MaxLength(1000)]
         public string Description { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Price is required.")]
         public decimal Price { get; set; }
-        [Required]
+        [Required(ErrorMessage = "You just specify if this puzzle suitable for WCA discipline.")]
         public bool IsWcaPuzzle { get; set; }
-        [Required]
+        [Required(ErrorMessage = "ManufacturerId is required.")]
         public long ManufacturerId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "PuzzleTypeId is required.")]
         public long PuzzleTypeId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "ColorId is required.")]
         public long ColorId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "DifficultyLevelId is required.")]
         public long DifficultyLevelId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "MaterialTypeId is required.")]
         public long MaterialTypeId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "At least one image must be specified.")]
         public List<ImageDto> Images { get; set; } = new List<ImageDto>();
     }
 }

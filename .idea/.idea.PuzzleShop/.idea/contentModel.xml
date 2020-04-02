@@ -79,7 +79,6 @@
           </e>
           <e p="DifficultyLevels" t="Include">
             <e p="DifficultyLevelDto.cs" t="Include" />
-            <e p="DifficultyLevelForCreationDto.cs" t="Include" />
           </e>
           <e p="Images" t="Include">
             <e p="ImageDto.cs" t="Include" />
@@ -179,9 +178,6 @@
             <e p="IRepository.cs" t="Include" />
           </e>
         </e>
-        <e p="ResourceParameters" t="Include">
-          <e p="PuzzleResourceParameters.cs" t="Include" />
-        </e>
       </e>
       <e p="PuzzleShop.Domain" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
@@ -198,6 +194,7 @@
           <e p="BaseEntity.cs" t="Include" />
           <e p="Color.cs" t="Include" />
           <e p="DifficultyLevel.cs" t="Include" />
+          <e p="DifficultyLevelId.cs" t="Include" />
           <e p="Image.cs" t="Include" />
           <e p="Manufacturer.cs" t="Include" />
           <e p="MaterialType.cs" t="Include" />
@@ -249,6 +246,8 @@
           <e p="20200327121335_OrderStatusChangedToEnumMigration.Designer.cs" t="Include" />
           <e p="20200327171233_AddUniqueConstraintToEmailMigration.cs" t="Include" />
           <e p="20200327171233_AddUniqueConstraintToEmailMigration.Designer.cs" t="Include" />
+          <e p="20200402141719_MovedDifficultyLevelsToEnumMigration.cs" t="Include" />
+          <e p="20200402141719_MovedDifficultyLevelsToEnumMigration.Designer.cs" t="Include" />
           <e p="PuzzleShopContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
@@ -265,8 +264,8 @@
       </e>
       <e p="PuzzleShop.sln" t="IncludeFlat" />
       <e p="PuzzleShop.Tests" t="IncludeRecursive">
-        <e p="AutomapperTest.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
+        <e p="ManufacturersControllerTests.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
@@ -275,6 +274,9 @@
           </e>
         </e>
         <e p="PuzzleShop.Tests.csproj" t="IncludeRecursive" />
+        <e p="Repository" t="Include">
+          <e p="ManufacturerRepositoryFake.cs" t="Include" />
+        </e>
       </e>
     </e>
   </component>

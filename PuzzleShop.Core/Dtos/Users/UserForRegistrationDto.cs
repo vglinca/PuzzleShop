@@ -6,21 +6,23 @@ namespace PuzzleShop.Core.Dtos.Users
 {
     public class UserForRegistrationDto
     {
-        [Required]
+        [Required(ErrorMessage ="Username is required.")]
         public string Username { get; set; }
-        [Required]
+        [Required(ErrorMessage = "FirstName is required.")]
         public string FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "LastName is required.")]
         public string LastName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Password is required.")]
         [MinLength(8, ErrorMessage = "Password should not be less than 8 characters.")]
         public string Password { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Address is required.")]
         public string Address { get; set; }
-        [Required]
+        [Required(ErrorMessage = "BirthDate is required.")]
         public DateTimeOffset BirthDate { get; set; }
+        [Phone(ErrorMessage ="Invalid phone number.")]
         public string PhoneNumber { get; set; }
     }
 }

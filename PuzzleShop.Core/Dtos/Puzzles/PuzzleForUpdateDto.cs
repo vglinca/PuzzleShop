@@ -13,19 +13,17 @@ namespace PuzzleShop.Core.Dtos.Puzzles
         [Required(ErrorMessage = "Description is required.")]
         [MaxLength(1000, ErrorMessage = "Description should not have more than 1000 characters.")]
         public string Description { get; set; }
-        [Required]
-        public decimal Price { get; set; }
-        [Required]
+        public bool IsWcaPuzzle { get; set; }
+        [Required(ErrorMessage = "ManufacturerId is required.")]
         public long ManufacturerId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "PuzzleTypeId is required.")]
         public long PuzzleTypeId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "ColorId is required.")]
         public long ColorId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "DifficultyLevelId is required.")]
         public long DifficultyLevelId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "MaterialTypeId is required.")]
         public long MaterialTypeId { get; set; }
-
         public List<ImageDto> Images { get; set; } = new List<ImageDto>();
     }
 }

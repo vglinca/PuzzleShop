@@ -7,9 +7,7 @@ namespace PuzzleShop.Core.Profiles
     {
         public DifficultyLevelProfile()
         {
-            CreateMap<Domain.Entities.DifficultyLevel, DifficultyLevelDto>().ReverseMap();
-            CreateMap<DifficultyLevelForCreationDto, Domain.Entities.DifficultyLevel>()
-                .ReverseMap();
+            CreateMap<Domain.Entities.DifficultyLevel, DifficultyLevelDto>();
         }
     }
 }
