@@ -4,7 +4,7 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core.Repository.Interfaces
 {
-    public interface IOrderRepository : IEfCoreRepository<Order>
+    public interface IOrderRepository : IRepository<Order>
     {
         Task<Order> FindByUserIdAsync(long userId, OrderStatusId statusId);
         Task<IEnumerable<Order>> FindAllOrdersByUserIdAsync(long userId);

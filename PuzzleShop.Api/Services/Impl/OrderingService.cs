@@ -30,6 +30,11 @@ namespace PuzzleShop.Api.Services.Impl
             return await _ordersRepository.FindAllOrdersByUserIdAsync(userId);
         }
 
+        public async Task<Order> GetOrderByIdASync(long orderId)
+        {
+            return await _ordersRepository.FindByIdAsync(orderId);
+        }
+
         public async Task AddToCartAsync(OrderItem orderItem, long userId)
         {
             var order = await _ordersRepository.FindByUserIdAsync(userId, OrderStatusId.Pending);
@@ -92,5 +97,7 @@ namespace PuzzleShop.Api.Services.Impl
                 await _ordersRepository.DeleteEntityAsync(order);
             }
         }
+
+       
     }
 }

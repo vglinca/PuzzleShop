@@ -91,5 +91,10 @@ namespace PuzzleShop.Core.Repository.Impl
                 .Where(o => o.UserId == userId).ToListAsync();
             return orders;
         }
+
+        public Task<IEnumerable<Order>> GetAllAsync()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

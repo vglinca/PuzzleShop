@@ -35,14 +35,16 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult> GetManufacturers()
         {
             var manufacturers = await _manufacturersRepository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<ManufacturerDto>>(manufacturers));
+            var response = _mapper.Map<IEnumerable<ManufacturerDto>>(manufacturers);
+            return Ok(response);
         }
 
         [HttpGet("{manufacturerId}")]
         public async Task<ActionResult> GetManufacturer(long manufacturerId)
         {
             var manufacturer = await _manufacturersRepository.FindByIdAsync(manufacturerId);
-            return Ok(_mapper.Map<ManufacturerDto>(manufacturer));
+            var response = _mapper.Map<ManufacturerDto>(manufacturer);
+            return Ok(response);
         }
 
         [Authorize(Roles = "admin")]
@@ -53,9 +55,10 @@ namespace PuzzleShop.Api.Controllers
         {
             var manufacturerEntity = _mapper.Map<Manufacturer>(manufacturerForCreateDto);
             await _manufacturersRepository.AddEntityAsync(manufacturerEntity);
-            
-            return CreatedAtAction(nameof(GetManufacturer), new {manufacturerId = manufacturerEntity.Id}, 
-                _mapper.Map<ManufacturerDto>(manufacturerEntity));
+
+            var responseEntity = _mapper.Map<ManufacturerDto>(manufacturerEntity);
+
+            return CreatedAtAction(nameof(AddManufacturer), new {manufacturerId = manufacturerEntity.Id}, responseEntity);
         }
 
         [Authorize(Roles = "admin")]
@@ -69,7 +72,7 @@ namespace PuzzleShop.Api.Controllers
             _mapper.Map(manufacturerForUpdateDto, manufacturerFromRepo);
             await _manufacturersRepository.UpdateEntityAsync(manufacturerFromRepo);
 
-            return NoContent();
+            return Ok();
         }
 
         [Authorize(Roles = "admin")]

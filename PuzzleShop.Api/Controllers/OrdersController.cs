@@ -36,7 +36,7 @@ namespace PuzzleShop.Api.Controllers
         }
 
         [HttpGet(nameof(GetCart))]
-        public async Task<ActionResult<OrderDto>> GetCart()
+        public async Task<IActionResult> GetCart()
         {
             var user = await GetCurrentUser();
             var pendingOrder = await _orderingService.GetOrderByStatusAsync(user.Id, OrderStatusId.Pending);
@@ -44,8 +44,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<OrderDto>(pendingOrder));
         }
 
-        [HttpGet(nameof(GetAllOrders))]
-        public async Task<ActionResult<IEnumerable<OrderDto>>> GetAllOrders()
+        [HttpGet("orders")]
+        public async Task<IActionResult> GetAllOrders()
         {
             var user = await GetCurrentUser();
             var orders = await _orderingService.GetUserOrdersAsync(user.Id);
@@ -86,8 +86,8 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("removeItemFromOrder/{itemId}")]
-        public async Task<IActionResult> RemoveItemFromOrder(long itemId)
+        [HttpDelete("removeOrderItem/{itemId}")]
+        public async Task<IActionResult> RemoveOrderItem(long itemId)
         {
             var user = await GetCurrentUser();
 
@@ -96,25 +96,6 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
         
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
-        [HttpGet("getUserOrders/{userId}")]
-        public async Task<ActionResult<IEnumerable<OrderDto>>> GetUserOrders(long userId)
-        {
-            var orders = await _orderingService.GetUserOrdersAsync(userId);
-            return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
-        }
-
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
-        [HttpPut("changeOrderStatus/{orderId}")]
-        public async Task<IActionResult> ChangeOrderStatus(long orderId, [FromBody] OrderStatusForSettingDto statusDto)
-        {
-            await _orderingService.UpdateOrderStatusAsync(orderId, (OrderStatusId) statusDto.StatusId);
-            
-            return NoContent();
-        }
-
         [NonAction]
         private async Task<User> GetCurrentUser()
         {

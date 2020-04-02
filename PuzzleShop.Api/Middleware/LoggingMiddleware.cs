@@ -20,10 +20,6 @@ namespace PuzzleShop.Api.Middleware
 		public async Task Invoke(HttpContext ctx)
 		{
 			const string filePath = @"D:\dev\PuzzleShop\log.txt";
-			if (!File.Exists(filePath))
-			{
-				File.Create(filePath);
-			}
 
 			var requestInfo = await HandleRequest(ctx.Request);
 
@@ -39,10 +35,13 @@ namespace PuzzleShop.Api.Middleware
 
 				var responseInfo = await HandleResponse(ctx.Response);
 
-				using (var sr = new StreamWriter(filePath, true))
+				using (var inStream = new FileStream(filePath, FileMode.OpenOrCreate | FileMode.Append, FileAccess.Write))
 				{
-					await sr.WriteLineAsync(requestInfo);
-					await sr.WriteLineAsync(responseInfo);
+					using (var sr = new StreamWriter(inStream))
+					{
+						await sr.WriteLineAsync(requestInfo);
+						await sr.WriteLineAsync(responseInfo);
+					}
 				}
 
 				await memStream.CopyToAsync(responseBodyStream);

@@ -8,6 +8,7 @@ namespace PuzzleShop.Api.Services.Interfaces
     {
         Task<Order> GetOrderByStatusAsync(long userId, OrderStatusId orderStatusId);
         Task<IEnumerable<Order>> GetUserOrdersAsync(long userId);
+        Task<Order> GetOrderByIdASync(long orderId);
         Task AddToCartAsync(OrderItem orderItem, long userId);
         Task UpdateOrderStatusAsync(long orderId, OrderStatusId orderStatusId);
         Task UpdateOrderStatusFromOldOneAsync(long userId, OrderStatusId oldStatus, OrderStatusId newStatus);
