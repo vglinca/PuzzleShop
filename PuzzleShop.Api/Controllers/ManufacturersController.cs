@@ -17,8 +17,8 @@ using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Controllers
 {
-    [ApiController]
     [AllowAnonymous]
+    [ApiController]
     [Route("api/[controller]")]
     public class ManufacturersController : ControllerBase
     {
@@ -32,14 +32,14 @@ namespace PuzzleShop.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ManufacturerDto>>> GetManufacturers()
+        public async Task<ActionResult> GetManufacturers()
         {
             var manufacturers = await _manufacturersRepository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<ManufacturerDto>>(manufacturers));
         }
 
         [HttpGet("{manufacturerId}")]
-        public async Task<ActionResult<ManufacturerDto>> GetManufacturer(long manufacturerId)
+        public async Task<ActionResult> GetManufacturer(long manufacturerId)
         {
             var manufacturer = await _manufacturersRepository.FindByIdAsync(manufacturerId);
             return Ok(_mapper.Map<ManufacturerDto>(manufacturer));
@@ -48,7 +48,7 @@ namespace PuzzleShop.Api.Controllers
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         [HttpPost]
-        public async Task<ActionResult<ManufacturerDto>> AddManufacturer(
+        public async Task<ActionResult> AddManufacturer(
            [FromBody] ManufacturerForCreateDto manufacturerForCreateDto)
         {
             var manufacturerEntity = _mapper.Map<Manufacturer>(manufacturerForCreateDto);

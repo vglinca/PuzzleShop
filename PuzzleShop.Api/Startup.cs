@@ -141,14 +141,7 @@ namespace PuzzleShop.Api
             }
             else
             {
-                app.UseExceptionHandler(appBuilder =>
-                {
-                    appBuilder.Run(async ctx =>
-                    {
-                        ctx.Response.StatusCode = 500;
-                        await ctx.Response.WriteAsync("An unexpecter fault happened. Try again later");
-                    });
-                });
+                app.UseClientExceptionPage();
             }
 
             app.UseSwagger();

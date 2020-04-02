@@ -37,5 +37,17 @@ namespace PuzzleShop.Api.Extensions
 				sa.SwaggerEndpoint("/swagger/PuzzleShopOpenApiSpecs/swagger.json", "PuzzleShop API");
 			});
 		}
+
+		public static void UseClientExceptionPage(this IApplicationBuilder app)
+		{
+			app.UseExceptionHandler(appBuilder =>
+			{
+				appBuilder.Run(async ctx =>
+				{
+					ctx.Response.StatusCode = 500;
+					await ctx.Response.WriteAsync("An unexpecter fault happened. Try again later");
+				});
+			});
+		}
 	}
 }
