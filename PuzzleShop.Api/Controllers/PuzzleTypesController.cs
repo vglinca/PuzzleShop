@@ -50,6 +50,16 @@ namespace PuzzleShop.Api.Controllers
                 _mapper.Map<PuzzleTypeDto>(newPuzzleType));
         }
 
+        [HttpPut("{puzzleTypeId}")]
+        public async Task<IActionResult> UpdatePuzzleType(long puzzleTypeId,
+            [FromBody] PuzzleTypeForCreationDto puzzleTypeForUpdateDto)
+        {
+            var puzzleTypeFromRepo = await _puzzleTypeRepository.FindByIdAsync(puzzleTypeId);
+            _mapper.Map(puzzleTypeForUpdateDto, puzzleTypeFromRepo);
+            await _puzzleTypeRepository.UpdateEntityAsync(puzzleTypeFromRepo);
+            return Ok();
+        }
+
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         [HttpDelete("{puzzleTypeId}")]

@@ -4,11 +4,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Users;
 using PuzzleShop.Domain.Entities.Auth;
+using System.Linq;
 
 namespace PuzzleShop.Api.Controllers.Identity
 {
@@ -37,9 +41,13 @@ namespace PuzzleShop.Api.Controllers.Identity
         public async Task<IActionResult> Register([FromBody] UserForRegistrationDto userForRegistrationDto)
         {
             var user = _mapper.Map<User>(userForRegistrationDto);
-            await _userManager.CreateAsync(user, userForRegistrationDto.Password);
-            await _userManager.AddToRoleAsync(user, "user");
-            return Ok();
+            var result = await _userManager.CreateAsync(user, userForRegistrationDto.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "user");
+                return Ok();
+            }
+            return StatusCode(422, result.Errors);
         }
 
         [HttpPost("authenticate")]

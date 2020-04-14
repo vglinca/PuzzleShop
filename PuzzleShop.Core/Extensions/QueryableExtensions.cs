@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -19,8 +20,8 @@ namespace PuzzleShop.Core.Extensions
             var puzzles = src.ProjectTo<TDto>(mapper.ConfigurationProvider);
             puzzles = puzzles.ApplyFilters(request.RequestFilters);
             var itemsCount = await puzzles.CountAsync();
-            puzzles = puzzles.Paginate(request.PageNumber, request.PageSize);
             puzzles = puzzles.ApplySort(request.OrderBy, request.OrderByDirection);
+            puzzles = puzzles.Paginate(request.PageNumber, request.PageSize);
             var puzzlesList = await puzzles.ToListAsync();
 
             return new PagedResponse<TDto>(request.PageNumber, request.PageSize, itemsCount,
@@ -65,9 +66,11 @@ namespace PuzzleShop.Core.Extensions
         {
             if (!string.IsNullOrWhiteSpace(orderBy))
             {
-                src = src.OrderBy($"{orderBy} {direction}");
+                var propertyInfo = typeof(T).GetProperty(orderBy, BindingFlags.IgnoreCase | BindingFlags.Public |
+                                                                  BindingFlags.Instance);
+                src = src.OrderBy($"{propertyInfo.Name} {direction}");
             }
-
+             
             return src;
         }
     }

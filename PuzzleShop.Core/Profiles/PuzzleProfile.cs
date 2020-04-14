@@ -26,7 +26,10 @@ namespace PuzzleShop.Core.Profiles
                 .ForMember(dest => dest.Images,
                     opt => opt.MapFrom(
                         src => src.Images)).ReverseMap();
-            CreateMap<PuzzleForCreationDto, Domain.Entities.Puzzle>().ReverseMap();
+            CreateMap<PuzzleForCreationDto, Domain.Entities.Puzzle>()
+                .ForMember(dest => dest.DifficultyLevelId,
+                    opt => opt.MapFrom(
+                        src => src.DifficultyLevelId));
             CreateMap<PuzzleForUpdateDto, Domain.Entities.Puzzle>();
         }
     }

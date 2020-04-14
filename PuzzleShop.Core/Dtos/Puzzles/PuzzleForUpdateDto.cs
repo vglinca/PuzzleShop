@@ -11,7 +11,7 @@ namespace PuzzleShop.Core.Dtos.Puzzles
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Description is required.")]
-        [MaxLength(1000, ErrorMessage = "Description should not have more than 1000 characters.")]
+        [MaxLength(1500, ErrorMessage = "Description should not have more than 1500 characters.")]
         public string Description { get; set; }
         public bool IsWcaPuzzle { get; set; }
         [Required(ErrorMessage = "ManufacturerId is required.")]

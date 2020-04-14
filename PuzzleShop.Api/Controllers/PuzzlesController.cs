@@ -25,7 +25,7 @@ namespace PuzzleShop.Api.Controllers
             _puzzleRepository = puzzleRepository ?? throw new ArgumentNullException(nameof(puzzleRepository));
         }
 
-        [HttpGet]
+        [HttpPost(nameof(GetPuzzles))]
         public async Task<ActionResult<IEnumerable<PuzzleDto>>> GetPuzzles([FromBody] PagedRequest pagedRequest)
         {
             var puzzlesPagedResponse = await _puzzleRepository.GetAllAsync(pagedRequest, _mapper);

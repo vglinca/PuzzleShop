@@ -52,7 +52,8 @@ namespace PuzzleShop.Api
                 
             }).AddRoles<Role>()
                 .AddEntityFrameworkStores<PuzzleShopContext>()
-                .AddRoleManager<RoleManager<Role>>();
+                .AddRoleManager<RoleManager<Role>>()
+                .AddErrorDescriber<IdentityErrorDescriber>();
             
             services.Configure<IdentityOptions>(o =>
             {
@@ -139,10 +140,10 @@ namespace PuzzleShop.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseClientExceptionPage();
-            }
+            // else
+            // {
+            //     app.UseClientExceptionPage();
+            // }
 
             app.UseSwagger();
 
@@ -162,7 +163,7 @@ namespace PuzzleShop.Api
             
             app.UseCors(b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             
-            app.UseLoggingMiddleware();
+            //app.UseLoggingMiddleware();
             
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

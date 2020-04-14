@@ -25,14 +25,14 @@ namespace PuzzleShop.Api.Controllers
         }
         
         [HttpGet(Name = "GetColors")]
-        public async Task<ActionResult<IEnumerable<ColorDto>>> GetColors()
+        public async Task<IActionResult> GetColors()
         {
             var colorsFromRepo = await _colorRepository.GetAllAsync();
             return Ok(_mapper.Map <IEnumerable<ColorDto>>(colorsFromRepo));
         }
 
         [HttpGet("{colorId}", Name = "GetColor")]
-        public async Task<ActionResult<ColorDto>> GetColor(long colorId)
+        public async Task<IActionResult> GetColor(long colorId)
         {
             var colorFromRepo = await _colorRepository.FindByIdAsync(colorId);
             return Ok(_mapper.Map<ColorDto>(colorFromRepo));
@@ -41,12 +41,12 @@ namespace PuzzleShop.Api.Controllers
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         [HttpPost]
-        public async Task<ActionResult<ColorDto>> AddColor([FromBody] ColorForCreateDto colorForCreateDto)
+        public async Task<IActionResult> AddColor([FromBody] ColorForCreateDto colorForCreateDto)
         {
             var colorEntity = _mapper.Map<Color>(colorForCreateDto);
             await _colorRepository.AddEntityAsync(colorEntity);
 
-            return CreatedAtAction(nameof(GetColor), new {colorId = colorEntity.Id}, 
+            return CreatedAtAction(nameof(AddColor), new {colorId = colorEntity.Id}, 
                 _mapper.Map<ColorDto>(colorEntity));
         }
 

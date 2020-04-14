@@ -4,7 +4,7 @@ namespace PuzzleShop.Core.Dtos.PuzzleTypes
 {
     public class PuzzleTypeForCreationDto
     {
-        [Required]
+        [Required(ErrorMessage = "Title is required.")]
         public string Title { get; set; }
     }
 }

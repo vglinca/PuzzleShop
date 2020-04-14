@@ -60,13 +60,14 @@ namespace PuzzleShop.Core.Repository.Impl
                 .FirstOrDefaultAsync(pt => pt.Id == puzzle.PuzzleTypeId);
             var materialType = await _ctx.MaterialTypes
                 .FirstOrDefaultAsync(mt => mt.Id == puzzle.MaterialTypeId);
+            
             var difficultyLevel = await _ctx.DifficultyLevels
-                .FirstOrDefaultAsync(l => l.Id == (long) puzzle.DifficultyLevelId);
+                .FirstOrDefaultAsync(l => l.DifficultyLevelId == puzzle.DifficultyLevelId);
 
             foreach (var image in puzzle.Images)
             {
                 image.Title = puzzle.Name;
-                image.FileName += Guid.NewGuid();//???
+                //image.FileName += Guid.NewGuid();//???
                 image.PuzzleId = puzzle.Id;
             }
             await _ctx.Images.AddRangeAsync(puzzle.Images);

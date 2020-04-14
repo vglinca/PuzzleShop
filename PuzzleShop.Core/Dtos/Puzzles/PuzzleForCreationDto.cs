@@ -10,12 +10,14 @@ namespace PuzzleShop.Core.Dtos.Puzzles
     {
         [Required(ErrorMessage ="PuzzleName is required.")]
         public string Name { get; set; }
-        [MaxLength(1000)]
+        [MaxLength(1500)]
         public string Description { get; set; }
         [Required(ErrorMessage = "Price is required.")]
         public decimal Price { get; set; }
         [Required(ErrorMessage = "You just specify if this puzzle suitable for WCA discipline.")]
         public bool IsWcaPuzzle { get; set; }
+        [Required(ErrorMessage = "Weight is required.")]
+        public double Weight { get; set; }
         [Required(ErrorMessage = "ManufacturerId is required.")]
         public long ManufacturerId { get; set; }
         [Required(ErrorMessage = "PuzzleTypeId is required.")]

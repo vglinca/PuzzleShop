@@ -95,7 +95,7 @@ namespace PuzzleShop.Tests
 				Description = "Updated Description"
 			};
 			var response = await _manufacturersController.UpdateManufacturer(4, dtoForUpdate);
-			Assert.IsInstanceOf<NoContentResult>(response);
+			Assert.IsInstanceOf<OkResult>(response);
 		}
 
 		[TestCase]
