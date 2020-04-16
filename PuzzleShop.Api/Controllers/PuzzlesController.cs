@@ -53,6 +53,21 @@ namespace PuzzleShop.Api.Controllers
 
 			var webRootPath = _webHostEnvironment.WebRootPath;
 
+			//var i = 1;
+			//foreach (var img in puzzleForCreationDto.Images)
+			//{
+			//	var bytes = Convert.FromBase64String(img.Base64String);
+			//	var fileName = Guid.NewGuid().ToString() + ".jpg";
+			//	var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
+			//	entityToAdd.Images.Add(new Image { FileName = fileName, Title = $"{entityToAdd.Name}-img{i++}" });
+			//	using (var imgFile = new FileStream(filePath, FileMode.Create))
+			//	{
+			//		await imgFile.WriteAsync(bytes, 0, bytes.Length);
+			//		await imgFile.FlushAsync();
+			//	}
+			//}
+
+
 			var i = 1;
 			foreach (var img in puzzleForCreationDto.Images)
 			{
@@ -64,18 +79,6 @@ namespace PuzzleShop.Api.Controllers
 					await img.CopyToAsync(fStream);
 				}
 			}
-
-			//foreach (var img in puzzleForCreationDto.Images)
-			//{
-			//    var fileName = Guid.NewGuid().ToString() + ".jpg";
-			//    var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
-			//    entityToAdd.Images.Add(new Image { FileName = fileName, Title = img.Title });
-
-			//    using (FileStream output = System.IO.File.Create(filePath))
-			//    {
-			//        await img.Bytes.CopyToAsync(output);
-			//    }
-			//}
 
 			await _puzzleRepository.AddEntityAsync(entityToAdd);
 			return CreatedAtAction(nameof(AddPuzzle), new { puzzleId = entityToAdd.Id },
