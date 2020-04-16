@@ -25,7 +25,7 @@ namespace PuzzleShop.Domain.Entities
         public virtual DifficultyLevel  DifficultyLevel { get; set; }
         public virtual MaterialType MaterialType { get; set; }
         public long MaterialTypeId { get; set; }
-        public virtual ICollection<Image> Images { get; private set; }
+        public virtual ICollection<Image> Images { get; set; }
        // public virtual OrderItem OrderItem { get; set; }
     }
 }

@@ -145,6 +145,8 @@ namespace PuzzleShop.Api
             //     app.UseClientExceptionPage();
             // }
 
+            app.UseStaticFiles();
+
             app.UseSwagger();
 
             app.UseSwaggerUIMiddleware();
@@ -162,9 +164,9 @@ namespace PuzzleShop.Api
             app.UseAuthorization();
             
             app.UseCors(b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            
+
             //app.UseLoggingMiddleware();
-            
+
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

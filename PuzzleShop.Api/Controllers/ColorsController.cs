@@ -38,8 +38,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok(_mapper.Map<ColorDto>(colorFromRepo));
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        //[Authorize(Roles = "admin")]
+        //[Authorize(Roles = "moderator")]
         [HttpPost]
         public async Task<IActionResult> AddColor([FromBody] ColorForCreateDto colorForCreateDto)
         {
@@ -50,19 +50,19 @@ namespace PuzzleShop.Api.Controllers
                 _mapper.Map<ColorDto>(colorEntity));
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        //[Authorize(Roles = "admin")]
+        //[Authorize(Roles = "moderator")]
         [HttpPut("{colorId}", Name = "UpdateColor")]
         public async Task<IActionResult> UpdateColor(long colorId, [FromBody] ColorForCreateDto colorForUpdateDto)
         {
             var colorEntity = await _colorRepository.FindByIdAsync(colorId);
-            _mapper.Map<Color>(colorForUpdateDto);
+            _mapper.Map(colorForUpdateDto, colorEntity);
             await _colorRepository.UpdateEntityAsync(colorEntity);
-            return NoContent();
+            return Ok();
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        //[Authorize(Roles = "admin")]
+        //[Authorize(Roles = "moderator")]
         [HttpDelete("{colorId}", Name = "DeleteColor")]
         public async Task<IActionResult> DeleteColor(long colorId)
         {

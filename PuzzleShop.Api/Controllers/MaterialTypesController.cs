@@ -46,7 +46,7 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<MaterialTypeDto>> AddMaterialType(
             [FromBody] MaterialTypeForCreationDto materialTypeForCreationDto)
         {
-            var entityToAdd = _mapper.Map<Domain.Entities.MaterialType>(materialTypeForCreationDto);
+            var entityToAdd = _mapper.Map<MaterialType>(materialTypeForCreationDto);
             await _materialTypeRepository.AddEntityAsync(entityToAdd);
 
             return CreatedAtAction(nameof(GetMaterialType), new {materialTypeId = entityToAdd.Id},

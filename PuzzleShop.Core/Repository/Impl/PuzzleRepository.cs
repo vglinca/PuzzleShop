@@ -66,8 +66,6 @@ namespace PuzzleShop.Core.Repository.Impl
 
             foreach (var image in puzzle.Images)
             {
-                image.Title = puzzle.Name;
-                //image.FileName += Guid.NewGuid();//???
                 image.PuzzleId = puzzle.Id;
             }
             await _ctx.Images.AddRangeAsync(puzzle.Images);

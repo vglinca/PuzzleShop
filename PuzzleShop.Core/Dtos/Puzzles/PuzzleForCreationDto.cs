@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using PuzzleShop.Core.Dtos.Images;
 
 // ReSharper disable All
@@ -8,7 +9,7 @@ namespace PuzzleShop.Core.Dtos.Puzzles
 {
     public class PuzzleForCreationDto
     {
-        [Required(ErrorMessage ="PuzzleName is required.")]
+        [Required(ErrorMessage = "PuzzleName is required.")]
         public string Name { get; set; }
         [MaxLength(1500)]
         public string Description { get; set; }
@@ -29,6 +30,7 @@ namespace PuzzleShop.Core.Dtos.Puzzles
         [Required(ErrorMessage = "MaterialTypeId is required.")]
         public long MaterialTypeId { get; set; }
         [Required(ErrorMessage = "At least one image must be specified.")]
-        public List<ImageDto> Images { get; set; } = new List<ImageDto>();
+        public List<IFormFile> Images { get; set; } = new List<IFormFile>();
+        //public List<ImageForCreationDto> Images { get; set; } = new List<ImageForCreationDto>();
     }
 }

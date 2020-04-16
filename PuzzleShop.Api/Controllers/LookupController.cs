@@ -14,6 +14,7 @@ using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class LookupController : ControllerBase

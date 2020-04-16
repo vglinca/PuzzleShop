@@ -29,7 +29,10 @@ namespace PuzzleShop.Core.Profiles
             CreateMap<PuzzleForCreationDto, Domain.Entities.Puzzle>()
                 .ForMember(dest => dest.DifficultyLevelId,
                     opt => opt.MapFrom(
-                        src => src.DifficultyLevelId));
+                        src => src.DifficultyLevelId))
+                .ForMember(dest => dest.Images, opt =>
+                    opt.Ignore());
+                
             CreateMap<PuzzleForUpdateDto, Domain.Entities.Puzzle>();
         }
     }
