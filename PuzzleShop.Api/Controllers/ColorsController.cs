@@ -15,10 +15,10 @@ namespace PuzzleShop.Api.Controllers
     [Route("api/[controller]")]
     public class ColorsController: ControllerBase
     {
-        private readonly IRepository<Color> _colorRepository;
+        private readonly IImageRepository<Color> _colorRepository;
         private readonly IMapper _mapper;
 
-        public ColorsController(IRepository<Color> colorRepository, IMapper mapper)
+        public ColorsController(IImageRepository<Color> colorRepository, IMapper mapper)
         {
             _colorRepository = colorRepository ?? throw new ArgumentNullException(nameof(colorRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

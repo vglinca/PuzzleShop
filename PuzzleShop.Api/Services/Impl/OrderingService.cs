@@ -12,9 +12,9 @@ namespace PuzzleShop.Api.Services.Impl
     public class OrderingService : IOrderingService
     {
         private readonly IOrderRepository _ordersRepository;
-        private readonly IRepository<OrderItem> _orderItemRepository;
+        private readonly IImageRepository<OrderItem> _orderItemRepository;
 
-        public OrderingService(IOrderRepository orderRepository, IRepository<OrderItem> orderItemRepository)
+        public OrderingService(IOrderRepository orderRepository, IImageRepository<OrderItem> orderItemRepository)
         {
             _ordersRepository = orderRepository;
             _orderItemRepository = orderItemRepository;

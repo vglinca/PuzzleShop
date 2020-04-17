@@ -95,16 +95,16 @@ namespace PuzzleShop.Api.Controllers
 
 			var webRootPath = _webHostEnvironment.WebRootPath;
 
-			foreach (var img in puzzleForUpdateDto.Images)
-			{
-				if (img.Id == null || img.Id <= 0)
-				{
-					var fileName = Guid.NewGuid().ToString() + ".jpg";
-					var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
-					await System.IO.File.WriteAllBytesAsync(filePath, img.Bytes);
-					puzzleToEdit.Images.Add(new Image { FileName = fileName, Title = img.Title });
-				}
-			}
+			//foreach (var img in puzzleForUpdateDto.Images)
+			//{
+			//	if (img.Id == null || img.Id <= 0)
+			//	{
+			//		var fileName = Guid.NewGuid().ToString() + ".jpg";
+			//		var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
+			//		await System.IO.File.WriteAllBytesAsync(filePath, img.File);
+			//		puzzleToEdit.Images.Add(new Image { FileName = fileName, Title = img.Title });
+			//	}
+			//}
 
 			await _puzzleRepository.UpdateEntityAsync(puzzleToEdit);
 			return Ok();

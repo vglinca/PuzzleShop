@@ -20,7 +20,7 @@ namespace PuzzleShop.Tests
 	public class ManufacturersControllerTests
 	{
 		ManufacturersController _manufacturersController;
-		IRepository<Manufacturer> _repository;
+		IImageRepository<Manufacturer> _repository;
 		IMapper _mapper;
 
 		public ManufacturersControllerTests()

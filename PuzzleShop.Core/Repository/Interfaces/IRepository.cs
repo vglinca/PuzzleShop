@@ -7,7 +7,7 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core
 {
-    public interface IRepository<TEntity> : IEfCoreRepository<TEntity> where TEntity : BaseEntity
+    public interface IImageRepository<TEntity> : IEfCoreRepository<TEntity> where TEntity : BaseEntity
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
     }

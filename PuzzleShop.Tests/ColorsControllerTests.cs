@@ -19,11 +19,11 @@ namespace PuzzleShop.Tests
 	{
 		private ColorsController _colorsController;
 		private IMapper _mapper;
-		private Mock<IRepository<Color>> _mock;
+		private Mock<IImageRepository<Color>> _mock;
 
 		public ColorsControllerTests()
 		{
-			_mock = new Mock<IRepository<Color>>();
+			_mock = new Mock<IImageRepository<Color>>();
 		}
 
 		[SetUp]

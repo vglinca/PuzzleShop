@@ -14,10 +14,10 @@ namespace PuzzleShop.Api.Controllers
     [Route("api/[controller]")]
     public class PuzzleTypesController : ControllerBase
     {
-        private readonly IRepository<PuzzleType> _puzzleTypeRepository;
+        private readonly IImageRepository<PuzzleType> _puzzleTypeRepository;
         private readonly IMapper _mapper;
 
-        public PuzzleTypesController(IRepository<PuzzleType> puzzleTypeRepository, IMapper mapper)
+        public PuzzleTypesController(IImageRepository<PuzzleType> puzzleTypeRepository, IMapper mapper)
         {
             _puzzleTypeRepository = puzzleTypeRepository ?? throw new ArgumentNullException(nameof(puzzleTypeRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

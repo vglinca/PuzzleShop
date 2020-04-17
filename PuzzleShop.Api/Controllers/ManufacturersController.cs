@@ -22,9 +22,9 @@ namespace PuzzleShop.Api.Controllers
     [Route("api/[controller]")]
     public class ManufacturersController : ControllerBase
     {
-        private readonly IRepository<Manufacturer> _manufacturersRepository;
+        private readonly IImageRepository<Manufacturer> _manufacturersRepository;
         private readonly IMapper _mapper;
-        public ManufacturersController(IRepository<Manufacturer> manufacturersRepository, IMapper mapper)
+        public ManufacturersController(IImageRepository<Manufacturer> manufacturersRepository, IMapper mapper)
         {
             _manufacturersRepository = manufacturersRepository ??
                                        throw new ArgumentNullException(nameof(manufacturersRepository));

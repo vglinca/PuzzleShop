@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleShop.Tests.Repository
 {
-	public class ManufacturerRepositoryFake : IRepository<Manufacturer>
+	public class ManufacturerRepositoryFake : IImageRepository<Manufacturer>
 	{
 		private readonly ICollection<Manufacturer> _manufacturers;
 

@@ -11,7 +11,7 @@ using PuzzleShop.Persistance.DbContext;
 
 namespace PuzzleShop.Core
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public class Repository<TEntity> : IImageRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly PuzzleShopContext _ctx;
 

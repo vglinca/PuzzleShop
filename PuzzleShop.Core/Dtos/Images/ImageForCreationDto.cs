@@ -11,6 +11,6 @@ namespace PuzzleShop.Core.Dtos.Images
 		[Required]
 		public string Title { get; set; }
 		[Required]
-		public IFormFile Bytes { get; set; }
+		public IFormFile File { get; set; }
 	}
 }

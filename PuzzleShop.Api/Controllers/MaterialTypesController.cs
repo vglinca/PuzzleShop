@@ -16,10 +16,10 @@ namespace PuzzleShop.Api.Controllers
     [Route("api/[controller]")]
     public class MaterialTypeController : ControllerBase
     {
-        private readonly IRepository<MaterialType> _materialTypeRepository;
+        private readonly IImageRepository<MaterialType> _materialTypeRepository;
         private readonly IMapper _mapper;
 
-        public MaterialTypeController(IRepository<MaterialType> materialTypeRepository, IMapper mapper)
+        public MaterialTypeController(IImageRepository<MaterialType> materialTypeRepository, IMapper mapper)
         {
             _materialTypeRepository = materialTypeRepository 
                                       ?? throw new ArgumentNullException(nameof(materialTypeRepository));
