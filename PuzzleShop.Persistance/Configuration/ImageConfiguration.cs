@@ -10,10 +10,10 @@ namespace PuzzleShop.Persistance.Configuration
         public void Configure(EntityTypeBuilder<Image> builder)
         {
             builder.Property(i => i.FileName).IsRequired();
-            builder.HasOne(i => i.Puzzle)
-                .WithMany(p => p.Images)
-                .HasForeignKey(i => i.PuzzleId)
-                .IsRequired();
+            //builder.HasOne(i => i.Puzzle)
+            //    .WithMany(p => p.Images)
+            //    .HasForeignKey(i => i.PuzzleId)
+            //    .IsRequired();
         }
     }
 }

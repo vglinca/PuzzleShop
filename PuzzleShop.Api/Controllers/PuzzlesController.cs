@@ -19,13 +19,15 @@ namespace PuzzleShop.Api.Controllers
 	public class PuzzlesController : ControllerBase
 	{
 		private readonly IPuzzleRepository _puzzleRepository;
+		private readonly IImageRepository _imageRepository;
 		private readonly IMapper _mapper;
 		private readonly IWebHostEnvironment _webHostEnvironment;
 
-		public PuzzlesController(IMapper mapper, IPuzzleRepository puzzleRepository, IWebHostEnvironment env)
+		public PuzzlesController(IMapper mapper, IPuzzleRepository puzzleRepository, IWebHostEnvironment env, IImageRepository imageRepository)
 		{
 			_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 			_puzzleRepository = puzzleRepository ?? throw new ArgumentNullException(nameof(puzzleRepository));
+			_imageRepository = imageRepository ?? throw new ArgumentNullException(nameof(imageRepository));
 			_webHostEnvironment = env;
 		}
 
@@ -53,21 +55,6 @@ namespace PuzzleShop.Api.Controllers
 
 			var webRootPath = _webHostEnvironment.WebRootPath;
 
-			//var i = 1;
-			//foreach (var img in puzzleForCreationDto.Images)
-			//{
-			//	var bytes = Convert.FromBase64String(img.Base64String);
-			//	var fileName = Guid.NewGuid().ToString() + ".jpg";
-			//	var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
-			//	entityToAdd.Images.Add(new Image { FileName = fileName, Title = $"{entityToAdd.Name}-img{i++}" });
-			//	using (var imgFile = new FileStream(filePath, FileMode.Create))
-			//	{
-			//		await imgFile.WriteAsync(bytes, 0, bytes.Length);
-			//		await imgFile.FlushAsync();
-			//	}
-			//}
-
-
 			var i = 1;
 			foreach (var img in puzzleForCreationDto.Images)
 			{
@@ -93,19 +80,6 @@ namespace PuzzleShop.Api.Controllers
 			var puzzleToEdit = await _puzzleRepository.FindByIdAsync(puzzleId);
 			_mapper.Map(puzzleForUpdateDto, puzzleToEdit);
 
-			var webRootPath = _webHostEnvironment.WebRootPath;
-
-			//foreach (var img in puzzleForUpdateDto.Images)
-			//{
-			//	if (img.Id == null || img.Id <= 0)
-			//	{
-			//		var fileName = Guid.NewGuid().ToString() + ".jpg";
-			//		var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
-			//		await System.IO.File.WriteAllBytesAsync(filePath, img.File);
-			//		puzzleToEdit.Images.Add(new Image { FileName = fileName, Title = img.Title });
-			//	}
-			//}
-
 			await _puzzleRepository.UpdateEntityAsync(puzzleToEdit);
 			return Ok();
 		}
@@ -115,6 +89,17 @@ namespace PuzzleShop.Api.Controllers
 		[HttpDelete("{puzzleId}")]
 		public async Task<IActionResult> DeletePuzzle(long puzzleId)
 		{
+			var images = await _imageRepository.GetImagesAsync(puzzleId);
+			var webRootPath = _webHostEnvironment.WebRootPath;
+			foreach (var img in images)
+			{
+				var filePath = Path.Combine($"{webRootPath}/images/{img.FileName}");
+				if (System.IO.File.Exists(filePath))
+				{
+					System.IO.File.Delete(filePath);
+				}
+			}
+
 			var puzzleToDelete = await _puzzleRepository.FindByIdAsync(puzzleId);
 			await _puzzleRepository.DeleteEntityAsync(puzzleToDelete);
 			return NoContent();

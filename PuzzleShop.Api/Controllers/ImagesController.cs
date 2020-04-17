@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Core;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleShop.Api.Controllers
 {
+	[AllowAnonymous]
 	[ApiController]
 	[Route("api/puzzles/{puzzleId}/[controller]")]
 	public class ImagesController : ControllerBase
@@ -36,15 +38,16 @@ namespace PuzzleShop.Api.Controllers
 			return Ok(imgDtos);
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> AddImages(long puzzleId, [FromForm] ImagesCollectionForUpdateDto imagesDtos)
+		[HttpPost(nameof(AddImages))]
+		public async Task<IActionResult> AddImages(long puzzleId, [FromForm] ImageForUpdateDto imagesDtos)
 		{
 			var webRootPath = _env.WebRootPath;
 
 			var imagesToAdd = new List<Image>();
-			foreach (var img in imagesDtos.Images)
-			{
-				if(img.Id != null || img.Id > 0)
+			var img = imagesDtos;
+			//foreach (var img in imagesDtos)
+			//{
+				if(img.Id == null || img.Id <= 0)
 				{
 					var fileName = Guid.NewGuid().ToString() + ".jpg";
 					var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
@@ -54,15 +57,30 @@ namespace PuzzleShop.Api.Controllers
 						await img.File.CopyToAsync(fStream);
 					}
 				}
+			//}
+			if (imagesToAdd.Any())
+			{
+				await _imagesRepository.AddImagesAsync(imagesToAdd);
 			}
-			await _imagesRepository.AddImagesAsync(imagesToAdd);
 			return Ok();
 		}
 
-		[HttpDelete]
+		[HttpPost(nameof(DeleteImages))]
 		public async Task<IActionResult> DeleteImages(long puzzleId, [FromBody] IEnumerable<long> ids)
 		{
+			var images = await _imagesRepository.GetImagesAsync(puzzleId);
+			var webRootPath = _env.WebRootPath;
+			foreach (var img in images)
+			{
+				var filePath = Path.Combine($"{webRootPath}/images/{img.FileName}");
+				if (System.IO.File.Exists(filePath))
+				{
+					System.IO.File.Delete(filePath);
+				}
+			}
+
 			await _imagesRepository.DeleteImagesAsync(puzzleId, ids);
+			
 			return NoContent();
 		}
 	}

@@ -27,13 +27,12 @@ namespace PuzzleShop.Core.Profiles
                     opt => opt.MapFrom(
                         src => src.Images)).ReverseMap();
             CreateMap<PuzzleForCreationDto, Domain.Entities.Puzzle>()
-                .ForMember(dest => dest.DifficultyLevelId,
-                    opt => opt.MapFrom(
+                .ForMember(dest => dest.DifficultyLevelId, opt => opt.MapFrom(
                         src => src.DifficultyLevelId))
-                .ForMember(dest => dest.Images, opt =>
-                    opt.Ignore());
-                
-            CreateMap<PuzzleForUpdateDto, Domain.Entities.Puzzle>();
+                .ForMember(dest => dest.Images, opt => opt.Ignore());
+
+            CreateMap<PuzzleForUpdateDto, Domain.Entities.Puzzle>()
+                .ForMember(dest => dest.Images, opt => opt.Ignore());
         }
     }
 }

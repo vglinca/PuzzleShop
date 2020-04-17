@@ -24,6 +24,6 @@ namespace PuzzleShop.Core.Dtos.Puzzles
         public long DifficultyLevelId { get; set; }
         [Required(ErrorMessage = "MaterialTypeId is required.")]
         public long MaterialTypeId { get; set; }
-        public List<ImageForUpdateDto> Images { get; set; } = new List<ImageForUpdateDto>();
+        //public List<ImageForUpdateDto> Images { get; set; } = new List<ImageForUpdateDto>();
     }
 }
