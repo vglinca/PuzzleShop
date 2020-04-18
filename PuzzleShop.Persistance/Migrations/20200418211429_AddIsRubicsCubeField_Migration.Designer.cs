@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PuzzleShop.Persistance.DbContext;
 
 namespace PuzzleShop.Persistance.Migrations
 {
     [DbContext(typeof(PuzzleShopContext))]
-    partial class PuzzleShopContextModelSnapshot : ModelSnapshot
+    [Migration("20200418211429_AddIsRubicsCubeField_Migration")]
+    partial class AddIsRubicsCubeField_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -540,6 +542,9 @@ namespace PuzzleShop.Persistance.Migrations
                     b.Property<long>("DifficultyLevelId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("IsRubicsCube")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsWcaPuzzle")
                         .HasColumnType("bit");
 
@@ -580,8 +585,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 1L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 376, DateTimeKind.Unspecified).AddTicks(9032), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 484, DateTimeKind.Unspecified).AddTicks(4606), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 1L,
+                            IsRubicsCube = true,
                             IsWcaPuzzle = true,
                             ManufacturerId = 1L,
                             MaterialTypeId = 1L,
@@ -594,8 +600,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 2L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3492), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 486, DateTimeKind.Unspecified).AddTicks(7959), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 1L,
+                            IsRubicsCube = true,
                             IsWcaPuzzle = true,
                             ManufacturerId = 1L,
                             MaterialTypeId = 1L,
@@ -608,8 +615,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 3L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3609), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 486, DateTimeKind.Unspecified).AddTicks(8069), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 1L,
+                            IsRubicsCube = true,
                             IsWcaPuzzle = true,
                             ManufacturerId = 2L,
                             MaterialTypeId = 1L,
@@ -622,8 +630,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 4L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3617), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 486, DateTimeKind.Unspecified).AddTicks(8080), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 1L,
+                            IsRubicsCube = true,
                             IsWcaPuzzle = true,
                             ManufacturerId = 5L,
                             MaterialTypeId = 1L,
@@ -636,8 +645,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 5L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3624), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 486, DateTimeKind.Unspecified).AddTicks(8084), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 1L,
+                            IsRubicsCube = true,
                             IsWcaPuzzle = true,
                             ManufacturerId = 1L,
                             MaterialTypeId = 1L,
@@ -650,8 +660,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 6L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3632), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 486, DateTimeKind.Unspecified).AddTicks(8095), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 1L,
+                            IsRubicsCube = true,
                             IsWcaPuzzle = true,
                             ManufacturerId = 3L,
                             MaterialTypeId = 1L,
@@ -664,8 +675,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 7L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3639), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 486, DateTimeKind.Unspecified).AddTicks(8103), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 1L,
+                            IsRubicsCube = true,
                             IsWcaPuzzle = true,
                             ManufacturerId = 3L,
                             MaterialTypeId = 1L,
@@ -678,8 +690,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 8L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3643), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 486, DateTimeKind.Unspecified).AddTicks(8110), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 0L,
+                            IsRubicsCube = false,
                             IsWcaPuzzle = true,
                             ManufacturerId = 3L,
                             MaterialTypeId = 1L,
@@ -692,8 +705,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 9L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3651), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 486, DateTimeKind.Unspecified).AddTicks(8118), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 0L,
+                            IsRubicsCube = false,
                             IsWcaPuzzle = true,
                             ManufacturerId = 2L,
                             MaterialTypeId = 1L,
@@ -706,8 +720,9 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 10L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3658), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 14, 28, 486, DateTimeKind.Unspecified).AddTicks(8122), new TimeSpan(0, 3, 0, 0, 0)),
                             DifficultyLevelId = 1L,
+                            IsRubicsCube = false,
                             IsWcaPuzzle = true,
                             ManufacturerId = 2L,
                             MaterialTypeId = 1L,
@@ -725,9 +740,6 @@ namespace PuzzleShop.Persistance.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsRubicsCube")
-                        .HasColumnType("bit");
-
                     b.Property<string>("TypeName")
                         .HasColumnType("nvarchar(max)");
 
@@ -739,43 +751,36 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 1L,
-                            IsRubicsCube = true,
                             TypeName = "3x3x3"
                         },
                         new
                         {
                             Id = 2L,
-                            IsRubicsCube = true,
                             TypeName = "4x4x4"
                         },
                         new
                         {
                             Id = 3L,
-                            IsRubicsCube = true,
                             TypeName = "5x5x5"
                         },
                         new
                         {
                             Id = 4L,
-                            IsRubicsCube = true,
                             TypeName = "6x6x6"
                         },
                         new
                         {
                             Id = 5L,
-                            IsRubicsCube = false,
                             TypeName = "skewb"
                         },
                         new
                         {
                             Id = 6L,
-                            IsRubicsCube = false,
                             TypeName = "square-1"
                         },
                         new
                         {
                             Id = 7L,
-                            IsRubicsCube = false,
                             TypeName = "Megaminx"
                         });
                 });

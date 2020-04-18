@@ -67,13 +67,13 @@ namespace PuzzleShop.Persistance.DbContext
 				new MaterialType { Id = 1, Title = "Plastic" });
 
 			modelBuilder.Entity<PuzzleType>().HasData(
-				new PuzzleType { Id = 1, TypeName = "3x3x3" },
-				new PuzzleType { Id = 2, TypeName = "4x4x4" },
-				new PuzzleType { Id = 3, TypeName = "5x5x5" },
-				new PuzzleType { Id = 4, TypeName = "6x6x6" },
-				new PuzzleType { Id = 5, TypeName = "skewb" },
-				new PuzzleType { Id = 6, TypeName = "square-1" },
-				new PuzzleType { Id = 7, TypeName = "Megaminx" });
+				new PuzzleType { Id = 1, TypeName = "3x3x3", IsRubicsCube = true },
+				new PuzzleType { Id = 2, TypeName = "4x4x4", IsRubicsCube = true },
+				new PuzzleType { Id = 3, TypeName = "5x5x5", IsRubicsCube = true },
+				new PuzzleType { Id = 4, TypeName = "6x6x6", IsRubicsCube = true },
+				new PuzzleType { Id = 5, TypeName = "skewb", IsRubicsCube = false },
+				new PuzzleType { Id = 6, TypeName = "square-1", IsRubicsCube = false },
+				new PuzzleType { Id = 7, TypeName = "Megaminx", IsRubicsCube = false });
 
 			modelBuilder.Entity<Color>().HasData(
 				new Color { Id = 1, Title = "White" },
@@ -246,7 +246,7 @@ namespace PuzzleShop.Persistance.DbContext
 					ColorId = 2,
 					DifficultyLevelId = DifficultyLevelId.Medium,
 					MaterialTypeId = 1
-				});
+				}) ;
 			modelBuilder.Entity<Image>().HasData(
 				new Image { Id = 1, FileName = "testfilename", PuzzleId = 1 },
 				new Image { Id = 2, FileName = "testfilename", PuzzleId = 2 });

@@ -24,8 +24,7 @@ namespace PuzzleShop.Core.Extensions
             puzzles = puzzles.Paginate(request.PageNumber, request.PageSize);
             var puzzlesList = await puzzles.ToListAsync();
 
-            return new PagedResponse<TDto>(request.PageNumber, request.PageSize, itemsCount,
-                puzzlesList);
+            return new PagedResponse<TDto>(request.PageNumber, request.PageSize, itemsCount, puzzlesList);
         }
 
         private static IQueryable<T> ApplyFilters<T>(this IQueryable<T> src, RequestFilters filters) where T : class
