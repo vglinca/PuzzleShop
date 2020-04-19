@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
@@ -7,8 +8,8 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core
 {
-    public interface IImageRepository<TEntity> : IEfCoreRepository<TEntity> where TEntity : BaseEntity
+    public interface IRepository<TEntity> : IEfCoreRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<IEnumerable<TEntity>> GetAllAsync(params object[] parameters);
     }
 }

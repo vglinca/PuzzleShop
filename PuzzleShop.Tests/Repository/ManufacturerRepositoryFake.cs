@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleShop.Tests.Repository
 {
-	public class ManufacturerRepositoryFake : IImageRepository<Manufacturer>
+	public class ManufacturerRepositoryFake : IRepository<Manufacturer>
 	{
 		private readonly ICollection<Manufacturer> _manufacturers;
 
@@ -54,7 +54,7 @@ namespace PuzzleShop.Tests.Repository
 			return _manufacturers.FirstOrDefault(e => e.Id == id);
 		}
 
-		public async Task<IEnumerable<Manufacturer>> GetAllAsync()
+		public async Task<IEnumerable<Manufacturer>> GetAllAsync(params object[] parameters)
 		{
 			return _manufacturers;
 		}

@@ -19,12 +19,12 @@ namespace PuzzleShop.Api.Controllers
     [Route("api/[controller]")]
     public class LookupController : ControllerBase
     {
-        private readonly IImageRepository<DifficultyLevel> _difflvlRepository;
+        private readonly IRepository<DifficultyLevel> _difflvlRepository;
         private readonly RoleManager<Role> _roleManager;
-        private readonly IImageRepository<OrderStatus> _orderStatusRepository; 
+        private readonly IRepository<OrderStatus> _orderStatusRepository; 
         private readonly IMapper _mapper;
 
-        public LookupController(IImageRepository<DifficultyLevel> difflvlRepository, IMapper mapper, RoleManager<Role> roleManager, IImageRepository<OrderStatus> orderStatusRepository)
+        public LookupController(IRepository<DifficultyLevel> difflvlRepository, IMapper mapper, RoleManager<Role> roleManager, IRepository<OrderStatus> orderStatusRepository)
         {
             _difflvlRepository = difflvlRepository;
             _mapper = mapper;

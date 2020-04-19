@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Core.Exceptions;
@@ -92,7 +94,7 @@ namespace PuzzleShop.Core.Repository.Impl
             return orders;
         }
 
-        public Task<IEnumerable<Order>> GetAllAsync()
+        public Task<IEnumerable<Order>> GetAllAsync(params object[] parameters)
         {
             throw new System.NotImplementedException();
         }

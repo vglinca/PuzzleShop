@@ -60,7 +60,7 @@ namespace PuzzleShop.Core.Extensions
             return src.Skip((pageNumber - 1) * pageSize).Take(pageSize);
         }
 
-        public static IQueryable<T> ApplySort<T>(this IQueryable<T> src, string orderBy, string direction)
+        private static IQueryable<T> ApplySort<T>(this IQueryable<T> src, string orderBy, string direction)
             where T : class
         {
             if (!string.IsNullOrWhiteSpace(orderBy))
@@ -70,6 +70,17 @@ namespace PuzzleShop.Core.Extensions
                 src = src.OrderBy($"{propertyInfo.Name} {direction}");
             }
              
+            return src;
+        }
+
+        public static IQueryable<T> Filter<T>(this IQueryable<T> src, params object[] parameters) where T : class
+        {
+            if(parameters.Length == 0)
+            {
+                return src;
+            }
+            var query = $"{parameters[0]}.{nameof(string.Contains)}(@0)";
+            src = src.Where(query, parameters[1]);
             return src;
         }
     }

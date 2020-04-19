@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.PuzzleTypes;
 using PuzzleShop.Domain.Entities;
@@ -14,10 +17,10 @@ namespace PuzzleShop.Api.Controllers
     [Route("api/[controller]")]
     public class PuzzleTypesController : ControllerBase
     {
-        private readonly IImageRepository<PuzzleType> _puzzleTypeRepository;
+        private readonly IRepository<PuzzleType> _puzzleTypeRepository;
         private readonly IMapper _mapper;
 
-        public PuzzleTypesController(IImageRepository<PuzzleType> puzzleTypeRepository, IMapper mapper)
+        public PuzzleTypesController(IRepository<PuzzleType> puzzleTypeRepository, IMapper mapper)
         {
             _puzzleTypeRepository = puzzleTypeRepository ?? throw new ArgumentNullException(nameof(puzzleTypeRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -26,6 +29,7 @@ namespace PuzzleShop.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PuzzleTypeTableRowDto>>> GetPuzzleTypes()
         {
+
             var puzzleTypeEntities = await _puzzleTypeRepository.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<PuzzleTypeTableRowDto>>(puzzleTypeEntities));
         }

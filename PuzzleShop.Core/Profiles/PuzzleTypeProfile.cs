@@ -16,6 +16,9 @@ namespace PuzzleShop.Core.Profiles
                         src => src.DifficultyLevel.DifficultyLevelId.ToString()));
 
             CreateMap<Domain.Entities.PuzzleType, PuzzleTypeDto>()
+                .ForMember(dest => dest.Title,
+                    opt => opt.MapFrom(
+                        src => src.TypeName))
                 .ForMember(dest => dest.DifficultyLevelId,
                     opt => opt.MapFrom(
                         src => (long) src.DifficultyLevel.DifficultyLevelId));

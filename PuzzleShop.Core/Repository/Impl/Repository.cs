@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Core.Exceptions;
+using PuzzleShop.Core.Extensions;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
 
@@ -11,7 +13,7 @@ using PuzzleShop.Persistance.DbContext;
 
 namespace PuzzleShop.Core
 {
-    public class Repository<TEntity> : IImageRepository<TEntity> where TEntity : BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly PuzzleShopContext _ctx;
 
@@ -20,12 +22,17 @@ namespace PuzzleShop.Core
             _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public async Task<IEnumerable<TEntity>> GetAllAsync(params object[] parameters)
         {
-            return await _ctx.Set<TEntity>().ToListAsync();
+            var entities = _ctx.Set<TEntity>().AsQueryable();
+            if(parameters.Length > 0)
+            {
+                entities = entities.Filter(parameters);
+            }
+            return await entities.ToListAsync();
         }
 
-        public virtual async Task<TEntity> FindByIdAsync(long id)
+        public async Task<TEntity> FindByIdAsync(long id)
         {
             var entity = //await _ctx.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
                 await _ctx.FindAsync<TEntity>(id);
@@ -37,7 +44,7 @@ namespace PuzzleShop.Core
             return entity;
         }
 
-        public virtual async Task<TEntity> AddEntityAsync(TEntity entity)
+        public async Task<TEntity> AddEntityAsync(TEntity entity)
         {
             if (entity == null)
             {
@@ -49,7 +56,7 @@ namespace PuzzleShop.Core
             return entity;
         }
 
-        public virtual async Task UpdateEntityAsync(TEntity entity)
+        public async Task UpdateEntityAsync(TEntity entity)
         {
             if (entity == null)
             {
@@ -60,7 +67,7 @@ namespace PuzzleShop.Core
             await _ctx.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteEntityAsync(TEntity entity)
+        public async Task DeleteEntityAsync(TEntity entity)
         {
             if (entity == null)
             {
