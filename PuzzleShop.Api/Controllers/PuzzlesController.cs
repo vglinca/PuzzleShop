@@ -32,7 +32,7 @@ namespace PuzzleShop.Api.Controllers
 		}
 
 		[HttpPost(nameof(GetPuzzles))]
-		public async Task<ActionResult<IEnumerable<PuzzleDto>>> GetPuzzles([FromBody] PagedRequest pagedRequest)
+		public async Task<ActionResult<IEnumerable<PuzzleTableRowDto>>> GetPuzzles([FromBody] PagedRequest pagedRequest)
 		{
 			var puzzlesPagedResponse = await _puzzleRepository.GetAllAsync(pagedRequest, _mapper);
 			return Ok(puzzlesPagedResponse);
@@ -68,7 +68,7 @@ namespace PuzzleShop.Api.Controllers
 			}
 
 			await _puzzleRepository.AddEntityAsync(entityToAdd);
-			return CreatedAtAction(nameof(AddPuzzle), new { puzzleId = entityToAdd.Id },
+			return CreatedAtAction(nameof(GetPuzzle), new { puzzleId = entityToAdd.Id },
 				_mapper.Map<PuzzleDto>(entityToAdd));
 		}
 

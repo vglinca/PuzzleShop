@@ -6,6 +6,6 @@ namespace PuzzleShop.Core.Dtos.OrderItems
     {
         public long Id { get; set; }
         public decimal Cost { get; set; }
-        public PuzzleDto Puzzle { get; set; }
+        public PuzzleTableRowDto Puzzle { get; set; }
     }
 }

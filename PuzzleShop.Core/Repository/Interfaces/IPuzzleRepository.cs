@@ -8,6 +8,6 @@ namespace PuzzleShop.Core.Repository.Interfaces
 {
     public interface IPuzzleRepository : IEfCoreRepository<Puzzle>
     {
-        Task<PagedResponse<PuzzleDto>> GetAllAsync(PagedRequest pagedRequest, IMapper mapper);
+        Task<PagedResponse<PuzzleTableRowDto>> GetAllAsync(PagedRequest pagedRequest, IMapper mapper);
     }
 }

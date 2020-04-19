@@ -10,7 +10,7 @@ namespace PuzzleShop.Persistance.Configuration
         public void Configure(EntityTypeBuilder<Puzzle> builder)
         {
             builder.Property(p => p.Name).IsRequired();
-            builder.Property(p => p.IsWcaPuzzle).IsRequired();
+            builder.Property(p => p.IsMagnetic).IsRequired();
             builder.Property(p => p.Description).HasMaxLength(1000);
             
             builder
@@ -38,13 +38,6 @@ namespace PuzzleShop.Persistance.Configuration
                 .HasOne(p => p.MaterialType)
                 .WithMany(m => m.Puzzles)
                 .HasForeignKey(p => p.MaterialTypeId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired();
-
-            builder
-                .HasOne(p => p.DifficultyLevel)
-                .WithMany(d => d.Puzzles)
-                .HasForeignKey(p => p.DifficultyLevelId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 

@@ -25,10 +25,10 @@ namespace PuzzleShop.Core.Repository.Impl
             _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
         }
 
-        public async Task<PagedResponse<PuzzleDto>> GetAllAsync(PagedRequest pagedRequest, IMapper mapper)
+        public async Task<PagedResponse<PuzzleTableRowDto>> GetAllAsync(PagedRequest pagedRequest, IMapper mapper)
         {
             var puzzles = _ctx.Puzzles;
-            return await puzzles.CreatePagedResultAsync<Puzzle, PuzzleDto>(pagedRequest, mapper);
+            return await puzzles.CreatePagedResultAsync<Puzzle, PuzzleTableRowDto>(pagedRequest, mapper);
         }
 
         public async Task<Puzzle> FindByIdAsync(long id)
@@ -61,8 +61,6 @@ namespace PuzzleShop.Core.Repository.Impl
             var materialType = await _ctx.MaterialTypes
                 .FirstOrDefaultAsync(mt => mt.Id == puzzle.MaterialTypeId);
             
-            var difficultyLevel = await _ctx.DifficultyLevels
-                .FirstOrDefaultAsync(l => l.DifficultyLevelId == puzzle.DifficultyLevelId);
 
             foreach (var image in puzzle.Images)
             {
@@ -74,7 +72,6 @@ namespace PuzzleShop.Core.Repository.Impl
             puzzle.Color = color;
             puzzle.PuzzleType = puzzleType;
             puzzle.MaterialType = materialType;
-            puzzle.DifficultyLevel = difficultyLevel;
 
             _ctx.Puzzles.Add(puzzle);
             await _ctx.SaveChangesAsync();

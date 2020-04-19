@@ -321,20 +321,6 @@ namespace PuzzleShop.Persistance.Migrations
                     b.HasIndex("PuzzleId");
 
                     b.ToTable("Images");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            FileName = "testfilename",
-                            PuzzleId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            FileName = "testfilename",
-                            PuzzleId = 2L
-                        });
                 });
 
             modelBuilder.Entity("PuzzleShop.Domain.Entities.Manufacturer", b =>
@@ -537,10 +523,7 @@ namespace PuzzleShop.Persistance.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("DifficultyLevelId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsWcaPuzzle")
+                    b.Property<bool>("IsMagnetic")
                         .HasColumnType("bit");
 
                     b.Property<long>("ManufacturerId")
@@ -558,14 +541,15 @@ namespace PuzzleShop.Persistance.Migrations
                     b.Property<long>("PuzzleTypeId")
                         .HasColumnType("bigint");
 
+                    b.Property<double?>("Rating")
+                        .HasColumnType("float");
+
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
-
-                    b.HasIndex("DifficultyLevelId");
 
                     b.HasIndex("ManufacturerId");
 
@@ -580,9 +564,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 1L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 376, DateTimeKind.Unspecified).AddTicks(9032), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 1L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 286, DateTimeKind.Unspecified).AddTicks(1488), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 1L,
                             MaterialTypeId = 1L,
                             Name = "Gan 356 X",
@@ -594,9 +577,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 2L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3492), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 1L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 289, DateTimeKind.Unspecified).AddTicks(2105), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 1L,
                             MaterialTypeId = 1L,
                             Name = "Gan 356 XS",
@@ -608,9 +590,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 3L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3609), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 1L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 289, DateTimeKind.Unspecified).AddTicks(2249), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 2L,
                             MaterialTypeId = 1L,
                             Name = "MoYu Weilong GTS 3M",
@@ -622,9 +603,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 4L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3617), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 1L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 289, DateTimeKind.Unspecified).AddTicks(2264), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 5L,
                             MaterialTypeId = 1L,
                             Name = "DaYan 7 TengYun",
@@ -636,9 +616,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 5L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3624), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 1L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 289, DateTimeKind.Unspecified).AddTicks(2275), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 1L,
                             MaterialTypeId = 1L,
                             Name = "Gan 354 M",
@@ -650,9 +629,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 6L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3632), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 1L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 289, DateTimeKind.Unspecified).AddTicks(2287), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 3L,
                             MaterialTypeId = 1L,
                             Name = "QiYi Valk Power M",
@@ -664,9 +642,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 7L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3639), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 1L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 289, DateTimeKind.Unspecified).AddTicks(2298), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 3L,
                             MaterialTypeId = 1L,
                             Name = "QiYi WuQue Mini M",
@@ -678,9 +655,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 8L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3643), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 0L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 289, DateTimeKind.Unspecified).AddTicks(2309), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 3L,
                             MaterialTypeId = 1L,
                             Name = "QiYi X-Man Skewb Wingy M",
@@ -692,9 +668,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 9L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3651), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 0L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 289, DateTimeKind.Unspecified).AddTicks(2321), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 2L,
                             MaterialTypeId = 1L,
                             Name = "MoYu Skewb AoYan M",
@@ -706,9 +681,8 @@ namespace PuzzleShop.Persistance.Migrations
                         {
                             Id = 10L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 0, 21, 17, 379, DateTimeKind.Unspecified).AddTicks(3658), new TimeSpan(0, 3, 0, 0, 0)),
-                            DifficultyLevelId = 1L,
-                            IsWcaPuzzle = true,
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 19, 12, 27, 28, 289, DateTimeKind.Unspecified).AddTicks(2336), new TimeSpan(0, 3, 0, 0, 0)),
+                            IsMagnetic = true,
                             ManufacturerId = 2L,
                             MaterialTypeId = 1L,
                             Name = "MoYu Square-1 MeiLong",
@@ -725,7 +699,13 @@ namespace PuzzleShop.Persistance.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long>("DifficultyLevelId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsRubicsCube")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsWca")
                         .HasColumnType("bit");
 
                     b.Property<string>("TypeName")
@@ -733,49 +713,65 @@ namespace PuzzleShop.Persistance.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DifficultyLevelId");
+
                     b.ToTable("PuzzleTypes");
 
                     b.HasData(
                         new
                         {
                             Id = 1L,
+                            DifficultyLevelId = 1L,
                             IsRubicsCube = true,
+                            IsWca = true,
                             TypeName = "3x3x3"
                         },
                         new
                         {
                             Id = 2L,
+                            DifficultyLevelId = 1L,
                             IsRubicsCube = true,
+                            IsWca = true,
                             TypeName = "4x4x4"
                         },
                         new
                         {
                             Id = 3L,
+                            DifficultyLevelId = 1L,
                             IsRubicsCube = true,
+                            IsWca = true,
                             TypeName = "5x5x5"
                         },
                         new
                         {
                             Id = 4L,
+                            DifficultyLevelId = 2L,
                             IsRubicsCube = true,
+                            IsWca = true,
                             TypeName = "6x6x6"
                         },
                         new
                         {
                             Id = 5L,
+                            DifficultyLevelId = 0L,
                             IsRubicsCube = false,
+                            IsWca = true,
                             TypeName = "skewb"
                         },
                         new
                         {
                             Id = 6L,
+                            DifficultyLevelId = 1L,
                             IsRubicsCube = false,
+                            IsWca = true,
                             TypeName = "square-1"
                         },
                         new
                         {
                             Id = 7L,
+                            DifficultyLevelId = 1L,
                             IsRubicsCube = false,
+                            IsWca = true,
                             TypeName = "Megaminx"
                         });
                 });
@@ -878,12 +874,6 @@ namespace PuzzleShop.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PuzzleShop.Domain.Entities.DifficultyLevel", "DifficultyLevel")
-                        .WithMany("Puzzles")
-                        .HasForeignKey("DifficultyLevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PuzzleShop.Domain.Entities.Manufacturer", "Manufacturer")
                         .WithMany("Puzzles")
                         .HasForeignKey("ManufacturerId")
@@ -899,6 +889,15 @@ namespace PuzzleShop.Persistance.Migrations
                     b.HasOne("PuzzleShop.Domain.Entities.PuzzleType", "PuzzleType")
                         .WithMany("Puzzles")
                         .HasForeignKey("PuzzleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PuzzleShop.Domain.Entities.PuzzleType", b =>
+                {
+                    b.HasOne("PuzzleShop.Domain.Entities.DifficultyLevel", "DifficultyLevel")
+                        .WithMany("PuzzlesTypes")
+                        .HasForeignKey("DifficultyLevelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

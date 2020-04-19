@@ -9,6 +9,9 @@ namespace PuzzleShop.Domain.Entities
     {
         public string TypeName { get; set; }
         public bool IsRubicsCube { get; set; }
+        public bool IsWca { get; set; }
+        public DifficultyLevelId DifficultyLevelId { get; set; }
+        public virtual DifficultyLevel DifficultyLevel { get; set; }
         public virtual ICollection<Puzzle> Puzzles { get; private set; }
     }
 }

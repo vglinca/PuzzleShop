@@ -10,6 +10,6 @@ namespace PuzzleShop.Domain.Entities
     {
         public DifficultyLevelId DifficultyLevelId { get; set; }
         public string Title { get; set; }
-        public virtual ICollection<Puzzle> Puzzles { get; private set; }
+        public virtual ICollection<PuzzleType> PuzzlesTypes { get; private set; }
     }
 }

@@ -15,8 +15,8 @@ namespace PuzzleShop.Core.Dtos.Puzzles
         public string Description { get; set; }
         [Required(ErrorMessage = "Price is required.")]
         public decimal Price { get; set; }
-        [Required(ErrorMessage = "You just specify if this puzzle suitable for WCA discipline.")]
-        public bool IsWcaPuzzle { get; set; }
+        [Required(ErrorMessage = "You just specify if this puzzle is magnetic.")]
+        public bool IsMagnetic { get; set; }
         [Required(ErrorMessage = "Weight is required.")]
         public double Weight { get; set; }
         [Required(ErrorMessage = "ManufacturerId is required.")]
@@ -25,8 +25,7 @@ namespace PuzzleShop.Core.Dtos.Puzzles
         public long PuzzleTypeId { get; set; }
         [Required(ErrorMessage = "ColorId is required.")]
         public long ColorId { get; set; }
-        [Required(ErrorMessage = "DifficultyLevelId is required.")]
-        public long DifficultyLevelId { get; set; }
+       
         [Required(ErrorMessage = "MaterialTypeId is required.")]
         public long MaterialTypeId { get; set; }
         [Required(ErrorMessage = "At least one image must be specified.")]

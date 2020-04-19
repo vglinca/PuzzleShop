@@ -67,13 +67,13 @@ namespace PuzzleShop.Persistance.DbContext
 				new MaterialType { Id = 1, Title = "Plastic" });
 
 			modelBuilder.Entity<PuzzleType>().HasData(
-				new PuzzleType { Id = 1, TypeName = "3x3x3", IsRubicsCube = true },
-				new PuzzleType { Id = 2, TypeName = "4x4x4", IsRubicsCube = true },
-				new PuzzleType { Id = 3, TypeName = "5x5x5", IsRubicsCube = true },
-				new PuzzleType { Id = 4, TypeName = "6x6x6", IsRubicsCube = true },
-				new PuzzleType { Id = 5, TypeName = "skewb", IsRubicsCube = false },
-				new PuzzleType { Id = 6, TypeName = "square-1", IsRubicsCube = false },
-				new PuzzleType { Id = 7, TypeName = "Megaminx", IsRubicsCube = false });
+				new PuzzleType { Id = 1, TypeName = "3x3x3", IsRubicsCube = true, IsWca = true, DifficultyLevelId = DifficultyLevelId.Medium },
+				new PuzzleType { Id = 2, TypeName = "4x4x4", IsRubicsCube = true, IsWca = true, DifficultyLevelId = DifficultyLevelId.Medium },
+				new PuzzleType { Id = 3, TypeName = "5x5x5", IsRubicsCube = true, IsWca = true, DifficultyLevelId = DifficultyLevelId.Medium },
+				new PuzzleType { Id = 4, TypeName = "6x6x6", IsRubicsCube = true, IsWca = true, DifficultyLevelId = DifficultyLevelId.High },
+				new PuzzleType { Id = 5, TypeName = "skewb", IsRubicsCube = false, IsWca = true, DifficultyLevelId = DifficultyLevelId.Low },
+				new PuzzleType { Id = 6, TypeName = "square-1", IsRubicsCube = false, IsWca = true, DifficultyLevelId = DifficultyLevelId.Medium },
+				new PuzzleType { Id = 7, TypeName = "Megaminx", IsRubicsCube = false, IsWca = true, DifficultyLevelId = DifficultyLevelId.Medium });
 
 			modelBuilder.Entity<Color>().HasData(
 				new Color { Id = 1, Title = "White" },
@@ -112,13 +112,12 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 1,
 					Name = "Gan 356 X",
 					Price = 45.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 350,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 1,
 					PuzzleTypeId = 1,
 					ColorId = 3,
-					DifficultyLevelId = DifficultyLevelId.Medium,
 					MaterialTypeId = 1,
 				},
 				new Puzzle
@@ -126,13 +125,12 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 2,
 					Name = "Gan 356 XS",
 					Price = 60.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 330,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 1,
 					PuzzleTypeId = 1,
 					ColorId = 1,
-					DifficultyLevelId = DifficultyLevelId.Medium,
 					MaterialTypeId = 1,
 				},
 				new Puzzle
@@ -140,13 +138,12 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 3,
 					Name = "MoYu Weilong GTS 3M",
 					Price = 30.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 345,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 2,
 					PuzzleTypeId = 1,
 					ColorId = 3,
-					DifficultyLevelId = DifficultyLevelId.Medium,
 					MaterialTypeId = 1,
 				},
 				new Puzzle
@@ -154,13 +151,12 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 4,
 					Name = "DaYan 7 TengYun",
 					Price = 25.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 334,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 5,
 					PuzzleTypeId = 1,
 					ColorId = 3,
-					DifficultyLevelId = DifficultyLevelId.Medium,
 					MaterialTypeId = 1,
 				},
 				new Puzzle
@@ -168,13 +164,12 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 5,
 					Name = "Gan 354 M",
 					Price = 34.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 290,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 1,
 					PuzzleTypeId = 1,
 					ColorId = 3,
-					DifficultyLevelId = DifficultyLevelId.Medium,
 					MaterialTypeId = 1,
 				},
 				new Puzzle
@@ -182,13 +177,12 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 6,
 					Name = "QiYi Valk Power M",
 					Price = 17.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 330,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 3,
 					PuzzleTypeId = 1,
 					ColorId = 1,
-					DifficultyLevelId = DifficultyLevelId.Medium,
 					MaterialTypeId = 1,
 				},
 				new Puzzle
@@ -196,13 +190,12 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 7,
 					Name = "QiYi WuQue Mini M",
 					Price = 24.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 330,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 3,
 					PuzzleTypeId = 2,
 					ColorId = 3,
-					DifficultyLevelId = DifficultyLevelId.Medium,
 					MaterialTypeId = 1,
 				},
 				new Puzzle
@@ -210,13 +203,12 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 8,
 					Name = "QiYi X-Man Skewb Wingy M",
 					Price = 12.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 220,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 3,
 					PuzzleTypeId = 5,
 					ColorId = 3,
-					DifficultyLevelId = DifficultyLevelId.Low,
 					MaterialTypeId = 1
 				},
 				new Puzzle
@@ -224,13 +216,12 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 9,
 					Name = "MoYu Skewb AoYan M",
 					Price = 22.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 220,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 2,
 					PuzzleTypeId = 5,
 					ColorId = 2,
-					DifficultyLevelId = DifficultyLevelId.Low,
 					MaterialTypeId = 1
 				},
 				new Puzzle
@@ -238,18 +229,17 @@ namespace PuzzleShop.Persistance.DbContext
 					Id = 10,
 					Name = "MoYu Square-1 MeiLong",
 					Price = 10.0m,
-					IsWcaPuzzle = true,
+					IsMagnetic = true,
 					Weight = 220,
 					DateWhenAdded = DateTimeOffset.Now,
 					ManufacturerId = 2,
 					PuzzleTypeId = 6,
 					ColorId = 2,
-					DifficultyLevelId = DifficultyLevelId.Medium,
 					MaterialTypeId = 1
 				}) ;
-			modelBuilder.Entity<Image>().HasData(
-				new Image { Id = 1, FileName = "testfilename", PuzzleId = 1 },
-				new Image { Id = 2, FileName = "testfilename", PuzzleId = 2 });
+			//modelBuilder.Entity<Image>().HasData(
+			//	new Image { Id = 1, FileName = "testfilename", PuzzleId = 1 },
+			//	new Image { Id = 2, FileName = "testfilename", PuzzleId = 2 });
 
 			modelBuilder.Entity<OrderStatus>()
 				.Ignore(s => s.Id)

@@ -7,7 +7,7 @@ namespace PuzzleShop.Core.Profiles
     {
         public PuzzleProfile()
         {
-            CreateMap<Domain.Entities.Puzzle, PuzzleDto>()
+            CreateMap<Domain.Entities.Puzzle, PuzzleTableRowDto>()
                 .ForMember(dest => dest.Manufacturer,
                     opt => opt.MapFrom(
                         src => src.Manufacturer.Name))
@@ -17,18 +17,16 @@ namespace PuzzleShop.Core.Profiles
                 .ForMember(dest => dest.Color,
                     opt => opt.MapFrom(
                         src => src.Color.Title))
-                .ForMember(dest => dest.DifficultyLevel,
-                    opt => opt.MapFrom(
-                        src => src.DifficultyLevel.DifficultyLevelId.ToString()))
                 .ForMember(dest => dest.MaterialType,
                     opt => opt.MapFrom(
                         src => src.MaterialType.Title))
                 .ForMember(dest => dest.Images,
                     opt => opt.MapFrom(
-                        src => src.Images)).ReverseMap();
+                        src => src.Images));
+
+            CreateMap<Domain.Entities.Puzzle, PuzzleDto>();
+
             CreateMap<PuzzleForCreationDto, Domain.Entities.Puzzle>()
-                .ForMember(dest => dest.DifficultyLevelId, opt => opt.MapFrom(
-                        src => src.DifficultyLevelId))
                 .ForMember(dest => dest.Images, opt => opt.Ignore());
 
             CreateMap<PuzzleForUpdateDto, Domain.Entities.Puzzle>()
