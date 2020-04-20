@@ -45,6 +45,13 @@ namespace PuzzleShop.Api.Controllers
 			return Ok(_mapper.Map<PuzzleDto>(puzzle));
 		}
 
+		[HttpGet("getPuzzleFriendly/{puzzleId}")]
+		public async Task<ActionResult<PuzzleTableRowDto>> GetPuzzleFriendly(long puzzleId)
+		{
+			var puzzle = await _puzzleRepository.FindByIdAsync(puzzleId);
+			return Ok(_mapper.Map<PuzzleTableRowDto>(puzzle));
+		}
+
 		//[Authorize(Roles = "admin")]
 		//[Authorize(Roles = "moderator")]
 		[HttpPost]
