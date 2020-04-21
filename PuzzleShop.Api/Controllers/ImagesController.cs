@@ -73,7 +73,7 @@ namespace PuzzleShop.Api.Controllers
 			foreach (var img in images)
 			{
 				var filePath = Path.Combine($"{webRootPath}/images/{img.FileName}");
-				if (System.IO.File.Exists(filePath))
+				if (System.IO.File.Exists(filePath) && ids.Contains(img.Id))
 				{
 					System.IO.File.Delete(filePath);
 				}

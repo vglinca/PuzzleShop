@@ -28,7 +28,15 @@ namespace PuzzleShop.Core.Repository.Impl
 		public async Task DeleteImagesAsync(long puzzleId, IEnumerable<long> ids)
 		{
 			var images = _ctx.Set<Image>().Where(i => i.PuzzleId == puzzleId);
-			_ctx.Set<Image>().RemoveRange(images);
+			var imagesToRemove = new List<Image>();
+			foreach (var img in images)
+			{
+				if (ids.Contains(img.Id))
+				{
+					imagesToRemove.Add(img);
+				}
+			}
+			_ctx.Set<Image>().RemoveRange(imagesToRemove);
 			await _ctx.SaveChangesAsync();
 		}
 		public async Task<IEnumerable<Image>> GetImagesAsync(long puzzleId)
