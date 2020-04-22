@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
+using PuzzleShop.Core.Dtos.Users;
 using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Services.Impl
@@ -14,15 +15,28 @@ namespace PuzzleShop.Api.Services.Impl
     public class SigningInService : ISigningInService
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public SigningInService(UserManager<User> userManager)
+        public SigningInService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        public async Task<string> SignIn(AuthOptions authOptions, string userName)
+        public async Task<string> SignIn(AuthOptions authOptions, UserForAuthDto userDto)
         {
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByEmailAsync(userDto.Email);
+
+            var passwordResultCheck =
+                await _signInManager.PasswordSignInAsync(user, userDto.Password, false,
+                    false);
+
+            if (!passwordResultCheck.Succeeded)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+
             var userRoles = await _userManager.GetRolesAsync(user);
             var claims = userRoles
                 .Select(role => new Claim(ClaimTypes.Role, role))

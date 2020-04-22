@@ -7,7 +7,6 @@ namespace PuzzleShop.Core.Dtos.Users
     public class UserWithRolesDto
     {
         public long Id { get; set; }
-        public string UserName { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public IList<string> Roles { get; set; } = new List<string>();

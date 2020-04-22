@@ -6,8 +6,6 @@ namespace PuzzleShop.Core.Dtos.Users
 {
     public class UserForRegistrationDto
     {
-        [Required(ErrorMessage ="Username is required.")]
-        public string Username { get; set; }
         [Required(ErrorMessage = "FirstName is required.")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "LastName is required.")]
@@ -18,11 +16,8 @@ namespace PuzzleShop.Core.Dtos.Users
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Address is required.")]
-        public string Address { get; set; }
         [Required(ErrorMessage = "BirthDate is required.")]
         public DateTimeOffset BirthDate { get; set; }
-        [Phone(ErrorMessage ="Invalid phone number.")]
-        public string PhoneNumber { get; set; }
+     
     }
 }
