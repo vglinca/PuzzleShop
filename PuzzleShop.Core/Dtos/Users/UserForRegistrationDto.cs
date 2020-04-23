@@ -6,6 +6,8 @@ namespace PuzzleShop.Core.Dtos.Users
 {
     public class UserForRegistrationDto
     {
+        [Required(ErrorMessage = "UserName is required.")]
+        public string UserName { get; set; }
         [Required(ErrorMessage = "FirstName is required.")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "LastName is required.")]

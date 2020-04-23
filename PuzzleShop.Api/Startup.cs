@@ -58,9 +58,9 @@ namespace PuzzleShop.Api
             services.Configure<IdentityOptions>(o =>
             {
                 o.Password.RequireDigit = true;
-                o.Password.RequireLowercase = false;
-                o.Password.RequireUppercase = false;
-                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequireLowercase = true;
+                o.Password.RequireUppercase = true;
+                o.Password.RequireNonAlphanumeric = true;
             });
             
             services.AddCors();
@@ -156,7 +156,7 @@ namespace PuzzleShop.Api
 
             app.UseSession();
             
-            app.UseTokenInsertionMiddleware();
+            //app.UseTokenInsertionMiddleware();
             
             app.UseRouting();
             

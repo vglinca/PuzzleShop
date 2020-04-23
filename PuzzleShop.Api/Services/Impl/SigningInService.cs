@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Users;
+using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Services.Impl
@@ -27,15 +28,19 @@ namespace PuzzleShop.Api.Services.Impl
         {
             var user = await _userManager.FindByEmailAsync(userDto.Email);
 
+            if(user == null)
+            {
+                throw new UnauthorizedException($"User with email {userDto.Email} could not be found.");
+            }
+
             var passwordResultCheck =
                 await _signInManager.PasswordSignInAsync(user, userDto.Password, false,
                     false);
 
             if (!passwordResultCheck.Succeeded)
             {
-                throw new UnauthorizedAccessException();
+                throw new UnauthorizedException("Wrong credentials.");
             }
-
 
             var userRoles = await _userManager.GetRolesAsync(user);
             var claims = userRoles
@@ -43,6 +48,8 @@ namespace PuzzleShop.Api.Services.Impl
                 .ToList();
             
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.Email, user.Email));
+            claims.Add(new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"));
 
             var signInCredentials = new SigningCredentials(authOptions.GetSymmetricSecurityKey(), 
                 SecurityAlgorithms.HmacSha256);

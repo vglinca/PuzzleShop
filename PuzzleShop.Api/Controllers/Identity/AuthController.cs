@@ -52,15 +52,9 @@ namespace PuzzleShop.Api.Controllers.Identity
 
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthDto userForAuthDto)
-        {
-            //var passwordResultCheck =
-            //    await _signInManager.PasswordSignInAsync(userForAuthDto.UserName, userForAuthDto.Password, false,
-            //        false);
-
-            //if (!passwordResultCheck.Succeeded) return Unauthorized();
-            
+        {   
             var jwtToken = await _signingInService.SignIn(_authOptions, userForAuthDto);
-            HttpContext.Session.SetString("JWToken", jwtToken);
+            //HttpContext.Session.SetString("JWToken", jwtToken);
                 
             return Ok(new {AccessToken = jwtToken});
         }
@@ -70,7 +64,7 @@ namespace PuzzleShop.Api.Controllers.Identity
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            HttpContext.Session.Clear();
+            //HttpContext.Session.Clear();
             return Ok();
         }
     }
