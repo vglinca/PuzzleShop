@@ -53,6 +53,8 @@ namespace PuzzleShop.Api.Services.Impl
                 order.TotalItems += orderItem.Quantity;
 
                 await _ordersRepository.AddEntityAsync(order);
+                orderItem.OrderId = order.Id;
+                await _orderItemRepository.AddEntityAsync(orderItem);
             } 
             else
             {
@@ -66,7 +68,7 @@ namespace PuzzleShop.Api.Services.Impl
                     }
                     else
                     {
-                        existingOrderItem.Cost += orderItem.Cost;
+                        existingOrderItem.Cost = orderItem.Cost;
                         await _orderItemRepository.UpdateEntityAsync(existingOrderItem);
                     }
                 }
@@ -75,9 +77,6 @@ namespace PuzzleShop.Api.Services.Impl
                     orderItem.OrderId = order.Id;
                     await _orderItemRepository.AddEntityAsync(orderItem);
                 }
-
-                order.TotalCost += orderItem.Cost;
-                order.TotalItems += orderItem.Quantity;
 
                 await _ordersRepository.UpdateEntityAsync(order);
             }
@@ -105,10 +104,7 @@ namespace PuzzleShop.Api.Services.Impl
             var orderItem = await _orderItemRepository.FindByIdAsync(itemId);
             await _orderItemRepository.DeleteEntityAsync(orderItem);
 
-            order.TotalItems--;
-            order.TotalCost -= orderItem.Cost;
-
-            if (order.TotalItems > 0)
+            if (order.OrderItems.Any())
             {
                 await _ordersRepository.UpdateEntityAsync(order);
             } else

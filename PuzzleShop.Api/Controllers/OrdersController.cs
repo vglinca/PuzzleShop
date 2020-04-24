@@ -82,12 +82,10 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("removeOrderItem/{itemId}")]
-        public async Task<IActionResult> RemoveOrderItem(long itemId)
+        [HttpDelete("removeOrderItem/{userId}/{itemId}")]
+        public async Task<IActionResult> RemoveOrderItem(long userId, long itemId)
         {
-            var user = await GetCurrentUser();
-
-            await _orderingService.RemoveOrderItemAsync(user.Id, itemId);
+            await _orderingService.RemoveOrderItemAsync(userId, itemId);
             
             return NoContent();
         }
