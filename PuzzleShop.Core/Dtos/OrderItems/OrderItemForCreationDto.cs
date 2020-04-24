@@ -6,8 +6,9 @@ namespace PuzzleShop.Core.Dtos.OrderItems
     {
         [Required]
         public decimal Cost { get; set; }
+        public int Quantity { get; set; }
         [Required]
         public long PuzzleId { get; set; }
-        public int TotalIdenticalItems { get; set; }
+        public long UserId { get; set; }
     }
 }

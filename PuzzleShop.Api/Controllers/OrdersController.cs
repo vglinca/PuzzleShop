@@ -35,32 +35,28 @@ namespace PuzzleShop.Api.Controllers
             _orderingService = orderingService;
         }
 
-        [HttpGet(nameof(GetCart))]
-        public async Task<IActionResult> GetCart()
+        [HttpGet("getCart/{userId}")]
+        public async Task<IActionResult> GetCart(long userId)
         {
-            var user = await GetCurrentUser();
-            var pendingOrder = await _orderingService.GetOrderByStatusAsync(user.Id, OrderStatusId.Pending);
+            var pendingOrder = await _orderingService.GetOrderByStatusAsync(userId, OrderStatusId.Pending);
 
             return Ok(_mapper.Map<OrderDto>(pendingOrder));
         }
 
-        [HttpGet("orders")]
-        public async Task<IActionResult> GetAllOrders()
+        [HttpGet("orders/{userId}")]
+        public async Task<IActionResult> GetAllOrders(long userId)
         {
-            var user = await GetCurrentUser();
-            var orders = await _orderingService.GetUserOrdersAsync(user.Id);
+            var orders = await _orderingService.GetUserOrdersAsync(userId);
             return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
         }
         
         [HttpPost(nameof(AddToCart))]
         public async Task<IActionResult> AddToCart([FromBody] OrderItemForCreationDto orderItemForCreationDto)
         {
-            var user = await GetCurrentUser();
-            
             var orderItem = _mapper.Map<OrderItem>(orderItemForCreationDto);
-            await _orderingService.AddToCartAsync(orderItem, user.Id);
+            await _orderingService.AddToCartAsync(orderItem, orderItemForCreationDto.UserId);
 
-            return NoContent();
+            return Ok();
         }
         
         [HttpPut(nameof(ConfirmOrder))]

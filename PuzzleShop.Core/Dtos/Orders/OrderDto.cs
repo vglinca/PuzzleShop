@@ -10,7 +10,7 @@ namespace PuzzleShop.Core.Dtos.Orders
     public class OrderDto
     {
         public long Id { get; set; }
-        public UserDto User { get; set; }
+        public long UserId { get; set; }
         public DateTimeOffset OrderDate { get; set; }
         public int TotalItems { get; set; }
         public decimal TotalCost { get; set; }

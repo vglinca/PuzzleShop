@@ -22,7 +22,7 @@ namespace PuzzleShop.Api.Services.Impl
 
         public async Task<Order> GetOrderByStatusAsync(long userId, OrderStatusId orderStatusId)
         {
-            return await _ordersRepository.FindByUserIdAsync(userId, orderStatusId);
+            return await _ordersRepository.FindByUserIdAndStatusAsync(userId, orderStatusId);
         }
 
         public async Task<IEnumerable<Order>> GetUserOrdersAsync(long userId)
@@ -37,7 +37,7 @@ namespace PuzzleShop.Api.Services.Impl
 
         public async Task AddToCartAsync(OrderItem orderItem, long userId)
         {
-            var order = await _ordersRepository.FindByUserIdAsync(userId, OrderStatusId.Pending);
+            var order = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
             if (order == null)
             {
                 order = new Order
@@ -50,18 +50,37 @@ namespace PuzzleShop.Api.Services.Impl
                 };
                 
                 order.TotalCost += orderItem.Cost;
-                order.TotalItems++;
+                order.TotalItems += orderItem.Quantity;
 
                 await _ordersRepository.AddEntityAsync(order);
-            } else
+            } 
+            else
             {
+                var existingOrderItem = order.OrderItems.FirstOrDefault(item => item.PuzzleId == orderItem.PuzzleId);
+                if(existingOrderItem != null)
+                {
+                    existingOrderItem.Quantity = orderItem.Quantity;
+                    if(existingOrderItem.Quantity == 0)
+                    {
+                        await _orderItemRepository.DeleteEntityAsync(existingOrderItem);
+                    }
+                    else
+                    {
+                        existingOrderItem.Cost += orderItem.Cost;
+                        await _orderItemRepository.UpdateEntityAsync(existingOrderItem);
+                    }
+                }
+                else
+                {
+                    orderItem.OrderId = order.Id;
+                    await _orderItemRepository.AddEntityAsync(orderItem);
+                }
+
                 order.TotalCost += orderItem.Cost;
-                order.TotalItems++;
+                order.TotalItems += orderItem.Quantity;
 
                 await _ordersRepository.UpdateEntityAsync(order);
             }
-            orderItem.OrderId = order.Id;
-            await _orderItemRepository.AddEntityAsync(orderItem);
         }
 
         public async Task UpdateOrderStatusAsync(long orderId, OrderStatusId orderStatusId)
@@ -73,7 +92,7 @@ namespace PuzzleShop.Api.Services.Impl
 
         public async Task UpdateOrderStatusFromOldOneAsync(long userId, OrderStatusId oldStatus, OrderStatusId newStatus)
         {
-            var orderWithOldStatus = await _ordersRepository.FindByUserIdAsync(userId, oldStatus);
+            var orderWithOldStatus = await _ordersRepository.FindByUserIdAndStatusAsync(userId, oldStatus);
             orderWithOldStatus.OrderStatusId = newStatus;
 
             await _ordersRepository.UpdateEntityAsync(orderWithOldStatus);
@@ -81,7 +100,7 @@ namespace PuzzleShop.Api.Services.Impl
 
         public async Task RemoveOrderItemAsync(long userId, long itemId)
         {
-            var order = await _ordersRepository.FindByUserIdAsync(userId, OrderStatusId.Pending);
+            var order = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
             
             var orderItem = await _orderItemRepository.FindByIdAsync(itemId);
             await _orderItemRepository.DeleteEntityAsync(orderItem);

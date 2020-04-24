@@ -75,7 +75,7 @@ namespace PuzzleShop.Core.Repository.Impl
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task<Order> FindByUserIdAsync(long userId, OrderStatusId statusId)
+        public async Task<Order> FindByUserIdAndStatusAsync(long userId, OrderStatusId statusId)
         {
             var order = await _ctx.Orders
                 .FirstOrDefaultAsync(o => o.UserId == userId && o.OrderStatusId == statusId);

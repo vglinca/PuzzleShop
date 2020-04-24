@@ -28,6 +28,8 @@ namespace PuzzleShop.Core.Dtos.Puzzles
        
         [Required(ErrorMessage = "MaterialTypeId is required.")]
         public long MaterialTypeId { get; set; }
+        [Required]
+        public uint AvailableInStock { get; set; }
         [Required(ErrorMessage = "At least one image must be specified.")]
         public List<IFormFile> Images { get; set; } = new List<IFormFile>();
         //public List<ImageForCreationDto> Images { get; set; } = new List<ImageForCreationDto>();

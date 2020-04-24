@@ -19,6 +19,7 @@ namespace PuzzleShop.Core.Dtos.Puzzles
         public string Color { get; set; }
         public string MaterialType { get; set; }
         public double? Rating { get; set; }
+        public uint AvailableInStock { get; set; }
         public List<ImageDto> Images { get; set; } = new List<ImageDto>();
     }
 }

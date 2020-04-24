@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PuzzleShop.Persistance.DbContext;
 
 namespace PuzzleShop.Persistance.Migrations
 {
     [DbContext(typeof(PuzzleShopContext))]
-    partial class PuzzleShopContextModelSnapshot : ModelSnapshot
+    [Migration("20200424144121_AddQuantityFieldInOrderItem_Migration")]
+    partial class AddQuantityFieldInOrderItem_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -517,9 +519,6 @@ namespace PuzzleShop.Persistance.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("AvailableInStock")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ColorId")
                         .HasColumnType("bigint");
 
@@ -569,9 +568,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 1L,
-                            AvailableInStock = 0L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 753, DateTimeKind.Unspecified).AddTicks(5838), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 393, DateTimeKind.Unspecified).AddTicks(258), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 1L,
                             MaterialTypeId = 1L,
@@ -583,9 +581,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 2L,
-                            AvailableInStock = 0L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 756, DateTimeKind.Unspecified).AddTicks(2620), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 395, DateTimeKind.Unspecified).AddTicks(3011), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 1L,
                             MaterialTypeId = 1L,
@@ -597,9 +594,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 3L,
-                            AvailableInStock = 0L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 756, DateTimeKind.Unspecified).AddTicks(2722), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 395, DateTimeKind.Unspecified).AddTicks(3131), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 2L,
                             MaterialTypeId = 1L,
@@ -611,9 +607,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 4L,
-                            AvailableInStock = 0L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 756, DateTimeKind.Unspecified).AddTicks(2734), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 395, DateTimeKind.Unspecified).AddTicks(3143), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 5L,
                             MaterialTypeId = 1L,
@@ -625,9 +620,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 5L,
-                            AvailableInStock = 0L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 756, DateTimeKind.Unspecified).AddTicks(2741), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 395, DateTimeKind.Unspecified).AddTicks(3150), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 1L,
                             MaterialTypeId = 1L,
@@ -639,9 +633,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 6L,
-                            AvailableInStock = 0L,
                             ColorId = 1L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 756, DateTimeKind.Unspecified).AddTicks(2749), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 395, DateTimeKind.Unspecified).AddTicks(3158), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 3L,
                             MaterialTypeId = 1L,
@@ -653,9 +646,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 7L,
-                            AvailableInStock = 0L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 756, DateTimeKind.Unspecified).AddTicks(2756), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 395, DateTimeKind.Unspecified).AddTicks(3162), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 3L,
                             MaterialTypeId = 1L,
@@ -667,9 +659,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 8L,
-                            AvailableInStock = 0L,
                             ColorId = 3L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 756, DateTimeKind.Unspecified).AddTicks(2760), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 395, DateTimeKind.Unspecified).AddTicks(3169), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 3L,
                             MaterialTypeId = 1L,
@@ -681,9 +672,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 9L,
-                            AvailableInStock = 0L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 756, DateTimeKind.Unspecified).AddTicks(2768), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 395, DateTimeKind.Unspecified).AddTicks(3177), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 2L,
                             MaterialTypeId = 1L,
@@ -695,9 +685,8 @@ namespace PuzzleShop.Persistance.Migrations
                         new
                         {
                             Id = 10L,
-                            AvailableInStock = 0L,
                             ColorId = 2L,
-                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 18, 16, 15, 756, DateTimeKind.Unspecified).AddTicks(2775), new TimeSpan(0, 3, 0, 0, 0)),
+                            DateWhenAdded = new DateTimeOffset(new DateTime(2020, 4, 24, 17, 41, 20, 395, DateTimeKind.Unspecified).AddTicks(3184), new TimeSpan(0, 3, 0, 0, 0)),
                             IsMagnetic = true,
                             ManufacturerId = 2L,
                             MaterialTypeId = 1L,

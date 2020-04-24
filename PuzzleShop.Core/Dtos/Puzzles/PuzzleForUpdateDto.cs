@@ -25,6 +25,8 @@ namespace PuzzleShop.Core.Dtos.Puzzles
         [Required(ErrorMessage = "MaterialTypeId is required.")]
         public long MaterialTypeId { get; set; }
         public double? Rating { get; set; }
+        [Required]
+        public uint AvailableInStock { get; set; }
         //public List<ImageForUpdateDto> Images { get; set; } = new List<ImageForUpdateDto>();
     }
 }
