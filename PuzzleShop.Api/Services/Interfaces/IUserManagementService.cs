@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using PuzzleShop.Core.Dtos.Users;
+using PuzzleShop.Core.PaginationModels;
 
 namespace PuzzleShop.Api.Services.Interfaces
 {
     public interface IUserManagementService
     {
-        Task<IEnumerable<UserDto>> GetAll();
-        Task<UserWithRolesDto> GetUser(long userId);
-        Task EditUserRoles(long userId, IEnumerable<string> roles);
+        Task<PagedResponse<UserWithRolesDto>> GetAllAsync(PagedRequest pagedRequest);
+        Task<UserWithRolesDto> GetUserAsync(long userId);
+        Task EditUserRolesAsync(long userId, IEnumerable<string> roles);
         Task BanUser(long userId);
         Task UnbanUser(long userId);
         Task DeleteUser(long userId);

@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Users;
 using PuzzleShop.Core.Exceptions;
+using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Domain.Entities.Auth;
+using PuzzleShop.Core.Extensions;
 
 namespace PuzzleShop.Api.Services.Impl
 {
@@ -22,14 +24,14 @@ namespace PuzzleShop.Api.Services.Impl
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAll()
+        public async Task<PagedResponse<UserWithRolesDto>> GetAllAsync(PagedRequest pagedRequest)
         {
-            var users = await _userManager.Users.ToListAsync();
+            var users = _userManager.Users.AsQueryable();
 
-            return _mapper.Map<IEnumerable<UserDto>>(users);
+            return await users.CreatePagedResultAsync<User, UserWithRolesDto>(pagedRequest, _mapper);
         }
 
-        public async Task<UserWithRolesDto> GetUser(long userId)
+        public async Task<UserWithRolesDto> GetUserAsync(long userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)
@@ -44,7 +46,7 @@ namespace PuzzleShop.Api.Services.Impl
             return userWithRolesDto;
         }
 
-        public async Task EditUserRoles(long userId, IEnumerable<string> roles)
+        public async Task EditUserRolesAsync(long userId, IEnumerable<string> roles)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)

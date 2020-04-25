@@ -18,10 +18,7 @@ namespace PuzzleShop.Core.Profiles
                     opt => opt.MapFrom(
                         src => $"{src.FirstName} {src.LastName}")).ReverseMap();
             CreateMap<UserForUpdateDto, Domain.Entities.Auth.User>();
-            CreateMap<Domain.Entities.Auth.User, UserWithRolesDto>()
-                .ForMember(dest => dest.Name,
-                    opt => opt.MapFrom(
-                        src => $"{src.FirstName} {src.LastName}"));
+            CreateMap<Domain.Entities.Auth.User, UserWithRolesDto>();
         }
     }
 }

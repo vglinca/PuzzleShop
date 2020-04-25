@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Users;
+using PuzzleShop.Core.PaginationModels;
 
 namespace PuzzleShop.Api.Controllers.Identity
 {
-    [Authorize(Roles = "admin")]
-    [Authorize(Roles = "moderator")]
+    //[Authorize(Roles = "admin")]
+    //[Authorize(Roles = "moderator")]
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -21,16 +23,17 @@ namespace PuzzleShop.Api.Controllers.Identity
             _userManagementService = userManagementService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        [HttpPost("GetPagedUsers")]
+        public async Task<IActionResult> GetUsers([FromBody] PagedRequest request)
         {
-            return Ok(await _userManagementService.GetAll());
+            var pagedUsers = await _userManagementService.GetAllAsync(request);
+            return Ok(pagedUsers);
         }
         
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserWithRolesDto>> GetUser(long userId)
         {
-            var user = await _userManagementService.GetUser(userId);
+            var user = await _userManagementService.GetUserAsync(userId);
             
             return Ok(user);
         }
@@ -39,7 +42,7 @@ namespace PuzzleShop.Api.Controllers.Identity
         public async Task<IActionResult> EditUserRoles(long userId, [FromBody] IEnumerable<string> roles)
         {
             var rolesAsArray = roles as string[] ?? roles.ToArray();
-            await _userManagementService.EditUserRoles(userId, rolesAsArray);
+            await _userManagementService.EditUserRolesAsync(userId, rolesAsArray);
 
             return NoContent();
         }

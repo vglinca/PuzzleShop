@@ -15,7 +15,7 @@ namespace PuzzleShop.Core.Extensions
     public static class QueryableExtensions
     {
         public static async Task<PagedResponse<TDto>> CreatePagedResultAsync<TEntity, TDto>(this IQueryable<TEntity> src,
-            PagedRequest request, IMapper mapper) where TEntity : BaseEntity where TDto : class
+            PagedRequest request, IMapper mapper) where TEntity : class where TDto : class
         {
             var puzzles = src.ProjectTo<TDto>(mapper.ConfigurationProvider);
             puzzles = puzzles.ApplyFilters(request.RequestFilters);
