@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Dtos.Orders;
+using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
 
@@ -13,16 +16,23 @@ namespace PuzzleShop.Api.Services.Impl
     {
         private readonly IOrderRepository _ordersRepository;
         private readonly IRepository<OrderItem> _orderItemRepository;
+        private readonly IMapper _mapper;
 
-        public OrderingService(IOrderRepository orderRepository, IRepository<OrderItem> orderItemRepository)
+        public OrderingService(IOrderRepository orderRepository, IRepository<OrderItem> orderItemRepository, IMapper mapper)
         {
             _ordersRepository = orderRepository;
             _orderItemRepository = orderItemRepository;
+            _mapper = mapper;
         }
 
         public async Task<Order> GetOrderByStatusAsync(long userId, OrderStatusId orderStatusId)
         {
             return await _ordersRepository.FindByUserIdAndStatusAsync(userId, orderStatusId);
+        }
+
+        public async Task<PagedResponse<OrderTableRowDto>> GetPagedOrdersAsync(PagedRequest request)
+        {
+            return await _ordersRepository.GetPagedOrders(request, _mapper);
         }
 
         public async Task<IEnumerable<Order>> GetUserOrdersAsync(long userId)
@@ -35,7 +45,7 @@ namespace PuzzleShop.Api.Services.Impl
             return await _ordersRepository.FindByIdAsync(orderId);
         }
 
-        public async Task AddToCartAsync(OrderItem orderItem, long userId)
+        public async Task EditCartAsync(OrderItem orderItem, long userId)
         {
             var order = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
             if (order == null)
@@ -61,6 +71,15 @@ namespace PuzzleShop.Api.Services.Impl
                 var existingOrderItem = order.OrderItems.FirstOrDefault(item => item.PuzzleId == orderItem.PuzzleId);
                 if(existingOrderItem != null)
                 {
+                    //first substract order items quantity. We can't just make addition 
+                    //because orderItem's quantity can be less than existingOrderItem's one 
+                    //same logic with TotalCost
+                    order.TotalItems -= existingOrderItem.Quantity;
+                    order.TotalItems += orderItem.Quantity;
+
+                    order.TotalCost -= existingOrderItem.Cost;
+                    order.TotalCost += orderItem.Cost;
+
                     existingOrderItem.Quantity = orderItem.Quantity;
                     if(existingOrderItem.Quantity == 0)
                     {
@@ -76,6 +95,8 @@ namespace PuzzleShop.Api.Services.Impl
                 {
                     orderItem.OrderId = order.Id;
                     await _orderItemRepository.AddEntityAsync(orderItem);
+                    order.TotalItems += orderItem.Quantity;
+                    order.TotalCost += orderItem.Cost;
                 }
 
                 await _ordersRepository.UpdateEntityAsync(order);

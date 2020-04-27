@@ -4,8 +4,12 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.Exceptions;
+using PuzzleShop.Core.Extensions;
+using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
@@ -23,6 +27,14 @@ namespace PuzzleShop.Core.Repository.Impl
 
         public void Dispose()
         {
+        }
+
+        public async Task<PagedResponse<OrderTableRowDto>> GetPagedOrders(PagedRequest request, IMapper mapper)
+        {
+            //pending and non-confirmed orders can not be seen by admin. So thus he won't be able to change their status.
+            var orders = _ctx.Orders
+                .Where(o => o.OrderStatusId != OrderStatusId.AwaitingPayment || o.OrderStatusId != OrderStatusId.Pending);
+            return await orders.CreatePagedResultAsync<Order, OrderTableRowDto>(request, mapper);
         }
 
         public async Task<Order> FindByIdAsync(long id)

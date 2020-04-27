@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.Dtos.Users;
+using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace PuzzleShop.Api.Controllers
 {
-	[Authorize(Roles = "admin")]
-	[Authorize(Roles = "moderator")]
+	//[Authorize(Roles = "admin")]
+	//[Authorize(Roles = "moderator")]
+	[AllowAnonymous]
 	[ApiController]
 	[Route("api/[controller]")]
 	public class ManageOrdersController : ControllerBase
@@ -27,18 +29,19 @@ namespace PuzzleShop.Api.Controllers
 			_mapper = mapper;
 		}
 
-		[HttpGet("userOrders/{userId}")]
-		public async Task<IActionResult> GetUserOrders(long userId)
+		[HttpPost("getOrdersPaged")]
+		public async Task<IActionResult> GetOrdersPaged([FromBody] PagedRequest request)
 		{
-			var orders = await _orderingService.GetUserOrdersAsync(userId);
-			return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
+			var orders = await _orderingService.GetPagedOrdersAsync(request);
+			return Ok(orders);
 		}
 
 		[HttpGet("{orderId}")]
 		public async Task<IActionResult> GetOrder(long orderId)
 		{
 			var order = await _orderingService.GetOrderByIdASync(orderId);
-			return Ok(_mapper.Map<OrderDto>(order));
+			var orderModel = _mapper.Map<OrderDto>(order);
+			return Ok(orderModel);
 		}
 
 		[HttpPut("orderStatus/{orderId}")]

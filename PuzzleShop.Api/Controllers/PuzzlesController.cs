@@ -42,18 +42,20 @@ namespace PuzzleShop.Api.Controllers
 		public async Task<ActionResult<PuzzleDto>> GetPuzzle(long puzzleId)
 		{
 			var puzzle = await _puzzleRepository.FindByIdAsync(puzzleId);
-			return Ok(_mapper.Map<PuzzleDto>(puzzle));
+			var model = _mapper.Map<PuzzleDto>(puzzle);
+			return Ok(model);
 		}
 
 		[HttpGet("getPuzzleFriendly/{puzzleId}")]
 		public async Task<ActionResult<PuzzleTableRowDto>> GetPuzzleFriendly(long puzzleId)
 		{
 			var puzzle = await _puzzleRepository.FindByIdAsync(puzzleId);
-			return Ok(_mapper.Map<PuzzleTableRowDto>(puzzle));
+			var model = _mapper.Map<PuzzleTableRowDto>(puzzle);
+			return Ok(model);
 		}
 
-		//[Authorize(Roles = "admin")]
-		//[Authorize(Roles = "moderator")]
+		[Authorize(Roles = "admin")]
+		[Authorize(Roles = "moderator")]
 		[HttpPost]
 		public async Task<ActionResult<PuzzleDto>> AddPuzzle([FromForm]PuzzleForCreationDto puzzleForCreationDto)
 		{
@@ -75,12 +77,12 @@ namespace PuzzleShop.Api.Controllers
 			}
 
 			await _puzzleRepository.AddEntityAsync(entityToAdd);
-			return CreatedAtAction(nameof(GetPuzzle), new { puzzleId = entityToAdd.Id },
-				_mapper.Map<PuzzleDto>(entityToAdd));
+			var model = _mapper.Map<PuzzleDto>(entityToAdd);
+			return CreatedAtAction(nameof(GetPuzzle), new { puzzleId = entityToAdd.Id }, model);
 		}
 
-		//[Authorize(Roles = "admin")]
-		//[Authorize(Roles = "moderator")]
+		[Authorize(Roles = "admin")]
+		[Authorize(Roles = "moderator")]
 		[HttpPut("{puzzleId}")]
 		public async Task<IActionResult> UpdatePuzzle(long puzzleId, [FromBody] PuzzleForUpdateDto puzzleForUpdateDto)
 		{
@@ -88,11 +90,11 @@ namespace PuzzleShop.Api.Controllers
 			_mapper.Map(puzzleForUpdateDto, puzzleToEdit);
 
 			await _puzzleRepository.UpdateEntityAsync(puzzleToEdit);
-			return Ok();
+			return NoContent();
 		}
 
-		//[Authorize(Roles = "admin")]
-		//[Authorize(Roles = "moderator")]
+		[Authorize(Roles = "admin")]
+		[Authorize(Roles = "moderator")]
 		[HttpDelete("{puzzleId}")]
 		public async Task<IActionResult> DeletePuzzle(long puzzleId)
 		{
@@ -109,6 +111,7 @@ namespace PuzzleShop.Api.Controllers
 
 			var puzzleToDelete = await _puzzleRepository.FindByIdAsync(puzzleId);
 			await _puzzleRepository.DeleteEntityAsync(puzzleToDelete);
+			
 			return NoContent();
 		}
 	}

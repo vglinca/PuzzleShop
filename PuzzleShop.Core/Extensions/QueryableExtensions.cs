@@ -17,12 +17,12 @@ namespace PuzzleShop.Core.Extensions
         public static async Task<PagedResponse<TDto>> CreatePagedResultAsync<TEntity, TDto>(this IQueryable<TEntity> src,
             PagedRequest request, IMapper mapper) where TEntity : class where TDto : class
         {
-            var puzzles = src.ProjectTo<TDto>(mapper.ConfigurationProvider);
-            puzzles = puzzles.ApplyFilters(request.RequestFilters);
-            var itemsCount = await puzzles.CountAsync();
-            puzzles = puzzles.ApplySort(request.OrderBy, request.OrderByDirection);
-            puzzles = puzzles.Paginate(request.PageNumber, request.PageSize);
-            var puzzlesList = await puzzles.ToListAsync();
+            var entities = src.ProjectTo<TDto>(mapper.ConfigurationProvider);
+            entities = entities.ApplyFilters(request.RequestFilters);
+            var itemsCount = await entities.CountAsync();
+            entities = entities.ApplySort(request.OrderBy, request.OrderByDirection);
+            entities = entities.Paginate(request.PageNumber, request.PageSize);
+            var puzzlesList = await entities.ToListAsync();
 
             return new PagedResponse<TDto>(request.PageNumber, request.PageSize, itemsCount, puzzlesList);
         }

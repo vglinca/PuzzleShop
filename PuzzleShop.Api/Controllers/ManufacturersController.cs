@@ -47,8 +47,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok(response);
         }
 
-        //[Authorize(Roles = "admin")]
-        //[Authorize(Roles = "moderator")]
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPost]
         public async Task<ActionResult> AddManufacturer(
            [FromBody] ManufacturerForCreateDto manufacturerForCreateDto)
@@ -58,11 +58,11 @@ namespace PuzzleShop.Api.Controllers
 
             var responseEntity = _mapper.Map<ManufacturerDto>(manufacturerEntity);
 
-            return CreatedAtAction(nameof(AddManufacturer), new {manufacturerId = manufacturerEntity.Id}, responseEntity);
+            return CreatedAtAction(nameof(GetManufacturer), new {manufacturerId = manufacturerEntity.Id}, responseEntity);
         }
 
-        //[Authorize(Roles = "admin")]
-        //[Authorize(Roles = "moderator")]
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPut("{manufacturerId}")]
         public async Task<IActionResult> UpdateManufacturer(long manufacturerId,
             [FromBody] ManufacturerForUpdateDto manufacturerForUpdateDto)
@@ -77,32 +77,6 @@ namespace PuzzleShop.Api.Controllers
 
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
-        [HttpPatch("{manufacturerId}")]
-        public async Task<IActionResult> PartiallyUpdateManufacturer(long manufacturerId,
-            [FromBody] JsonPatchDocument<ManufacturerForUpdateDto> jsonPatchDocument)
-        {
-            //retrieve target manufacturer from storage
-            var manufacturerFromRepo = await _manufacturersRepository.FindByIdAsync(manufacturerId);
-           
-            //convert found manufacturerEntity to manufacturerForUpd DTO
-            var manufacturerToPatch = _mapper.Map<ManufacturerForUpdateDto>(manufacturerFromRepo);
-            jsonPatchDocument.ApplyTo(manufacturerToPatch, ModelState);
-            //validate model before updating the entity
-            if (!TryValidateModel(manufacturerToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-            //convert back to entity updated manufacturerForUpd DTO
-            //now manufacturerFromRepo contains updated fields
-            _mapper.Map(manufacturerToPatch, manufacturerFromRepo);
-            //update entity and save changes
-            await _manufacturersRepository.UpdateEntityAsync(manufacturerFromRepo);
-            
-            return NoContent();
-        }
-
-        //[Authorize(Roles = "admin")]
-        //[Authorize(Roles = "moderator")]
         [HttpDelete("{manufacturerId}")]
         public async Task<IActionResult> DeleteManufacturer(long manufacturerId)
         {
@@ -110,18 +84,6 @@ namespace PuzzleShop.Api.Controllers
             await _manufacturersRepository.DeleteEntityAsync(entityToDel);
             
             return NoContent();
-        }
-
-        //override this to call invalid model state response factory instead of base.ValidationProblem...
-        //to execute custom invalid model state response
-        [NonAction]
-        public override ActionResult ValidationProblem(
-            [ActionResultObjectValue]ModelStateDictionary modelStateDictionary)
-        {
-            var options = HttpContext.RequestServices
-                .GetRequiredService<IOptions<ApiBehaviorOptions>>();
-            
-            return (ActionResult) options.Value.InvalidModelStateResponseFactory(ControllerContext);
         }
     }
 }

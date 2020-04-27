@@ -29,36 +29,38 @@ namespace PuzzleShop.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PuzzleTypeTableRowDto>>> GetPuzzleTypes()
         {
-
             var puzzleTypeEntities = await _puzzleTypeRepository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<PuzzleTypeTableRowDto>>(puzzleTypeEntities));
+            var models = _mapper.Map<IEnumerable<PuzzleTypeTableRowDto>>(puzzleTypeEntities);
+            return Ok(models);
         }
 
         [HttpGet("{puzzleTypeId}")]
         public async Task<ActionResult<PuzzleTypeDto>> GetPuzzleType(long puzzleTypeId)
         {
             var puzzleTypeEntity = await _puzzleTypeRepository.FindByIdAsync(puzzleTypeId);
-            return Ok(_mapper.Map<PuzzleTypeDto>(puzzleTypeEntity));
+            var model = _mapper.Map<PuzzleTypeDto>(puzzleTypeEntity);
+            return Ok(model);
         }
 
         [HttpGet("getPuzzleTypeFriendly/{puzzleTypeId}")]
         public async Task<ActionResult<PuzzleTypeTableRowDto>> GetPuzzleTypeFriendly(long puzzleTypeId)
         {
             var puzzleTypeEntity = await _puzzleTypeRepository.FindByIdAsync(puzzleTypeId);
-            return Ok(_mapper.Map<PuzzleTypeTableRowDto>(puzzleTypeEntity));
+            var model = _mapper.Map<PuzzleTypeTableRowDto>(puzzleTypeEntity);
+            return Ok(model);
         }
 
-        //[Authorize(Roles = "admin")]
-        //[Authorize(Roles = "moderator")]
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpPost]
         public async Task<ActionResult<PuzzleTypeDto>> AddPuzzleType(
             [FromBody] PuzzleTypeForCreationDto puzzleTypeForCreationDto)
         {
             var newPuzzleType = _mapper.Map<Domain.Entities.PuzzleType>(puzzleTypeForCreationDto);
             await _puzzleTypeRepository.AddEntityAsync(newPuzzleType);
-            
-            return CreatedAtAction(nameof(GetPuzzleType), new {puzzleTypeId = newPuzzleType.Id}, 
-                _mapper.Map<PuzzleTypeDto>(newPuzzleType));
+
+            var model = _mapper.Map<PuzzleTypeDto>(newPuzzleType);
+            return CreatedAtAction(nameof(GetPuzzleType), new {puzzleTypeId = newPuzzleType.Id}, model);
         }
 
         [HttpPut("{puzzleTypeId}")]
@@ -68,11 +70,11 @@ namespace PuzzleShop.Api.Controllers
             var puzzleTypeFromRepo = await _puzzleTypeRepository.FindByIdAsync(puzzleTypeId);
             _mapper.Map(puzzleTypeForUpdateDto, puzzleTypeFromRepo);
             await _puzzleTypeRepository.UpdateEntityAsync(puzzleTypeFromRepo);
-            return Ok();
+            return NoContent();
         }
 
-        //[Authorize(Roles = "admin")]
-        //[Authorize(Roles = "moderator")]
+        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "moderator")]
         [HttpDelete("{puzzleTypeId}")]
         public async Task<IActionResult> DeletePuzzleType(long puzzleTypeId)
         {

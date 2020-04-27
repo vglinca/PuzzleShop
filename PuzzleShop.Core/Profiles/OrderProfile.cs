@@ -12,6 +12,10 @@ namespace PuzzleShop.Core.Profiles
                 .ForMember(dest => dest.OrderStatus,
                     opt => opt.MapFrom(
                         src => src.OrderStatus.OrderStatusId.ToString()));
+            CreateMap<Order, OrderTableRowDto>()
+                .ForMember(dest => dest.OrderStatus,
+                    opt => opt.MapFrom(
+                        src => src.OrderStatus.OrderStatusId.ToString()));
             CreateMap<OrderStatus, OrderStatusDto>();
         }
     }

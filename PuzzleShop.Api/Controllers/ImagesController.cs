@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 
 namespace PuzzleShop.Api.Controllers
 {
-	[AllowAnonymous]
+	[Authorize(Roles = "admin")]
+	[Authorize(Roles = "moderator")]
 	[ApiController]
 	[Route("api/puzzles/{puzzleId}/[controller]")]
 	public class ImagesController : ControllerBase
@@ -45,8 +46,6 @@ namespace PuzzleShop.Api.Controllers
 
 			var imagesToAdd = new List<Image>();
 			var img = imagesDtos;
-			//foreach (var img in imagesDtos)
-			//{
 				if(img.Id == null || img.Id <= 0)
 				{
 					var fileName = Guid.NewGuid().ToString() + ".jpg";
@@ -57,7 +56,6 @@ namespace PuzzleShop.Api.Controllers
 						await img.File.CopyToAsync(fStream);
 					}
 				}
-			//}
 			if (imagesToAdd.Any())
 			{
 				await _imagesRepository.AddImagesAsync(imagesToAdd);

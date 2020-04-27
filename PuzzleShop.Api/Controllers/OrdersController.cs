@@ -47,14 +47,15 @@ namespace PuzzleShop.Api.Controllers
         public async Task<IActionResult> GetAllOrders(long userId)
         {
             var orders = await _orderingService.GetUserOrdersAsync(userId);
-            return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
+            var models = _mapper.Map<IEnumerable<OrderDto>>(orders);
+            return Ok(models);
         }
         
         [HttpPost(nameof(AddToCart))]
         public async Task<IActionResult> AddToCart([FromBody] OrderItemForCreationDto orderItemForCreationDto)
         {
             var orderItem = _mapper.Map<OrderItem>(orderItemForCreationDto);
-            await _orderingService.AddToCartAsync(orderItem, orderItemForCreationDto.UserId);
+            await _orderingService.EditCartAsync(orderItem, orderItemForCreationDto.UserId);
 
             return Ok();
         }

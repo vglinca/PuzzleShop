@@ -36,7 +36,8 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<IEnumerable<DifficultyLevelDto>>> GetDifficultyLevels()
         {
             var entities = await _difflvlRepository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<DifficultyLevelDto>>(entities));
+            var models = _mapper.Map<IEnumerable<DifficultyLevelDto>>(entities);
+            return Ok(models);
         }
 
         [Authorize(Roles = "admin")]
@@ -45,7 +46,8 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<IEnumerable<RoleDto>>> GetRoles()
         {
             var roles = await _roleManager.Roles.ToListAsync();
-            return Ok(_mapper.Map<IEnumerable<RoleDto>>(roles));
+            var models = _mapper.Map<IEnumerable<RoleDto>>(roles);
+            return Ok(models);
         }
 
         [Authorize(Roles = "admin")]
@@ -54,7 +56,8 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<IEnumerable<OrderStatusDto>>> GetOrderStatusList()
         {
             var orderStatusList = await _orderStatusRepository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<OrderStatusDto>>(orderStatusList));
+            var models = _mapper.Map<IEnumerable<OrderStatusDto>>(orderStatusList);
+            return Ok(models);
         }
     }
 }

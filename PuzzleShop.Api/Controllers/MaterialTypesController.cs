@@ -30,14 +30,16 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<IEnumerable<MaterialTypeDto>>> GetMaterialTypes()
         {
             var materialTypeEntities = await _materialTypeRepository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<MaterialTypeDto>>(materialTypeEntities));
+            var models = _mapper.Map<IEnumerable<MaterialTypeDto>>(materialTypeEntities);
+            return Ok(models);
         }
 
         [HttpGet("{materialTypeId}")]
         public async Task<ActionResult<MaterialTypeDto>> GetMaterialType(long materialTypeId)
         {
             var materialTypeEntity = await _materialTypeRepository.FindByIdAsync(materialTypeId);
-            return Ok(_mapper.Map<MaterialTypeDto>(materialTypeEntity));
+            var model = _mapper.Map<MaterialTypeDto>(materialTypeEntity);
+            return Ok(model);
         }
 
         [Authorize(Roles = "admin")]
@@ -48,9 +50,9 @@ namespace PuzzleShop.Api.Controllers
         {
             var entityToAdd = _mapper.Map<MaterialType>(materialTypeForCreationDto);
             await _materialTypeRepository.AddEntityAsync(entityToAdd);
+            var model = _mapper.Map<MaterialTypeDto>(entityToAdd);
 
-            return CreatedAtAction(nameof(GetMaterialType), new {materialTypeId = entityToAdd.Id},
-                _mapper.Map<MaterialTypeDto>(entityToAdd));
+            return CreatedAtAction(nameof(GetMaterialType), new {materialTypeId = entityToAdd.Id}, model );
         }
 
         [Authorize(Roles = "admin")]
