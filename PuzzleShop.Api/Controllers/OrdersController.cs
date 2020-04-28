@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Dtos.Customers;
 using PuzzleShop.Core.Dtos.OrderItems;
 using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.Dtos.Users;
@@ -61,10 +62,9 @@ namespace PuzzleShop.Api.Controllers
         }
         
         [HttpPut("confirmOrder/{userId}")]
-        public async Task<IActionResult> ConfirmOrder(long userId)
+        public async Task<IActionResult> ConfirmOrder(long userId, [FromBody] CustomerInfoForOrderDto customerDetails)
         {
-            await _orderingService.UpdateOrderStatusAsync(userId, OrderStatusId.Pending,
-                OrderStatusId.AwaitingPayment);
+            await _orderingService.CheckoutOrderAsync(userId, customerDetails);
 
             return NoContent();
         }

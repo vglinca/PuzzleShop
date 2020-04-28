@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Dtos.Customers;
 using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
@@ -116,6 +117,25 @@ namespace PuzzleShop.Api.Services.Impl
             orderWithOldStatus.OrderStatusId = newStatus;
 
             await _ordersRepository.UpdateEntityAsync(orderWithOldStatus);
+        }
+
+        public async Task CheckoutOrderAsync(long userId, CustomerInfoForOrderDto customerDetails)
+        {
+            //a user can have only one pending order
+            var pendingOrder = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
+            
+            pendingOrder.ContactEmail = customerDetails.ContactEmail;
+            pendingOrder.CustomerFirstName = customerDetails.CustomerFirstName;
+            pendingOrder.CustomerLastName = customerDetails.CustomerLastName;
+            pendingOrder.Address = customerDetails.Address;
+            pendingOrder.City = customerDetails.City;
+            pendingOrder.Country = customerDetails.Country;
+            pendingOrder.PostalCode = customerDetails.PostalCode;
+            pendingOrder.Phone = customerDetails.Phone;
+
+            pendingOrder.OrderStatusId = OrderStatusId.AwaitingPayment;
+
+            await _ordersRepository.UpdateEntityAsync(pendingOrder);
         }
 
         public async Task RemoveOrderItemAsync(long userId, long itemId)

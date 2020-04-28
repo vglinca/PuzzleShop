@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PuzzleShop.Core.Dtos.Customers;
 using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Domain.Entities;
@@ -14,6 +15,7 @@ namespace PuzzleShop.Api.Services.Interfaces
         Task<Order> GetOrderByIdASync(long orderId);
         Task EditCartAsync(OrderItem orderItem, long userId);
         Task UpdateOrderStatusAsync(long orderId, OrderStatusId orderStatusId);
+        Task CheckoutOrderAsync(long userId, CustomerInfoForOrderDto customerDetails);
         Task UpdateOrderStatusAsync(long userId, OrderStatusId oldStatus, OrderStatusId newStatus);
         Task RemoveOrderItemAsync(long userId, long itemId);
     }

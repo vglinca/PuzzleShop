@@ -33,7 +33,7 @@ namespace PuzzleShop.Core.Repository.Impl
         {
             //pending and non-confirmed orders can not be seen by admin. So thus he won't be able to change their status.
             var orders = _ctx.Orders
-                .Where(o => o.OrderStatusId != OrderStatusId.AwaitingPayment || o.OrderStatusId != OrderStatusId.Pending);
+                .Where(o => o.OrderStatusId != OrderStatusId.Pending);
             return await orders.CreatePagedResultAsync<Order, OrderTableRowDto>(request, mapper);
         }
 
