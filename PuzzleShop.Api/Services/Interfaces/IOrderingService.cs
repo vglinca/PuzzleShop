@@ -14,7 +14,7 @@ namespace PuzzleShop.Api.Services.Interfaces
         Task<Order> GetOrderByIdASync(long orderId);
         Task EditCartAsync(OrderItem orderItem, long userId);
         Task UpdateOrderStatusAsync(long orderId, OrderStatusId orderStatusId);
-        Task UpdateOrderStatusFromOldOneAsync(long userId, OrderStatusId oldStatus, OrderStatusId newStatus);
+        Task UpdateOrderStatusAsync(long userId, OrderStatusId oldStatus, OrderStatusId newStatus);
         Task RemoveOrderItemAsync(long userId, long itemId);
     }
 }

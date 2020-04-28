@@ -60,25 +60,20 @@ namespace PuzzleShop.Api.Controllers
             return Ok();
         }
         
-        [HttpPut(nameof(ConfirmOrder))]
-        public async Task<IActionResult> ConfirmOrder()
+        [HttpPut("confirmOrder/{userId}")]
+        public async Task<IActionResult> ConfirmOrder(long userId)
         {
-            var user = await GetCurrentUser();
-
-            await _orderingService.UpdateOrderStatusFromOldOneAsync(user.Id, OrderStatusId.Pending,
+            await _orderingService.UpdateOrderStatusAsync(userId, OrderStatusId.Pending,
                 OrderStatusId.AwaitingPayment);
 
             return NoContent();
         }
         
-        [HttpPut(nameof(PlaceOrder))]
-        public async Task<IActionResult> PlaceOrder([FromBody] UserDataForProcessOrderDto userData)
+        [HttpPut("placeOrder/{userId}/{orderId}")]
+        public async Task<IActionResult> PlaceOrder(long userId, long orderId, [FromBody] UserDataForProcessOrderDto userData)
         {
-            //some logic with user data
-            var user = await GetCurrentUser();
-
-            await _orderingService.UpdateOrderStatusFromOldOneAsync(user.Id, OrderStatusId.AwaitingPayment,
-                OrderStatusId.ConfirmedPayment);
+            var order = await _orderingService.GetOrderByIdASync(orderId);
+            await _orderingService.UpdateOrderStatusAsync(orderId, OrderStatusId.ConfirmedPayment);
 
             return NoContent();
         }
@@ -91,11 +86,11 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
         
-        [NonAction]
-        private async Task<User> GetCurrentUser()
-        {
-            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return await _userManager.FindByIdAsync(userId);
-        }
+        //[NonAction]
+        //private async Task<User> GetCurrentUser()
+        //{
+        //    var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        //    return await _userManager.FindByIdAsync(userId);
+        //}
     }
 }

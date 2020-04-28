@@ -65,20 +65,10 @@ namespace PuzzleShop.Api
             
             services.AddCors();
 
-            //var authOptionsSection = Configuration.GetSection("AuthOptions");
-            //services.Configure<AuthOptions>(authOptionsSection);
-            //var authOptions = authOptionsSection.Get<AuthOptions>();
             var authOptions = services.ConfigureAuthOptions(Configuration);
             services.AddJwtBearerAuthentication(authOptions);
 
-            services.AddAuthorization(
-                //     cfg =>
-                // {
-                //     cfg.AddPolicy("admin", policyBuilder => { policyBuilder.RequireRole("admin"); });
-                //     cfg.AddPolicy("user", policyBuilder => { policyBuilder.RequireRole("user"); });
-                //     cfg.AddPolicy("moderator", policyBuilder => { policyBuilder.RequireRole("moderator"); });
-                // }
-            );
+            services.AddAuthorization();
             
             services.AddControllers(cfg =>
                 {
@@ -123,6 +113,7 @@ namespace PuzzleShop.Api
             services.AddTransient<IUserManagementService, UserManagementService>();
             services.AddTransient<ISigningInService, SigningInService>();
             services.AddTransient<IOrderingService, OrderingService>();
+            services.AddTransient<IImageService, ImageService>();
 
             services.AddSwaggerGen(sa =>
             {

@@ -110,7 +110,7 @@ namespace PuzzleShop.Api.Services.Impl
             await _ordersRepository.UpdateEntityAsync(order);
         }
 
-        public async Task UpdateOrderStatusFromOldOneAsync(long userId, OrderStatusId oldStatus, OrderStatusId newStatus)
+        public async Task UpdateOrderStatusAsync(long userId, OrderStatusId oldStatus, OrderStatusId newStatus)
         {
             var orderWithOldStatus = await _ordersRepository.FindByUserIdAndStatusAsync(userId, oldStatus);
             orderWithOldStatus.OrderStatusId = newStatus;
