@@ -3,30 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Customers;
 using PuzzleShop.Core.Dtos.Orders;
+using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
+using Stripe;
 
 namespace PuzzleShop.Api.Services.Impl
 {
     public class OrderingService : IOrderingService
     {
         private readonly IOrderRepository _ordersRepository;
-        private readonly IRepository<OrderItem> _orderItemRepository;
+        private readonly IRepository<Domain.Entities.OrderItem> _orderItemRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public OrderingService(IOrderRepository orderRepository, IRepository<OrderItem> orderItemRepository, IMapper mapper)
+        public OrderingService(IOrderRepository orderRepository, IRepository<Domain.Entities.OrderItem> orderItemRepository, IMapper mapper, IConfiguration configuration)
         {
             _ordersRepository = orderRepository;
             _orderItemRepository = orderItemRepository;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
-        public async Task<Order> GetOrderByStatusAsync(long userId, OrderStatusId orderStatusId)
+        public async Task<Domain.Entities.Order> GetOrderByStatusAsync(long userId, OrderStatusId orderStatusId)
         {
             return await _ordersRepository.FindByUserIdAndStatusAsync(userId, orderStatusId);
         }
@@ -36,22 +41,22 @@ namespace PuzzleShop.Api.Services.Impl
             return await _ordersRepository.GetPagedOrders(request, _mapper);
         }
 
-        public async Task<IEnumerable<Order>> GetUserOrdersAsync(long userId)
+        public async Task<IEnumerable<Domain.Entities.Order>> GetUserOrdersAsync(long userId)
         {
             return await _ordersRepository.FindAllOrdersByUserIdAsync(userId);
         }
 
-        public async Task<Order> GetOrderByIdASync(long orderId)
+        public async Task<Domain.Entities.Order> GetOrderByIdASync(long orderId)
         {
             return await _ordersRepository.FindByIdAsync(orderId);
         }
 
-        public async Task EditCartAsync(OrderItem orderItem, long userId)
+        public async Task EditCartAsync(Domain.Entities.OrderItem orderItem, long userId)
         {
             var order = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
             if (order == null)
             {
-                order = new Order
+                order = new Domain.Entities.Order
                 {
                     OrderStatusId = OrderStatusId.Pending,
                     OrderDate = DateTimeOffset.Now,
@@ -119,7 +124,7 @@ namespace PuzzleShop.Api.Services.Impl
             await _ordersRepository.UpdateEntityAsync(orderWithOldStatus);
         }
 
-        public async Task CheckoutOrderAsync(long userId, CustomerInfoForOrderDto customerDetails)
+        public async Task ConfirmOrderAsync(long userId, CustomerInfoForOrderDto customerDetails)
         {
             //a user can have only one pending order
             var pendingOrder = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
@@ -154,6 +159,45 @@ namespace PuzzleShop.Api.Services.Impl
             }
         }
 
-       
+        public async Task CheckoutAsync(long userId, long orderId, CustomerInfoForOrderDto customerInfo)
+        {
+            var order = await _ordersRepository.FindByIdAsync(orderId);
+            StripeConfiguration.ApiKey = _configuration.GetConnectionString("StripeSecret");
+            try
+            {
+                var customerOptions = new CustomerCreateOptions
+                {
+                    Source = customerInfo.Token,
+                    Email = customerInfo.ContactEmail,
+                    Name = $"{customerInfo.CustomerFirstName} {customerInfo.CustomerLastName}",
+                    Phone = customerInfo.Phone,
+                    Metadata = new Dictionary<string, string>()
+                {
+                    {"City", customerInfo.City },
+                    {"Country", customerInfo.Country },
+                    {"Address", customerInfo.Address}
+                }
+                };
+                var customerService = new CustomerService();
+                var customer = await customerService.CreateAsync(customerOptions);
+
+                var chargeOptions = new ChargeCreateOptions
+                {
+                    Amount = ((long) order.TotalCost) * 100,
+                    Description = $"Charge for {customerInfo.ContactEmail}",
+                    Customer = customer.Id
+                };
+
+                var chargeService = new ChargeService();
+                var charge = await chargeService.CreateAsync(chargeOptions);
+
+                order.OrderStatusId = OrderStatusId.ConfirmedPayment;
+                await _ordersRepository.UpdateEntityAsync(order);
+            }
+            catch (Exception)
+            {
+                throw new InternalServerErrorException("An error occured during payment process.");
+            }
+        }
     }
 }

@@ -64,17 +64,15 @@ namespace PuzzleShop.Api.Controllers
         [HttpPut("confirmOrder/{userId}")]
         public async Task<IActionResult> ConfirmOrder(long userId, [FromBody] CustomerInfoForOrderDto customerDetails)
         {
-            await _orderingService.CheckoutOrderAsync(userId, customerDetails);
+            await _orderingService.ConfirmOrderAsync(userId, customerDetails);
 
             return NoContent();
         }
         
         [HttpPut("placeOrder/{userId}/{orderId}")]
-        public async Task<IActionResult> PlaceOrder(long userId, long orderId, [FromBody] UserDataForProcessOrderDto userData)
+        public async Task<IActionResult> PlaceOrder(long userId, long orderId, [FromBody] CustomerInfoForOrderDto userData)
         {
-            var order = await _orderingService.GetOrderByIdASync(orderId);
-            await _orderingService.UpdateOrderStatusAsync(orderId, OrderStatusId.ConfirmedPayment);
-
+            await _orderingService.CheckoutAsync(userId, orderId, userData);
             return NoContent();
         }
 
