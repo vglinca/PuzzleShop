@@ -162,7 +162,16 @@ namespace PuzzleShop.Api.Services.Impl
         public async Task CheckoutAsync(long userId, long orderId, CustomerInfoForOrderDto customerInfo)
         {
             var order = await _ordersRepository.FindByIdAsync(orderId);
-            StripeConfiguration.ApiKey = _configuration.GetConnectionString("StripeSecret");
+            order.ContactEmail = customerInfo.ContactEmail;
+            order.CustomerFirstName = customerInfo.CustomerFirstName;
+            order.CustomerLastName = customerInfo.CustomerLastName;
+            order.Address = customerInfo.Address;
+            order.City = customerInfo.City;
+            order.Country = customerInfo.Country;
+            order.PostalCode = customerInfo.PostalCode;
+            order.Phone = customerInfo.Phone;
+            var apiKey = _configuration.GetValue<string>("StripeSecret");
+            StripeConfiguration.ApiKey = "sk_test_lDCvMfC3VPB8wGOuFxjCmrLb003Iqr9r9F";
             try
             {
                 var customerOptions = new CustomerCreateOptions
@@ -185,7 +194,8 @@ namespace PuzzleShop.Api.Services.Impl
                 {
                     Amount = ((long) order.TotalCost) * 100,
                     Description = $"Charge for {customerInfo.ContactEmail}",
-                    Customer = customer.Id
+                    Customer = customer.Id,
+                    Currency = "USD"
                 };
 
                 var chargeService = new ChargeService();
@@ -194,7 +204,7 @@ namespace PuzzleShop.Api.Services.Impl
                 order.OrderStatusId = OrderStatusId.ConfirmedPayment;
                 await _ordersRepository.UpdateEntityAsync(order);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw new InternalServerErrorException("An error occured during payment process.");
             }

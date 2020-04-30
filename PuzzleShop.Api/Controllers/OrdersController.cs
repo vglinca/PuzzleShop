@@ -73,7 +73,7 @@ namespace PuzzleShop.Api.Controllers
         public async Task<IActionResult> PlaceOrder(long userId, long orderId, [FromBody] CustomerInfoForOrderDto userData)
         {
             await _orderingService.CheckoutAsync(userId, orderId, userData);
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("removeOrderItem/{userId}/{itemId}")]
