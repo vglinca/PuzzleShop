@@ -22,13 +22,14 @@ namespace PuzzleShop.Core
             _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(params object[] parameters)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, bool>>[] wherePredicate)
         {
-            var entities = _ctx.Set<TEntity>().AsQueryable();
-            if(parameters.Length > 0)
+            IQueryable<TEntity> entities = _ctx.Set<TEntity>();
+            foreach (var predicate in wherePredicate)
             {
-                entities = entities.Filter(parameters);
+                entities = entities.Where(predicate);
             }
+            
             return await entities.ToListAsync();
         }
 

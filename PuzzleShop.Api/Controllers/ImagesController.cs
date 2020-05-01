@@ -15,8 +15,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleShop.Api.Controllers
 {
-	[Authorize(Roles = "admin")]
-	[Authorize(Roles = "moderator")]
+	[AllowAnonymous]
 	[ApiController]
 	[Route("api/puzzles/{puzzleId}/[controller]")]
 	public class ImagesController : ControllerBase
@@ -36,6 +35,8 @@ namespace PuzzleShop.Api.Controllers
 			return Ok(models);
 		}
 
+		[Authorize(Roles = "admin")]
+		[Authorize(Roles = "moderator")]
 		[HttpPost(nameof(AddImages))]
 		public async Task<IActionResult> AddImages(long puzzleId, [FromForm] ImageForUpdateDto imageModel)
 		{
@@ -44,6 +45,8 @@ namespace PuzzleShop.Api.Controllers
 			return Ok();
 		}
 
+		[Authorize(Roles = "admin")]
+		[Authorize(Roles = "moderator")]
 		[HttpPost(nameof(DeleteImages))]
 		public async Task<IActionResult> DeleteImages(long puzzleId, [FromBody] IEnumerable<long> ids)
 		{

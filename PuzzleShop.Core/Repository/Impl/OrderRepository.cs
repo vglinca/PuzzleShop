@@ -106,9 +106,10 @@ namespace PuzzleShop.Core.Repository.Impl
             return orders;
         }
 
-        public Task<IEnumerable<Order>> GetAllAsync(params object[] parameters)
+        public async Task<IEnumerable<Order>> GetAllAsync(params Expression<Func<Order, bool>>[] wherePredicate)
         {
-            throw new System.NotImplementedException();
+            var orders = _ctx.Set<Order>().AsQueryable();
+            return await orders.ToListAsync();
         }
     }
 }

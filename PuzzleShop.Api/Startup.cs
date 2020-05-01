@@ -114,6 +114,7 @@ namespace PuzzleShop.Api
             services.AddTransient<ISigningInService, SigningInService>();
             services.AddTransient<IOrderingService, OrderingService>();
             services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IPuzzleReviewService, PuzzleReviewService>();
 
             services.AddSwaggerGen(sa =>
             {

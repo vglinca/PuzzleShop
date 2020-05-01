@@ -4,6 +4,7 @@ using PuzzleShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,7 +55,7 @@ namespace PuzzleShop.Tests.Repository
 			return _manufacturers.FirstOrDefault(e => e.Id == id);
 		}
 
-		public async Task<IEnumerable<Manufacturer>> GetAllAsync(params object[] parameters)
+		public async Task<IEnumerable<Manufacturer>> GetAllAsync(params Expression<Func<Manufacturer, bool>>[] wherePredicate)
 		{
 			return _manufacturers;
 		}

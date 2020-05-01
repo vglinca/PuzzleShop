@@ -10,6 +10,6 @@ namespace PuzzleShop.Core
 {
     public interface IRepository<TEntity> : IEfCoreRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<IEnumerable<TEntity>> GetAllAsync(params object[] parameters);
+        Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, bool>>[] wherePredicate);
     }
 }

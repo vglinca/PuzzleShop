@@ -27,15 +27,14 @@ namespace PuzzleShop.Persistance.DbContext
 		public DbSet<OrderItem> OrderItems { get; set; }
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderStatus> OrdeStatuses { get; set; }
+		public DbSet<Review> Reviews { get; set; }
 
 		public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder =>
 			builder.AddFilter((category, lvl) => category == DbLoggerCategory.Database.Command.Name
 												 && lvl == LogLevel.Information)
 				.AddProvider(new LoggerProvider()));
 
-		public PuzzleShopContext(DbContextOptions options) : base(options)
-		{
-		}
+		public PuzzleShopContext(DbContextOptions options) : base(options){}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
@@ -92,11 +91,6 @@ namespace PuzzleShop.Persistance.DbContext
 						Title = dl.ToString()
 					})
 				);
-
-			//modelBuilder.Entity<DifficultyLevel>().HasData(
-			//	new DifficultyLevel { Id = 1, Title = "Low" },
-			//	new DifficultyLevel { Id = 2, Title = "Middle" },
-			//	new DifficultyLevel { Id = 3, Title = "High" });
 
 			modelBuilder.Entity<Manufacturer>().HasData(
 				new Manufacturer { Id = 1, Name = "Gan" },
