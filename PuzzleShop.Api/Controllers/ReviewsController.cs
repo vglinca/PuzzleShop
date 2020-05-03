@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Reviews;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleShop.Api.Controllers
 {
+	[AllowAnonymous]
 	[ApiController]
 	[Route("api/{puzzleId}/[controller]")]
 	public class ReviewsController : ControllerBase
@@ -18,7 +20,7 @@ namespace PuzzleShop.Api.Controllers
 			_reviewService = reviewService ?? throw new ArgumentNullException(nameof(reviewService));
 		}
 
-		[HttpGet("reviews")]
+		[HttpGet]
 		public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews(long puzzleId)
 		{
 			var reviews = await _reviewService.GetAllReviewsAsync(puzzleId);

@@ -13,8 +13,8 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {
-	[ApiController]
 	[AllowAnonymous]
+	[ApiController]
 	[Route("api/[controller]")]
 	public class PuzzlesController : ControllerBase
 	{
