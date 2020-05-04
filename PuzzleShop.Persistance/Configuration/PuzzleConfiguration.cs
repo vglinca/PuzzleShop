@@ -12,6 +12,7 @@ namespace PuzzleShop.Persistance.Configuration
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.IsMagnetic).IsRequired();
             builder.Property(p => p.Description).HasMaxLength(1000);
+
             
             builder
                 .HasOne(p => p.Manufacturer)

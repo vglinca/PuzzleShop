@@ -22,13 +22,16 @@ namespace PuzzleShop.Api.Services.Impl
         private readonly IRepository<Domain.Entities.OrderItem> _orderItemRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly IPuzzleRepository _puzzleRepository;
 
-        public OrderingService(IOrderRepository orderRepository, IRepository<Domain.Entities.OrderItem> orderItemRepository, IMapper mapper, IConfiguration configuration)
+        public OrderingService(IOrderRepository orderRepository, IRepository<Domain.Entities.OrderItem> orderItemRepository, IMapper mapper, IConfiguration configuration, IPuzzleRepository puzzleRepository)
+
         {
             _ordersRepository = orderRepository;
             _orderItemRepository = orderItemRepository;
             _mapper = mapper;
             _configuration = configuration;
+            _puzzleRepository = puzzleRepository;
         }
 
         public async Task<Domain.Entities.Order> GetOrderByStatusAsync(long userId, OrderStatusId orderStatusId)
@@ -200,6 +203,16 @@ namespace PuzzleShop.Api.Services.Impl
 
                 var chargeService = new ChargeService();
                 var charge = await chargeService.CreateAsync(chargeOptions);
+
+                foreach (var orderItmem in order.OrderItems)
+                {
+                    var puzzle = await _puzzleRepository.FindByIdAsync(orderItmem.PuzzleId);
+                    if(puzzle.AvailableInStock >= orderItmem.Quantity)
+                    {
+                        puzzle.AvailableInStock -= orderItmem.Quantity;
+                        await _puzzleRepository.UpdateEntityAsync(puzzle);                    
+                    }
+                }
 
                 order.OrderStatusId = OrderStatusId.ConfirmedPayment;
                 await _ordersRepository.UpdateEntityAsync(order);

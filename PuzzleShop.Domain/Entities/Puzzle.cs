@@ -24,7 +24,7 @@ namespace PuzzleShop.Domain.Entities
         public virtual MaterialType MaterialType { get; set; }
         public long MaterialTypeId { get; set; }
         public double? Rating { get; set; }
-        public uint AvailableInStock { get; set; }
+        public int AvailableInStock { get; set; }
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
     }
