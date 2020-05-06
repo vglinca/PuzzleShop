@@ -45,7 +45,7 @@ namespace PuzzleShop.Api.Extensions
 				appBuilder.Run(async ctx =>
 				{
 					ctx.Response.StatusCode = 500;
-					await ctx.Response.WriteAsync("An unexpecter fault happened. Try again later");
+					await ctx.Response.WriteAsync("An unexpected fault happened. Try again later.");
 				});
 			});
 		}

@@ -10,6 +10,7 @@ using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Domain.Entities.Auth;
 using PuzzleShop.Core.Extensions;
+using System;
 
 namespace PuzzleShop.Api.Services.Impl
 {
@@ -20,8 +21,8 @@ namespace PuzzleShop.Api.Services.Impl
 
         public UserManagementService(UserManager<User> userManager, IMapper mapper)
         {
-            _userManager = userManager;
-            _mapper = mapper;
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<PagedResponse<UserWithRolesDto>> GetAllAsync(PagedRequest pagedRequest)

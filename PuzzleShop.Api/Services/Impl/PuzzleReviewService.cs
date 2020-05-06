@@ -17,7 +17,9 @@ namespace PuzzleShop.Api.Services.Impl
 		private readonly IMapper _mapper;
 		private readonly IRepository<Review> _reviewRepository;
 		private readonly IPuzzleRepository _puzzleRepository;
-		public PuzzleReviewService(IMapper mapper, IRepository<Review> reviewRepository, IPuzzleRepository puzzleRepository)
+		public PuzzleReviewService(IMapper mapper, 
+			IRepository<Review> reviewRepository, 
+			IPuzzleRepository puzzleRepository)
 		{
 			_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 			_reviewRepository = reviewRepository ?? throw new ArgumentNullException(nameof(reviewRepository));

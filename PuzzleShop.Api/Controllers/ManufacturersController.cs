@@ -24,7 +24,8 @@ namespace PuzzleShop.Api.Controllers
     {
         private readonly IRepository<Manufacturer> _manufacturersRepository;
         private readonly IMapper _mapper;
-        public ManufacturersController(IRepository<Manufacturer> manufacturersRepository, IMapper mapper)
+        public ManufacturersController(IRepository<Manufacturer> manufacturersRepository, 
+            IMapper mapper)
         {
             _manufacturersRepository = manufacturersRepository ??
                                        throw new ArgumentNullException(nameof(manufacturersRepository));

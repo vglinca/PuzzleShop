@@ -9,8 +9,8 @@ using PuzzleShop.Core.PaginationModels;
 
 namespace PuzzleShop.Api.Controllers.Identity
 {
-    //[Authorize(Roles = "admin")]
-    //[Authorize(Roles = "moderator")]
+    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "moderator")]
     [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]

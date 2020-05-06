@@ -20,8 +20,8 @@ namespace PuzzleShop.Api.Services.Impl
 
         public SigningInService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         }
 
         public async Task<string> SignIn(AuthOptions authOptions, UserForAuthDto userDto)
@@ -30,7 +30,7 @@ namespace PuzzleShop.Api.Services.Impl
 
             if(user == null)
             {
-                throw new UnauthorizedException($"User with email {userDto.Email} could not be found.");
+                throw new UnauthorizedException($"Wrong credentials.");
             }
 
             var passwordResultCheck =

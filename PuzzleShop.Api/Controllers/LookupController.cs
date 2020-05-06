@@ -24,7 +24,9 @@ namespace PuzzleShop.Api.Controllers
         private readonly IRepository<OrderStatus> _orderStatusRepository; 
         private readonly IMapper _mapper;
 
-        public LookupController(IRepository<DifficultyLevel> difflvlRepository, IMapper mapper, RoleManager<Role> roleManager, IRepository<OrderStatus> orderStatusRepository)
+        public LookupController(IRepository<DifficultyLevel> difflvlRepository, 
+            IMapper mapper, RoleManager<Role> roleManager, 
+            IRepository<OrderStatus> orderStatusRepository)
         {
             _difflvlRepository = difflvlRepository;
             _mapper = mapper;

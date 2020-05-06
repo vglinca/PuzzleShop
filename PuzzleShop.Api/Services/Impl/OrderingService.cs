@@ -24,7 +24,11 @@ namespace PuzzleShop.Api.Services.Impl
         private readonly IConfiguration _configuration;
         private readonly IPuzzleRepository _puzzleRepository;
 
-        public OrderingService(IOrderRepository orderRepository, IRepository<Domain.Entities.OrderItem> orderItemRepository, IMapper mapper, IConfiguration configuration, IPuzzleRepository puzzleRepository)
+        public OrderingService(IOrderRepository orderRepository, 
+            IRepository<Domain.Entities.OrderItem> orderItemRepository, 
+            IMapper mapper, 
+            IConfiguration configuration, 
+            IPuzzleRepository puzzleRepository)
 
         {
             _ordersRepository = orderRepository;

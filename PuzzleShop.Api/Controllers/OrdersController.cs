@@ -29,7 +29,8 @@ namespace PuzzleShop.Api.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public OrdersController(IMapper mapper, UserManager<User> userManager, IOrderingService orderingService)
+        public OrdersController(IMapper mapper, UserManager<User> userManager, 
+            IOrderingService orderingService)
         {
             _mapper = mapper;
             _userManager = userManager;

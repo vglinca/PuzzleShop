@@ -35,13 +35,13 @@ namespace PuzzleShop.Core
 
         public async Task<TEntity> FindByIdAsync(long id)
         {
-            var entity = //await _ctx.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
-                await _ctx.FindAsync<TEntity>(id);
+            var entity = await _ctx.FindAsync<TEntity>(id);
             if (entity == null)
             {
                 throw new EntityNotFoundException(
                     $"{typeof(TEntity).ToString().Split('.').Last()} with Id {id} not found.");
             }
+
             return entity;
         }
 
@@ -50,7 +50,6 @@ namespace PuzzleShop.Core
             if (entity == null)
             {
                 throw new BadRequestException($"{nameof(entity)} is null.");
-                //throw new ArgumentNullException(nameof(entity));
             }
             _ctx.Set<TEntity>().Add(entity);
             await _ctx.SaveChangesAsync();

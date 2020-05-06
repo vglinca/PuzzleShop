@@ -95,10 +95,10 @@ namespace PuzzleShop.Api
                             Instance = ctx.HttpContext.Request.Path
                         };
                         problemDetails.Extensions.Add("traceId", ctx.HttpContext.TraceIdentifier);
-                        
+
                         return new UnprocessableEntityObjectResult(problemDetails)
                         {
-                            ContentTypes = {"application/problem+json"}
+                            ContentTypes = { "application/problem+json" }
                         };
                     };
                 });
@@ -112,6 +112,7 @@ namespace PuzzleShop.Api
             
             services.AddTransient<IUserManagementService, UserManagementService>();
             services.AddTransient<ISigningInService, SigningInService>();
+            services.AddTransient<IPuzzleService, PuzzleService>();
             services.AddTransient<IOrderingService, OrderingService>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IPuzzleReviewService, PuzzleReviewService>();
@@ -133,10 +134,10 @@ namespace PuzzleShop.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            // else
-            // {
-            //     app.UseClientExceptionPage();
-            // }
+            else
+            {
+                app.UseClientExceptionPage();
+            }
 
             app.UseStaticFiles();
 
