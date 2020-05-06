@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.Colors;
+using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core.Profiles
 {
@@ -7,8 +8,8 @@ namespace PuzzleShop.Core.Profiles
     {
         public ColorProfile()
         {
-            CreateMap<Domain.Entities.Color, ColorDto>().ReverseMap();
-            CreateMap<Domain.Entities.Color, ColorForCreateDto>().ReverseMap();
+            CreateMap<Color, ColorDto>().ReverseMap();
+            CreateMap<Color, ColorForCreateDto>().ReverseMap();
         }
     }
 }

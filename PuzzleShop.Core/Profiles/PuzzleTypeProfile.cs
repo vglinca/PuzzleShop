@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.PuzzleTypes;
+using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core.Profiles
 {
@@ -7,7 +8,7 @@ namespace PuzzleShop.Core.Profiles
     {
         public PuzzleTypeProfile()
         {
-            CreateMap<Domain.Entities.PuzzleType, PuzzleTypeTableRowDto>()
+            CreateMap<PuzzleType, PuzzleTypeTableRowDto>()
                 .ForMember(dest => dest.Title,
                     opt => opt.MapFrom(
                         src => src.TypeName))
@@ -15,7 +16,7 @@ namespace PuzzleShop.Core.Profiles
                     opt => opt.MapFrom(
                         src => src.DifficultyLevel.DifficultyLevelId.ToString()));
 
-            CreateMap<Domain.Entities.PuzzleType, PuzzleTypeDto>()
+            CreateMap<PuzzleType, PuzzleTypeDto>()
                 .ForMember(dest => dest.Title,
                     opt => opt.MapFrom(
                         src => src.TypeName))
@@ -23,7 +24,7 @@ namespace PuzzleShop.Core.Profiles
                     opt => opt.MapFrom(
                         src => (long) src.DifficultyLevel.DifficultyLevelId));
 
-            CreateMap<PuzzleTypeForCreationDto, Domain.Entities.PuzzleType>()
+            CreateMap<PuzzleTypeForCreationDto, PuzzleType>()
                 .ForMember(src => src.TypeName,
                     opt => opt.MapFrom(
                         src => src.Title))

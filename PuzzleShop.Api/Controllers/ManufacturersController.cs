@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using PuzzleShop.Api.Dtos.Manufacturers;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Manufacturers;
 using PuzzleShop.Domain.Entities;
@@ -48,8 +49,7 @@ namespace PuzzleShop.Api.Controllers
             return Ok(response);
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpPost]
         public async Task<ActionResult> AddManufacturer(
            [FromBody] ManufacturerForCreateDto manufacturerForCreateDto)
@@ -62,8 +62,7 @@ namespace PuzzleShop.Api.Controllers
             return CreatedAtAction(nameof(GetManufacturer), new {manufacturerId = manufacturerEntity.Id}, responseEntity);
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpPut("{manufacturerId}")]
         public async Task<IActionResult> UpdateManufacturer(long manufacturerId,
             [FromBody] ManufacturerForUpdateDto manufacturerForUpdateDto)
@@ -76,8 +75,7 @@ namespace PuzzleShop.Api.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpDelete("{manufacturerId}")]
         public async Task<IActionResult> DeleteManufacturer(long manufacturerId)
         {

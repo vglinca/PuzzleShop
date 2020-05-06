@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.Puzzles;
+using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core.Profiles
 {
@@ -7,7 +8,7 @@ namespace PuzzleShop.Core.Profiles
     {
         public PuzzleProfile()
         {
-            CreateMap<Domain.Entities.Puzzle, PuzzleTableRowDto>()
+            CreateMap<Puzzle, PuzzleTableRowDto>()
                 .ForMember(dest => dest.Manufacturer,
                     opt => opt.MapFrom(
                         src => src.Manufacturer.Name))
@@ -24,12 +25,12 @@ namespace PuzzleShop.Core.Profiles
                     opt => opt.MapFrom(
                         src => src.Images));
 
-            CreateMap<Domain.Entities.Puzzle, PuzzleDto>();
+            CreateMap<Puzzle, PuzzleDto>();
 
-            CreateMap<PuzzleForCreationDto, Domain.Entities.Puzzle>()
+            CreateMap<PuzzleForCreationDto, Puzzle>()
                 .ForMember(dest => dest.Images, opt => opt.Ignore());
 
-            CreateMap<PuzzleForUpdateDto, Domain.Entities.Puzzle>()
+            CreateMap<PuzzleForUpdateDto, Puzzle>()
                 .ForMember(dest => dest.Images, opt => opt.Ignore());
         }
     }

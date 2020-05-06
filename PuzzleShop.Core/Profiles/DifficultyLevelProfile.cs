@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.DifficultyLevels;
+using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core.Profiles
 {
@@ -7,7 +8,7 @@ namespace PuzzleShop.Core.Profiles
     {
         public DifficultyLevelProfile()
         {
-            CreateMap<Domain.Entities.DifficultyLevel, DifficultyLevelDto>();
+            CreateMap<DifficultyLevel, DifficultyLevelDto>();
         }
     }
 }

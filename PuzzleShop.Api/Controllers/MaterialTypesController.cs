@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.MaterialTypes;
 using PuzzleShop.Domain.Entities;
@@ -42,8 +43,7 @@ namespace PuzzleShop.Api.Controllers
             return Ok(model);
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpPost]
         public async Task<ActionResult<MaterialTypeDto>> AddMaterialType(
             [FromBody] MaterialTypeForCreationDto materialTypeForCreationDto)
@@ -55,8 +55,7 @@ namespace PuzzleShop.Api.Controllers
             return CreatedAtAction(nameof(GetMaterialType), new {materialTypeId = entityToAdd.Id}, model );
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpDelete("{materialTypeId}")]
         public async Task<IActionResult> DeleteMaterialType(long materialTypeId)
         {

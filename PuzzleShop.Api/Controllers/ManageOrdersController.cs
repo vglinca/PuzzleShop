@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.Dtos.Users;
@@ -13,9 +14,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleShop.Api.Controllers
 {
-	//[Authorize(Roles = "admin")]
-	//[Authorize(Roles = "moderator")]
-	[AllowAnonymous]
+	[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
 	[ApiController]
 	[Route("api/[controller]")]
 	public class ManageOrdersController : ControllerBase

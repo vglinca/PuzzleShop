@@ -47,7 +47,7 @@ namespace PuzzleShop.Api.Controllers.Identity
                 await _userManager.AddToRoleAsync(user, "user");
                 return Ok();
             }
-            return StatusCode(422, result.Errors);
+            return StatusCode(StatusCodes.Status422UnprocessableEntity, result.Errors);
         }
 
         [HttpPost("authenticate")]

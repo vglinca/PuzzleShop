@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.Reviews;
+using PuzzleShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,8 +11,8 @@ namespace PuzzleShop.Core.Profiles
 	{
 		public ReviewProfile()
 		{
-			CreateMap<Domain.Entities.Review, ReviewDto>();
-			CreateMap<ReviewForCreationDto, Domain.Entities.Review>();
+			CreateMap<Review, ReviewDto>();
+			CreateMap<ReviewForCreationDto, Review>();
 		}
 	}
 }

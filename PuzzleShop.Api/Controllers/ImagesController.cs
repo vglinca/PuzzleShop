@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Images;
@@ -35,8 +36,7 @@ namespace PuzzleShop.Api.Controllers
 			return Ok(models);
 		}
 
-		[Authorize(Roles = "admin")]
-		[Authorize(Roles = "moderator")]
+		[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
 		[HttpPost(nameof(AddImages))]
 		public async Task<IActionResult> AddImages(long puzzleId, [FromForm] ImageForUpdateDto imageModel)
 		{
@@ -45,8 +45,7 @@ namespace PuzzleShop.Api.Controllers
 			return Ok();
 		}
 
-		[Authorize(Roles = "admin")]
-		[Authorize(Roles = "moderator")]
+		[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
 		[HttpPost(nameof(DeleteImages))]
 		public async Task<IActionResult> DeleteImages(long puzzleId, [FromBody] IEnumerable<long> ids)
 		{

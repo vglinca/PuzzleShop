@@ -61,7 +61,11 @@ namespace PuzzleShop.Persistance.DbContext
 			}
 
 			ApplyIdentityMapConfig(modelBuilder);
+			SeedData(modelBuilder);
+		}
 
+		private void SeedData(ModelBuilder modelBuilder)
+		{
 			modelBuilder.Entity<MaterialType>().HasData(
 				new MaterialType { Id = 1, Title = "Plastic" });
 
@@ -230,10 +234,7 @@ namespace PuzzleShop.Persistance.DbContext
 					PuzzleTypeId = 6,
 					ColorId = 2,
 					MaterialTypeId = 1
-				}) ;
-			//modelBuilder.Entity<Image>().HasData(
-			//	new Image { Id = 1, FileName = "testfilename", PuzzleId = 1 },
-			//	new Image { Id = 2, FileName = "testfilename", PuzzleId = 2 });
+				});
 
 			modelBuilder.Entity<OrderStatus>()
 				.Ignore(s => s.Id)
@@ -242,13 +243,10 @@ namespace PuzzleShop.Persistance.DbContext
 					.Cast<OrderStatusId>()
 					.Select(o => new OrderStatus
 					{
-						//Id = (long) o,
 						OrderStatusId = o,
 						Name = o.ToString()
 					})
 				);
-
-			
 		}
 
 		private void ApplyIdentityMapConfig(ModelBuilder modelBuilder)

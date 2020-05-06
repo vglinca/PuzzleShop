@@ -50,8 +50,7 @@ namespace PuzzleShop.Api.Controllers
             return Ok(model);
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpPost]
         public async Task<ActionResult<PuzzleTypeDto>> AddPuzzleType(
             [FromBody] PuzzleTypeForCreationDto puzzleTypeForCreationDto)
@@ -63,6 +62,7 @@ namespace PuzzleShop.Api.Controllers
             return CreatedAtAction(nameof(GetPuzzleType), new {puzzleTypeId = newPuzzleType.Id}, model);
         }
 
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpPut("{puzzleTypeId}")]
         public async Task<IActionResult> UpdatePuzzleType(long puzzleTypeId,
             [FromBody] PuzzleTypeForCreationDto puzzleTypeForUpdateDto)
@@ -73,8 +73,7 @@ namespace PuzzleShop.Api.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpDelete("{puzzleTypeId}")]
         public async Task<IActionResult> DeletePuzzleType(long puzzleTypeId)
         {

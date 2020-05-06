@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.Images;
+using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core.Profiles
 {
@@ -7,7 +8,7 @@ namespace PuzzleShop.Core.Profiles
     {
         public ImageProfile()
         {
-            CreateMap<Domain.Entities.Image, ImageDto>().ReverseMap();
+            CreateMap<Image, ImageDto>().ReverseMap();
         }
     }
 }

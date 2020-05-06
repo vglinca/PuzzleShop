@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.MaterialTypes;
+using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core.Profiles
 {
@@ -7,8 +8,8 @@ namespace PuzzleShop.Core.Profiles
     {
         public MaterialTypeProfile()
         {
-            CreateMap<Domain.Entities.MaterialType, MaterialTypeDto>().ReverseMap();
-            CreateMap<MaterialTypeForCreationDto, Domain.Entities.MaterialType>().ReverseMap();
+            CreateMap<MaterialType, MaterialTypeDto>().ReverseMap();
+            CreateMap<MaterialTypeForCreationDto, MaterialType>().ReverseMap();
         }
     }
 }

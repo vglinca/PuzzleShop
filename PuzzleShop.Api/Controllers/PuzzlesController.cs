@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Puzzles;
 using PuzzleShop.Core.PaginationModels;
@@ -15,9 +16,9 @@ using PuzzleShop.Domain.Entities;
 namespace PuzzleShop.Api.Controllers
 {
 	[AllowAnonymous]
-	[ApiController]
-	[Route("api/[controller]")]
-	public class PuzzlesController : ControllerBase
+	//[ApiController]
+	//[Route("api/[controller]")]
+	public class PuzzlesController : BaseController
 	{
 		private readonly IPuzzleService _puzzleService;
 
@@ -47,8 +48,7 @@ namespace PuzzleShop.Api.Controllers
 			return Ok(model);
 		}
 
-		[Authorize(Roles = "admin")]
-		[Authorize(Roles = "moderator")]
+		[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
 		[HttpPost]
 		public async Task<ActionResult<PuzzleDto>> AddPuzzle([FromForm] PuzzleForCreationDto puzzleForCreationDto)
 		{
@@ -56,8 +56,7 @@ namespace PuzzleShop.Api.Controllers
 			return CreatedAtAction(nameof(GetPuzzle), new { puzzleId = createdModel.Id }, createdModel);
 		}
 
-		[Authorize(Roles = "admin")]
-		[Authorize(Roles = "moderator")]
+		[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
 		[HttpPut("{puzzleId}")]
 		public async Task<IActionResult> UpdatePuzzle(long puzzleId, [FromBody] PuzzleForUpdateDto puzzleForUpdateDto)
 		{
@@ -65,8 +64,7 @@ namespace PuzzleShop.Api.Controllers
 			return NoContent();
 		}
 
-		[Authorize(Roles = "admin")]
-		[Authorize(Roles = "moderator")]
+		[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
 		[HttpDelete("{puzzleId}")]
 		public async Task<IActionResult> DeletePuzzle(long puzzleId)
 		{

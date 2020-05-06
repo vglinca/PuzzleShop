@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using PuzzleShop.Api.Dtos.Manufacturers;
 using PuzzleShop.Core.Dtos.Manufacturers;
+using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Core.Profiles
 {
@@ -7,9 +9,9 @@ namespace PuzzleShop.Core.Profiles
     {
         public ManufacturerProfile()
         {
-            CreateMap<Domain.Entities.Manufacturer, ManufacturerDto>().ReverseMap();
-            CreateMap<Domain.Entities.Manufacturer, ManufacturerForCreateDto>().ReverseMap();
-            CreateMap<Domain.Entities.Manufacturer, Api.Dtos.Manufacturers.ManufacturerForUpdateDto>().ReverseMap();
+            CreateMap<Manufacturer, ManufacturerDto>().ReverseMap();
+            CreateMap<Manufacturer, ManufacturerForCreateDto>().ReverseMap();
+            CreateMap<Manufacturer, ManufacturerForUpdateDto>().ReverseMap();
         }
     }
 }

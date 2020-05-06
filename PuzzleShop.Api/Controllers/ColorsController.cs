@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Colors;
 using PuzzleShop.Domain.Entities;
@@ -11,9 +12,9 @@ using PuzzleShop.Domain.Entities;
 namespace PuzzleShop.Api.Controllers
 {
     [AllowAnonymous]
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ColorsController: ControllerBase
+    //[ApiController]
+    //[Route("api/[controller]")]
+    public class ColorsController: BaseController
     {
         private readonly IRepository<Color> _colorRepository;
         private readonly IMapper _mapper;
@@ -24,22 +25,21 @@ namespace PuzzleShop.Api.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         
-        [HttpGet(Name = "GetColors")]
+        [HttpGet]
         public async Task<IActionResult> GetColors()
         {
             var colorsFromRepo = await _colorRepository.GetAllAsync();
             return Ok(_mapper.Map <IEnumerable<ColorDto>>(colorsFromRepo));
         }
 
-        [HttpGet("{colorId}", Name = "GetColor")]
+        [HttpGet("{colorId}")]
         public async Task<IActionResult> GetColor(long colorId)
         {
             var colorFromRepo = await _colorRepository.FindByIdAsync(colorId);
             return Ok(_mapper.Map<ColorDto>(colorFromRepo));
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpPost]
         public async Task<IActionResult> AddColor([FromBody] ColorForCreateDto colorForCreateDto)
         {
@@ -50,9 +50,8 @@ namespace PuzzleShop.Api.Controllers
                 _mapper.Map<ColorDto>(colorEntity));
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
-        [HttpPut("{colorId}", Name = "UpdateColor")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
+        [HttpPut("{colorId}")]
         public async Task<IActionResult> UpdateColor(long colorId, [FromBody] ColorForCreateDto colorForUpdateDto)
         {
             var colorEntity = await _colorRepository.FindByIdAsync(colorId);
@@ -61,9 +60,8 @@ namespace PuzzleShop.Api.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
-        [HttpDelete("{colorId}", Name = "DeleteColor")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
+        [HttpDelete("{colorId}")]
         public async Task<IActionResult> DeleteColor(long colorId)
         {
             var colorToDelete = await _colorRepository.FindByIdAsync(colorId);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.Roles;
+using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Core.Profiles
 {
@@ -7,7 +8,7 @@ namespace PuzzleShop.Core.Profiles
     {
         public RoleProfile()
         {
-            CreateMap<RoleDto, Domain.Entities.Auth.Role>().ReverseMap();
+            CreateMap<RoleDto, Role>().ReverseMap();
         }
     }
 }

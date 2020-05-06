@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.DifficultyLevels;
 using PuzzleShop.Core.Dtos.Orders;
@@ -42,8 +43,7 @@ namespace PuzzleShop.Api.Controllers
             return Ok(models);
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpGet("roles")]
         public async Task<ActionResult<IEnumerable<RoleDto>>> GetRoles()
         {
@@ -52,8 +52,7 @@ namespace PuzzleShop.Api.Controllers
             return Ok(models);
         }
 
-        [Authorize(Roles = "admin")]
-        [Authorize(Roles = "moderator")]
+        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpGet("orderstatuslist")]
         public async Task<ActionResult<IEnumerable<OrderStatusDto>>> GetOrderStatusList()
         {
