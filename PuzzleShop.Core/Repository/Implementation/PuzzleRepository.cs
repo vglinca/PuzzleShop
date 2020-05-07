@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -8,13 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Core.Dtos.Puzzles;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.Extensions;
-using PuzzleShop.Core.Helpers;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
 
-namespace PuzzleShop.Core.Repository.Impl
+namespace PuzzleShop.Core.Repository.Implementation
 {
     public sealed class PuzzleRepository : IPuzzleRepository
     {
@@ -22,7 +19,7 @@ namespace PuzzleShop.Core.Repository.Impl
 
         public PuzzleRepository(PuzzleShopContext ctx)
         {
-            _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
+            _ctx = ctx;
         }
 
         public async Task<PagedResponse<PuzzleTableRowDto>> GetAllAsync(PagedRequest pagedRequest, IMapper mapper)

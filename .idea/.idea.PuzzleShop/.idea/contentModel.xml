@@ -311,7 +311,7 @@
         </e>
         <e p="PuzzleShop.Core.csproj" t="IncludeRecursive" />
         <e p="Repository" t="Include">
-          <e p="Impl" t="Include">
+          <e p="Implementation" t="Include">
             <e p="ImageRepository.cs" t="Include" />
             <e p="OrderRepository.cs" t="Include" />
             <e p="PuzzleRepository.cs" t="Include" />

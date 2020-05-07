@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -14,7 +13,7 @@ using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
 
-namespace PuzzleShop.Core.Repository.Impl
+namespace PuzzleShop.Core.Repository.Implementation
 {
     public class OrderRepository : IOrderRepository
     {

@@ -140,15 +140,6 @@ namespace PuzzleShop.Api.Services.Implementation
             //a user can have only one pending order
             var pendingOrder = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
             _mapper.Map(customerDetails, pendingOrder);
-            
-            // pendingOrder.ContactEmail = customerDetails.ContactEmail;
-            // pendingOrder.CustomerFirstName = customerDetails.CustomerFirstName;
-            // pendingOrder.CustomerLastName = customerDetails.CustomerLastName;
-            // pendingOrder.Address = customerDetails.Address;
-            // pendingOrder.City = customerDetails.City;
-            // pendingOrder.Country = customerDetails.Country;
-            // pendingOrder.PostalCode = customerDetails.PostalCode;
-            // pendingOrder.Phone = customerDetails.Phone;
 
             pendingOrder.OrderStatusId = OrderStatusId.AwaitingPayment;
 
@@ -175,14 +166,7 @@ namespace PuzzleShop.Api.Services.Implementation
         {
             var order = await _ordersRepository.FindByIdAsync(orderId);
             _mapper.Map(customerInfo, order);
-            // order.ContactEmail = customerInfo.ContactEmail;
-            // order.CustomerFirstName = customerInfo.CustomerFirstName;
-            // order.CustomerLastName = customerInfo.CustomerLastName;
-            // order.Address = customerInfo.Address;
-            // order.City = customerInfo.City;
-            // order.Country = customerInfo.Country;
-            // order.PostalCode = customerInfo.PostalCode;
-            // order.Phone = customerInfo.Phone;
+
             var apiKey = _configuration.GetValue<string>("StripeSecret");
             StripeConfiguration.ApiKey = apiKey;
             try

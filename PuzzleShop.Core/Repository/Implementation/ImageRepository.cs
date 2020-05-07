@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
 using PuzzleShop.Persistance.DbContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PuzzleShop.Core.Repository.Impl
+namespace PuzzleShop.Core.Repository.Implementation
 {
 	public class ImageRepository : IImageRepository
 	{
@@ -56,6 +55,5 @@ namespace PuzzleShop.Core.Repository.Impl
 			{
 			}
 		}
-
 	}
 }

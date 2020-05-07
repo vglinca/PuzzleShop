@@ -19,7 +19,7 @@ namespace PuzzleShop.Core
 
         public Repository(PuzzleShopContext ctx)
         {
-            _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
+            _ctx = ctx;
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, bool>>[] wherePredicate)

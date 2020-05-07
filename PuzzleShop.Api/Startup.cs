@@ -16,7 +16,7 @@ using PuzzleShop.Api.Extensions;
 using PuzzleShop.Api.Services.Implementation;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
-using PuzzleShop.Core.Repository.Impl;
+using PuzzleShop.Core.Repository.Implementation;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities.Auth;
 using PuzzleShop.Persistance.DbContext;
@@ -37,8 +37,7 @@ namespace PuzzleShop.Api
         public void ConfigureServices(IServiceCollection services)
         {
             var connString = Configuration["ConnectionStrings:PuzzleShopDbConnString"];
-            services.AddDbContext<PuzzleShopContext>(
-                opt => opt.UseSqlServer(connString));
+            services.AddDbContext<PuzzleShopContext>(opt => opt.UseSqlServer(connString));
             
            services.AddDistributedMemoryCache();
             services.AddSession(options => {
@@ -49,19 +48,14 @@ namespace PuzzleShop.Api
             {
                 o.Password.RequiredLength = 8;
                 o.User.RequireUniqueEmail = true;
-                
-            }).AddRoles<Role>()
+            })
+                .AddRoles<Role>()
                 .AddEntityFrameworkStores<PuzzleShopContext>()
                 .AddRoleManager<RoleManager<Role>>()
                 .AddErrorDescriber<IdentityErrorDescriber>();
             
             services.Configure<IdentityOptions>(o =>
-            {
-                o.Password.RequireDigit = true;
-                o.Password.RequireLowercase = true;
-                o.Password.RequireUppercase = true;
-                o.Password.RequireNonAlphanumeric = true;
-            });
+            {});
             
             services.AddCors();
 
