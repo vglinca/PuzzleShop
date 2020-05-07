@@ -3,34 +3,25 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using PuzzleShop.Api.Dtos.Manufacturers;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Manufacturers;
 using PuzzleShop.Domain.Entities;
-using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Controllers
 {
     [AllowAnonymous]
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ManufacturersController : ControllerBase
+    public class ManufacturersController : BaseController
     {
         private readonly IRepository<Manufacturer> _manufacturersRepository;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
         public ManufacturersController(IRepository<Manufacturer> manufacturersRepository, 
-            IMapper mapper)
+            IMapper mapper) : base(mapper)
         {
-            _manufacturersRepository = manufacturersRepository ??
-                                       throw new ArgumentNullException(nameof(manufacturersRepository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _manufacturersRepository = manufacturersRepository;
+            //_mapper = mapper;
         }
 
         [HttpGet]

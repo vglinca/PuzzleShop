@@ -1,17 +1,16 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Puzzles;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PuzzleShop.Api.Services.Impl
+namespace PuzzleShop.Api.Services.Implementation
 {
 	public class PuzzleService : IPuzzleService
 	{
@@ -24,10 +23,10 @@ namespace PuzzleShop.Api.Services.Impl
 							IMapper mapper, 
 							IWebHostEnvironment webHostEnvironment)
 		{
-			_puzzleRepository = puzzleRepository ?? throw new ArgumentNullException(nameof(puzzleRepository));
-			_imageRepository = imageRepository ?? throw new ArgumentNullException(nameof(imageRepository));
-			_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-			_webHostEnvironment = webHostEnvironment ?? throw new ArgumentNullException(nameof(webHostEnvironment));
+			_puzzleRepository = puzzleRepository;
+			_imageRepository = imageRepository;
+			_mapper = mapper;
+			_webHostEnvironment = webHostEnvironment;
 		}
 
 		public async Task<PagedResponse<PuzzleTableRowDto>> GetPuzzlesAsync(PagedRequest request)

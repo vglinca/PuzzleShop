@@ -17,20 +17,21 @@ using System.Linq;
 namespace PuzzleShop.Api.Controllers.Identity
 {
     [AllowAnonymous]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
         private readonly AuthOptions _authOptions;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ISigningInService _signingInService;
 
-        public AuthController(IOptions<AuthOptions> authOptions, IMapper mapper, 
-            SignInManager<User> signInManager, UserManager<User> userManager, ISigningInService signingInService)
+        public AuthController(IOptions<AuthOptions> authOptions, 
+            IMapper mapper, 
+            SignInManager<User> signInManager, 
+            UserManager<User> userManager, 
+            ISigningInService signingInService) : base(mapper)
         {
-            _mapper = mapper;
+            //_mapper = mapper;
             _signInManager = signInManager;
             _userManager = userManager;
             _signingInService = signingInService;

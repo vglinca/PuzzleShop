@@ -1,16 +1,16 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Images;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PuzzleShop.Api.Services.Impl
+namespace PuzzleShop.Api.Services.Implementation
 {
 	public class ImageService : IImageService
 	{

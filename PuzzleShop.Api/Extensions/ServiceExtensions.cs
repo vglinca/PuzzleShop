@@ -40,5 +40,14 @@ namespace PuzzleShop.Api.Extensions
             var authOptions = authOptionsConfigurationSection.Get<AuthOptions>();
             return authOptions;
         }
+
+        public static StripeApiSecret ConfigureStripeApiSecret(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            var stripeApiSection = configuration.GetSection("StripeApiSecret");
+            services.Configure<StripeApiSecret>(stripeApiSection);
+            var apiSecret = stripeApiSection.Get<StripeApiSecret>();
+            return apiSecret;
+        }
     }
 }

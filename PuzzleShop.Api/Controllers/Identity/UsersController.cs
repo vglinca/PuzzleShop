@@ -10,9 +10,7 @@ using PuzzleShop.Core.PaginationModels;
 
 namespace PuzzleShop.Api.Controllers.Identity
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
         private readonly IUserManagementService _userManagementService;
 

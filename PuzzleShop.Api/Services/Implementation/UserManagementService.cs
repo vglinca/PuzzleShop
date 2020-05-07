@@ -3,16 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Users;
 using PuzzleShop.Core.Exceptions;
+using PuzzleShop.Core.Extensions;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Domain.Entities.Auth;
-using PuzzleShop.Core.Extensions;
-using System;
 
-namespace PuzzleShop.Api.Services.Impl
+namespace PuzzleShop.Api.Services.Implementation
 {
     public class UserManagementService : IUserManagementService
     {
@@ -21,8 +19,8 @@ namespace PuzzleShop.Api.Services.Impl
 
         public UserManagementService(UserManager<User> userManager, IMapper mapper)
         {
-            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<PagedResponse<UserWithRolesDto>> GetAllAsync(PagedRequest pagedRequest)

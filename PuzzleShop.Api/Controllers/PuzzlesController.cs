@@ -16,15 +16,13 @@ using PuzzleShop.Domain.Entities;
 namespace PuzzleShop.Api.Controllers
 {
 	[AllowAnonymous]
-	//[ApiController]
-	//[Route("api/[controller]")]
 	public class PuzzlesController : BaseController
 	{
 		private readonly IPuzzleService _puzzleService;
 
 		public PuzzlesController(IPuzzleService puzzleService)
 		{
-			_puzzleService = puzzleService ?? throw new ArgumentNullException(nameof(puzzleService));
+			_puzzleService = puzzleService;
 		}
 
 		[HttpPost(nameof(GetPuzzles))]

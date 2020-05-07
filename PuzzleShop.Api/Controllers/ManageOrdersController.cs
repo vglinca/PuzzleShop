@@ -15,17 +15,15 @@ using System.Threading.Tasks;
 namespace PuzzleShop.Api.Controllers
 {
 	[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
-	[ApiController]
-	[Route("api/[controller]")]
-	public class ManageOrdersController : ControllerBase
+	public class ManageOrdersController : BaseController
 	{
 		private readonly IOrderingService _orderingService;
-		private readonly IMapper _mapper;
+		//private readonly IMapper _mapper;
 
-		public ManageOrdersController(IOrderingService orderingService, IMapper mapper)
+		public ManageOrdersController(IOrderingService orderingService, IMapper mapper) : base(mapper)
 		{
 			_orderingService = orderingService;
-			_mapper = mapper;
+			//_mapper = mapper;
 		}
 
 		[HttpPost("getOrdersPaged")]

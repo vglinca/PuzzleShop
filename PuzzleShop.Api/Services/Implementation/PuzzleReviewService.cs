@@ -1,16 +1,14 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Reviews;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PuzzleShop.Api.Services.Impl
+namespace PuzzleShop.Api.Services.Implementation
 {
 	public class PuzzleReviewService : IPuzzleReviewService
 	{
@@ -21,9 +19,9 @@ namespace PuzzleShop.Api.Services.Impl
 			IRepository<Review> reviewRepository, 
 			IPuzzleRepository puzzleRepository)
 		{
-			_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-			_reviewRepository = reviewRepository ?? throw new ArgumentNullException(nameof(reviewRepository));
-			_puzzleRepository = puzzleRepository ?? throw new ArgumentNullException(nameof(puzzleRepository));
+			_mapper = mapper;
+			_reviewRepository = reviewRepository;
+			_puzzleRepository = puzzleRepository;
 		}
 
 		public async Task<IEnumerable<ReviewDto>> GetAllReviewsAsync(long puzzleId)

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Customers;
@@ -14,7 +16,7 @@ using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities;
 using Stripe;
 
-namespace PuzzleShop.Api.Services.Impl
+namespace PuzzleShop.Api.Services.Implementation
 {
     public class OrderingService : IOrderingService
     {
@@ -23,19 +25,21 @@ namespace PuzzleShop.Api.Services.Impl
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly IPuzzleRepository _puzzleRepository;
+        private readonly StripeApiSecret _stripeApiSecret;
 
         public OrderingService(IOrderRepository orderRepository, 
             IRepository<Domain.Entities.OrderItem> orderItemRepository, 
             IMapper mapper, 
-            IConfiguration configuration, 
-            IPuzzleRepository puzzleRepository)
-
+            IConfiguration configuration,
+            IPuzzleRepository puzzleRepository,
+            IOptions<StripeApiSecret> stripeApiSecret)
         {
             _ordersRepository = orderRepository;
             _orderItemRepository = orderItemRepository;
             _mapper = mapper;
             _configuration = configuration;
             _puzzleRepository = puzzleRepository;
+            _stripeApiSecret = stripeApiSecret.Value;
         }
 
         public async Task<Domain.Entities.Order> GetOrderByStatusAsync(long userId, OrderStatusId orderStatusId)
@@ -135,15 +139,16 @@ namespace PuzzleShop.Api.Services.Impl
         {
             //a user can have only one pending order
             var pendingOrder = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
+            _mapper.Map(customerDetails, pendingOrder);
             
-            pendingOrder.ContactEmail = customerDetails.ContactEmail;
-            pendingOrder.CustomerFirstName = customerDetails.CustomerFirstName;
-            pendingOrder.CustomerLastName = customerDetails.CustomerLastName;
-            pendingOrder.Address = customerDetails.Address;
-            pendingOrder.City = customerDetails.City;
-            pendingOrder.Country = customerDetails.Country;
-            pendingOrder.PostalCode = customerDetails.PostalCode;
-            pendingOrder.Phone = customerDetails.Phone;
+            // pendingOrder.ContactEmail = customerDetails.ContactEmail;
+            // pendingOrder.CustomerFirstName = customerDetails.CustomerFirstName;
+            // pendingOrder.CustomerLastName = customerDetails.CustomerLastName;
+            // pendingOrder.Address = customerDetails.Address;
+            // pendingOrder.City = customerDetails.City;
+            // pendingOrder.Country = customerDetails.Country;
+            // pendingOrder.PostalCode = customerDetails.PostalCode;
+            // pendingOrder.Phone = customerDetails.Phone;
 
             pendingOrder.OrderStatusId = OrderStatusId.AwaitingPayment;
 
@@ -169,16 +174,17 @@ namespace PuzzleShop.Api.Services.Impl
         public async Task CheckoutAsync(long userId, long orderId, CustomerInfoForOrderDto customerInfo)
         {
             var order = await _ordersRepository.FindByIdAsync(orderId);
-            order.ContactEmail = customerInfo.ContactEmail;
-            order.CustomerFirstName = customerInfo.CustomerFirstName;
-            order.CustomerLastName = customerInfo.CustomerLastName;
-            order.Address = customerInfo.Address;
-            order.City = customerInfo.City;
-            order.Country = customerInfo.Country;
-            order.PostalCode = customerInfo.PostalCode;
-            order.Phone = customerInfo.Phone;
+            _mapper.Map(customerInfo, order);
+            // order.ContactEmail = customerInfo.ContactEmail;
+            // order.CustomerFirstName = customerInfo.CustomerFirstName;
+            // order.CustomerLastName = customerInfo.CustomerLastName;
+            // order.Address = customerInfo.Address;
+            // order.City = customerInfo.City;
+            // order.Country = customerInfo.Country;
+            // order.PostalCode = customerInfo.PostalCode;
+            // order.Phone = customerInfo.Phone;
             var apiKey = _configuration.GetValue<string>("StripeSecret");
-            StripeConfiguration.ApiKey = "sk_test_lDCvMfC3VPB8wGOuFxjCmrLb003Iqr9r9F";
+            StripeConfiguration.ApiKey = apiKey;
             try
             {
                 var customerOptions = new CustomerCreateOptions
@@ -208,12 +214,12 @@ namespace PuzzleShop.Api.Services.Impl
                 var chargeService = new ChargeService();
                 var charge = await chargeService.CreateAsync(chargeOptions);
 
-                foreach (var orderItmem in order.OrderItems)
+                foreach (var orderItem in order.OrderItems)
                 {
-                    var puzzle = await _puzzleRepository.FindByIdAsync(orderItmem.PuzzleId);
-                    if(puzzle.AvailableInStock >= orderItmem.Quantity)
+                    var puzzle = await _puzzleRepository.FindByIdAsync(orderItem.PuzzleId);
+                    if(puzzle.AvailableInStock >= orderItem.Quantity)
                     {
-                        puzzle.AvailableInStock -= orderItmem.Quantity;
+                        puzzle.AvailableInStock -= orderItem.Quantity;
                         await _puzzleRepository.UpdateEntityAsync(puzzle);                    
                     }
                 }

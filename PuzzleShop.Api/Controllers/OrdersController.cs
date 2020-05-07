@@ -21,19 +21,15 @@ using PuzzleShop.Domain.Entities.Auth;
 namespace PuzzleShop.Api.Controllers
 {
     [Authorize]
-    [ApiController]
-    [Route("api/[controller]")]
-    public class OrdersController : ControllerBase
+    public class OrdersController : BaseController
     {
         private readonly IOrderingService _orderingService;
-        private readonly UserManager<User> _userManager;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
-        public OrdersController(IMapper mapper, UserManager<User> userManager, 
-            IOrderingService orderingService)
+        public OrdersController(IMapper mapper, 
+            IOrderingService orderingService) : base(mapper)
         {
-            _mapper = mapper;
-            _userManager = userManager;
+            //_mapper = mapper;
             _orderingService = orderingService;
         }
 

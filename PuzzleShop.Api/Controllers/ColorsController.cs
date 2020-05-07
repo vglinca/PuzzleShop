@@ -12,17 +12,15 @@ using PuzzleShop.Domain.Entities;
 namespace PuzzleShop.Api.Controllers
 {
     [AllowAnonymous]
-    //[ApiController]
-    //[Route("api/[controller]")]
     public class ColorsController: BaseController
     {
         private readonly IRepository<Color> _colorRepository;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
-        public ColorsController(IRepository<Color> colorRepository, IMapper mapper)
+        public ColorsController(IRepository<Color> colorRepository, IMapper mapper) : base(mapper)
         {
-            _colorRepository = colorRepository ?? throw new ArgumentNullException(nameof(colorRepository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _colorRepository = colorRepository;
+            //_mapper = mapper;
         }
         
         [HttpGet]

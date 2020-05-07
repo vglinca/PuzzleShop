@@ -12,19 +12,17 @@ using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {
-    [ApiController]
     [AllowAnonymous]
-    [Route("api/[controller]")]
-    public class MaterialTypeController : ControllerBase
+    public class MaterialTypeController : BaseController
     {
         private readonly IRepository<MaterialType> _materialTypeRepository;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
-        public MaterialTypeController(IRepository<MaterialType> materialTypeRepository, IMapper mapper)
+        public MaterialTypeController(IRepository<MaterialType> materialTypeRepository, 
+            IMapper mapper) : base(mapper)
         {
-            _materialTypeRepository = materialTypeRepository 
-                                      ?? throw new ArgumentNullException(nameof(materialTypeRepository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _materialTypeRepository = materialTypeRepository;
+            //_mapper = mapper;
         }
 
         [HttpGet]

@@ -10,14 +10,12 @@ using System.Threading.Tasks;
 namespace PuzzleShop.Api.Controllers
 {
 	[AllowAnonymous]
-	[ApiController]
-	[Route("api/{puzzleId}/[controller]")]
-	public class ReviewsController : ControllerBase
+	public class ReviewsController : BaseController
 	{
 		private readonly IPuzzleReviewService _reviewService;
 		public ReviewsController(IPuzzleReviewService reviewService)
 		{
-			_reviewService = reviewService ?? throw new ArgumentNullException(nameof(reviewService));
+			_reviewService = reviewService;
 		}
 
 		[HttpGet]

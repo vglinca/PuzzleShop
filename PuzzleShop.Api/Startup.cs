@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PuzzleShop.Api.Extensions;
-using PuzzleShop.Api.Services.Impl;
+using PuzzleShop.Api.Services.Implementation;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Repository.Impl;
@@ -82,9 +82,6 @@ namespace PuzzleShop.Api
                 })
                 .ConfigureApiBehaviorOptions(cfg =>
                 {
-                    //configure how the api controller should behave
-                    //handle validation problems errors
-                    //this factory will be execured when the model state is invalid
                     cfg.InvalidModelStateResponseFactory = ctx =>
                     {
                         var problemDetails = new ValidationProblemDetails(ctx.ModelState)

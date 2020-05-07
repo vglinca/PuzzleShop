@@ -11,7 +11,7 @@ using PuzzleShop.Core.Dtos.Users;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Domain.Entities.Auth;
 
-namespace PuzzleShop.Api.Services.Impl
+namespace PuzzleShop.Api.Services.Implementation
 {
     public class SigningInService : ISigningInService
     {
@@ -20,8 +20,8 @@ namespace PuzzleShop.Api.Services.Impl
 
         public SigningInService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<string> SignIn(AuthOptions authOptions, UserForAuthDto userDto)

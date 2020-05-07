@@ -16,21 +16,20 @@ using PuzzleShop.Domain.Entities.Auth;
 namespace PuzzleShop.Api.Controllers
 {
     [AllowAnonymous]
-    [ApiController]
-    [Route("api/[controller]")]
-    public class LookupController : ControllerBase
+    public class LookupController : BaseController
     {
         private readonly IRepository<DifficultyLevel> _difflvlRepository;
         private readonly RoleManager<Role> _roleManager;
         private readonly IRepository<OrderStatus> _orderStatusRepository; 
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
         public LookupController(IRepository<DifficultyLevel> difflvlRepository, 
-            IMapper mapper, RoleManager<Role> roleManager, 
-            IRepository<OrderStatus> orderStatusRepository)
+            IMapper mapper, 
+            RoleManager<Role> roleManager, 
+            IRepository<OrderStatus> orderStatusRepository) : base(mapper)
         {
             _difflvlRepository = difflvlRepository;
-            _mapper = mapper;
+            //_mapper = mapper;
             _roleManager = roleManager;
             _orderStatusRepository = orderStatusRepository;
         }

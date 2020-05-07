@@ -19,11 +19,13 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="BaseController.cs" t="Include" />
           <e p="ColorsController.cs" t="Include" />
           <e p="Identity" t="Include">
             <e p="AuthController.cs" t="Include" />
             <e p="UsersController.cs" t="Include" />
           </e>
+          <e p="ImagesController.cs" t="Include" />
           <e p="LookupController.cs" t="Include" />
           <e p="ManageOrdersController.cs" t="Include" />
           <e p="ManufacturersController.cs" t="Include" />
@@ -31,6 +33,7 @@
           <e p="OrdersController.cs" t="Include" />
           <e p="PuzzlesController.cs" t="Include" />
           <e p="PuzzleTypesController.cs" t="Include" />
+          <e p="ReviewsController.cs" t="Include" />
         </e>
         <e p="extensions" t="Include">
           <e p="ApplicationBuilderExtensions.cs" t="Include" />
@@ -39,7 +42,11 @@
         <e p="Helpers" t="Include">
           <e p="AppSettings.cs" t="Include" />
           <e p="AuthOptions.cs" t="Include" />
+          <e p="AuthorizeRole.cs" t="Include" />
+          <e p="QueryParameters.cs" t="Include" />
+          <e p="RoleAuthorizeAttribute.cs" t="Include" />
           <e p="RoleInitializer.cs" t="Include" />
+          <e p="StripeApiSecret.cs" t="Include" />
         </e>
         <e p="Middleware" t="Include">
           <e p="ExceptionHandlerMiddleware.cs" t="Include" />
@@ -58,18 +65,138 @@
         </e>
         <e p="PuzzleShop.Api.csproj" t="IncludeRecursive" />
         <e p="Services" t="Include">
-          <e p="Impl" t="Include">
+          <e p="Implementation" t="Include">
+            <e p="ImageService.cs" t="Include" />
             <e p="OrderingService.cs" t="Include" />
+            <e p="PuzzleReviewService.cs" t="Include" />
+            <e p="PuzzleService.cs" t="Include" />
             <e p="SigningInService.cs" t="Include" />
             <e p="UserManagementService.cs" t="Include" />
           </e>
           <e p="Interfaces" t="Include">
+            <e p="IImageService.cs" t="Include" />
             <e p="IOrderingService.cs" t="Include" />
+            <e p="IPuzzleReviewService.cs" t="Include" />
+            <e p="IPuzzleService.cs" t="Include" />
             <e p="ISigningInService.cs" t="Include" />
             <e p="IUserManagementService.cs" t="Include" />
           </e>
         </e>
         <e p="Startup.cs" t="Include" />
+        <e p="wwwroot" t="Include">
+          <e p="Images" t="Include">
+            <e p="010b9236-b92b-4fee-bb30-bd5e41d7aa8d.jpg" t="Include" />
+            <e p="07f05f43-8a25-4618-8199-28cf9c12051e.jpg" t="Include" />
+            <e p="10776040-286f-40e0-a06b-b3e064ae16c1.jpg" t="Include" />
+            <e p="125357d0-2b52-4ea5-a32c-d9113766dfd6.jpg" t="Include" />
+            <e p="167c45b4-8e9a-40c6-906a-ae6282f3a162.jpg" t="Include" />
+            <e p="169d5e11-bbb7-4c2e-b9a0-d327aa699e0b.jpg" t="Include" />
+            <e p="16d518db-2dfd-463e-a1c2-54ca0fd06bf6.jpg" t="Include" />
+            <e p="18f16696-49e6-4c3d-be02-1492d41f07a5.jpg" t="Include" />
+            <e p="1baf6a89-09e7-42b4-87be-e829159076e7.jpg" t="Include" />
+            <e p="1f9b87b3-483b-486a-ba6b-a04cce279c2d.jpg" t="Include" />
+            <e p="1fd84372-5630-474b-a144-bc1c5b42ae45.jpg" t="Include" />
+            <e p="1ff074ae-1b6c-4cce-9e1f-00e7668b3adf.jpg" t="Include" />
+            <e p="21a746e6-1e44-45e2-9900-bae4e7eaaaff.jpg" t="Include" />
+            <e p="230c9e27-f4fe-4d69-bcab-5bedab9806a3.jpg" t="Include" />
+            <e p="243e6189-d19a-4421-8c74-a2a1a2e12232.jpg" t="Include" />
+            <e p="25569511-459d-4cae-9a06-6f51c8f5b531.jpg" t="Include" />
+            <e p="26e52c5a-aebe-48d0-9f23-3688e30e727f.jpg" t="Include" />
+            <e p="3002dcc7-6dc2-4dfc-b13e-8a6ff578e82c.jpg" t="Include" />
+            <e p="34e79fe5-2a9e-4c41-a515-9a76dbd8fd42.jpg" t="Include" />
+            <e p="35f08245-a346-4d6c-85a5-d21778d8e707.jpg" t="Include" />
+            <e p="3cecab90-0608-443e-ac43-8962823f6df0.jpg" t="Include" />
+            <e p="40010bb3-4f7f-4e7a-959b-95d22000fe49.jpg" t="Include" />
+            <e p="4020e435-01e4-486c-81f0-4b7563662f24.jpg" t="Include" />
+            <e p="41306e49-adaf-4aae-ad03-95b9886a711b.jpg" t="Include" />
+            <e p="42a6dcc8-3557-44f7-95f0-c8825972962d.jpg" t="Include" />
+            <e p="4322e64c-1651-486b-9118-aed05673ed9e.jpg" t="Include" />
+            <e p="49bb7a9d-e49e-4b2e-bf46-b70575173b21.jpg" t="Include" />
+            <e p="4b5568ad-5073-4264-ba09-929328a94420.jpg" t="Include" />
+            <e p="4b6340d0-ed71-4496-92ac-6ea2eda93f21.jpg" t="Include" />
+            <e p="4c9d6abf-4633-422e-b848-5571a9d30c0d.jpg" t="Include" />
+            <e p="4d7ea525-d3db-40b3-a454-8cd714ce84b2.jpg" t="Include" />
+            <e p="506f9e3f-0a3a-4943-a03a-3160b532513f.jpg" t="Include" />
+            <e p="553b3b85-7c19-436d-8da0-02075c3f38ad.jpg" t="Include" />
+            <e p="564e040f-086c-44b1-9e23-2f59a8758bb1.jpg" t="Include" />
+            <e p="57b3e586-4426-40f2-a9c4-4fbe3ab724de.jpg" t="Include" />
+            <e p="589c87ea-73ee-4435-bf77-5f740b95ffc7.jpg" t="Include" />
+            <e p="5a048877-435b-4c17-ba81-bdd517912d5d.jpg" t="Include" />
+            <e p="5a4bb44a-6b41-4802-9f41-f3d2e14dbae1.jpg" t="Include" />
+            <e p="6106dd40-efb2-46f6-a8f9-b529e9721382.jpg" t="Include" />
+            <e p="623e8149-74dd-4f3c-941b-8cd8fd9b3526.jpg" t="Include" />
+            <e p="65249424-4aa5-4f8b-ba3a-5d6d6cab97c8.jpg" t="Include" />
+            <e p="6548e2df-0155-402f-90ba-6b391ccf1f56.jpg" t="Include" />
+            <e p="6805690b-aadf-44bd-9cf0-492ae2870f64.jpg" t="Include" />
+            <e p="6b1ad356-4460-4254-8371-b750f9cddf5d.jpg" t="Include" />
+            <e p="743bdca0-d0eb-4481-a6ad-e1d963b85c2b.jpg" t="Include" />
+            <e p="7471a24d-cc13-4f55-87f9-9ed04dee8f00.jpg" t="Include" />
+            <e p="75d772b7-da1b-4b76-91a7-da5f2a109cf9.jpg" t="Include" />
+            <e p="7a8012f8-8586-4475-b4d8-8c0023fe3804.jpg" t="Include" />
+            <e p="7d74fca8-2497-4b99-96d4-36bb07ab48f6.jpg" t="Include" />
+            <e p="7d903e68-054b-44b6-8ae7-291e3dc299f0.jpg" t="Include" />
+            <e p="7e5a18dc-c3a8-4190-95f3-31fbbc40d246.jpg" t="Include" />
+            <e p="82b6d3b4-7bb0-4dd3-9cd1-e3536b1593ff.jpg" t="Include" />
+            <e p="86cc7b3f-57ef-4640-9a19-5887b2965a07.jpg" t="Include" />
+            <e p="883882c8-8086-4342-ac56-29e6fedb9da9.jpg" t="Include" />
+            <e p="891cfd28-1b4d-4b76-83d3-023e4c8ef8c8.jpg" t="Include" />
+            <e p="8b13433e-c38a-4254-86c9-aa806476d4bd.jpg" t="Include" />
+            <e p="8b17c17d-08db-43f9-b1a4-46149f5b505b.jpg" t="Include" />
+            <e p="8d1b4b65-50aa-4468-a07a-80691a70f10c.jpg" t="Include" />
+            <e p="8dfb7a08-eb2f-44b6-ac2e-c2ea0b0a7add.jpg" t="Include" />
+            <e p="95f0037c-d4cd-465a-85a4-b64148587753.jpg" t="Include" />
+            <e p="97498e9c-c680-4eda-ba35-22f8bb454b3c.jpg" t="Include" />
+            <e p="99fa2288-4d39-44d4-ad7c-9f054c8489be.jpg" t="Include" />
+            <e p="9a7c7154-c10c-46c6-9824-ce1078d17f27.jpg" t="Include" />
+            <e p="9ba95753-ba88-4fba-ae31-e75b72e2c7ca.jpg" t="Include" />
+            <e p="9c741f1f-715d-4a28-9bd1-80cd0df1d298.jpg" t="Include" />
+            <e p="a46a6abc-2df1-4d28-9d7b-e8e246a434d5.jpg" t="Include" />
+            <e p="a6b452c1-2871-4b61-a491-0a2496f008d5.jpg" t="Include" />
+            <e p="ad42565f-074a-41c9-b9cf-384575912647.jpg" t="Include" />
+            <e p="b1889b37-8a4a-4db1-aa5c-c404d169d86b.jpg" t="Include" />
+            <e p="b434c23f-3877-49c0-8588-7e60eae71c72.jpg" t="Include" />
+            <e p="b558ab59-89cd-4b24-89be-fcac56fafb45.jpg" t="Include" />
+            <e p="baa512cd-ff5f-4a0e-91bf-67a40b231fb6.jpg" t="Include" />
+            <e p="bbb38c5e-f81d-4525-b3d5-cc4e17b4fbd5.jpg" t="Include" />
+            <e p="bbc74d97-cfdd-4d68-aa49-992c5b66d9b1.jpg" t="Include" />
+            <e p="bd313179-85b1-4d82-9207-f67062de9947.jpg" t="Include" />
+            <e p="bd58a759-97e3-40d6-9afd-d13b20638f21.jpg" t="Include" />
+            <e p="c0c59332-27c2-4eac-abed-896d2716c093.jpg" t="Include" />
+            <e p="c17cb979-ba0f-45f8-a9a2-96e2754eb3f7.jpg" t="Include" />
+            <e p="c27f7052-70f0-457f-868f-d0f910f21500.jpg" t="Include" />
+            <e p="c3c503bb-c9bf-43c9-877e-c4e7c6acdfc1.jpg" t="Include" />
+            <e p="c74952a1-8dc3-46de-8fc7-8618437c0196.jpg" t="Include" />
+            <e p="c7b6f4fb-10c3-496d-8dbc-0ef0df3d1f99.jpg" t="Include" />
+            <e p="c8f18189-9fc9-4f0b-8078-2d108e1b36f0.jpg" t="Include" />
+            <e p="c990b884-a8fe-46f3-8bce-2b5131511ac9.jpg" t="Include" />
+            <e p="caa8f7a4-a365-4b34-b51c-48f0b3686681.jpg" t="Include" />
+            <e p="cb9119bd-c7d8-466b-a188-01ee67cb317c.jpg" t="Include" />
+            <e p="d0380b4e-6bb8-4a5e-bd61-74b459c20bda.jpg" t="Include" />
+            <e p="d53e630a-3bc7-4d0d-a2a4-262e10779206.jpg" t="Include" />
+            <e p="d848a359-21ad-4921-98e7-f1cec8750b46.jpg" t="Include" />
+            <e p="d9f37907-5d41-416e-91f1-3b0eede79ea6.jpg" t="Include" />
+            <e p="dbcb78ad-c398-4f5a-8234-af2b0719a3c9.jpg" t="Include" />
+            <e p="df312349-221c-4796-92bf-0a2fcc52b895.jpg" t="Include" />
+            <e p="df8d78fc-e643-4e3c-8fd3-4709b8cd6303.jpg" t="Include" />
+            <e p="dfbc5ff6-81ae-426b-966c-180826ff081d.jpg" t="Include" />
+            <e p="e4c6b72b-69c5-4d9f-b1f4-4ee9fcb3c0d4.jpg" t="Include" />
+            <e p="e873b5ca-acc6-4ed8-bd9a-9aeca091eb44.jpg" t="Include" />
+            <e p="eafe5eb2-5d39-4373-ae4c-f9cfb0b0d24e.jpg" t="Include" />
+            <e p="ec0b46f6-5c0d-4422-8132-002bfc175f38.jpg" t="Include" />
+            <e p="ed6b78ac-ef9a-44b6-9996-20c1eeb30458.jpg" t="Include" />
+            <e p="ed6c6c6c-74bd-49b8-8a5e-75b027bb212a.jpg" t="Include" />
+            <e p="f1090ee1-5beb-4765-9216-a4ab3ddc17b7.jpg" t="Include" />
+            <e p="f21d18d2-c989-4678-9a84-62762b0b92ce.jpg" t="Include" />
+            <e p="f58c157a-2bff-428c-a6cc-24bbf384174b.jpg" t="Include" />
+            <e p="f6120d46-639d-4e98-9a01-c4e608535908.jpg" t="Include" />
+            <e p="f727af68-823f-437f-9f3b-3577a3ca213d.jpg" t="Include" />
+            <e p="f78279e5-6cab-4b18-99fa-fd6dcb313990.jpg" t="Include" />
+            <e p="f904168f-05c3-445b-ac5d-b13b0e3cb002.jpg" t="Include" />
+            <e p="f9c8888b-611b-42db-9396-e83bf40ccc9b.jpg" t="Include" />
+            <e p="fbfb6e40-8773-493e-9621-488678d46d79.jpg" t="Include" />
+            <e p="fd1e8ded-b96a-48ae-9bbe-d829db7f9065.jpg" t="Include" />
+          </e>
+        </e>
       </e>
       <e p="PuzzleShop.Core" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
@@ -78,11 +205,18 @@
             <e p="ColorDto.cs" t="Include" />
             <e p="ColorForCreateDto.cs" t="Include" />
           </e>
+          <e p="Customers" t="Include">
+            <e p="CustomerInfoForOrderDto.cs" t="Include" />
+          </e>
           <e p="DifficultyLevels" t="Include">
             <e p="DifficultyLevelDto.cs" t="Include" />
           </e>
           <e p="Images" t="Include">
             <e p="ImageDto.cs" t="Include" />
+            <e p="ImageForCreationDto.cs" t="Include" />
+            <e p="ImageForUpdateDto.cs" t="Include" />
+            <e p="ImageMetaData.cs" t="Include" />
+            <e p="ImagesCollectionForUpdateDto.cs" t="Include" />
           </e>
           <e p="Manufacturers" t="Include">
             <e p="ManufacturerDto.cs" t="Include" />
@@ -101,15 +235,23 @@
             <e p="OrderDto.cs" t="Include" />
             <e p="OrderStatusDto.cs" t="Include" />
             <e p="OrderStatusForSettingDto.cs" t="Include" />
+            <e p="OrderTableRowDto.cs" t="Include" />
           </e>
           <e p="Puzzles" t="Include">
+            <e p="PuzzleBaseDto.cs" t="Include" />
             <e p="PuzzleDto.cs" t="Include" />
             <e p="PuzzleForCreationDto.cs" t="Include" />
             <e p="PuzzleForUpdateDto.cs" t="Include" />
+            <e p="PuzzleTableRowDto.cs" t="Include" />
           </e>
           <e p="PuzzleTypes" t="Include">
             <e p="PuzzleTypeDto.cs" t="Include" />
             <e p="PuzzleTypeForCreationDto.cs" t="Include" />
+            <e p="PuzzleTypeTableRowDto.cs" t="Include" />
+          </e>
+          <e p="Reviews" t="Include">
+            <e p="ReviewDto.cs" t="Include" />
+            <e p="ReviewForCreationDto.cs" t="Include" />
           </e>
           <e p="Roles" t="Include">
             <e p="RoleDto.cs" t="Include" />
@@ -128,6 +270,7 @@
           <e p="AuthenticationFailedException.cs" t="Include" />
           <e p="BadREquestException.cs" t="Include" />
           <e p="EntityNotFoundException.cs" t="Include" />
+          <e p="InternalServerErrorException.cs" t="Include" />
           <e p="UnauthorizedException.cs" t="Include" />
         </e>
         <e p="extensions" t="Include">
@@ -153,6 +296,7 @@
         </e>
         <e p="Profiles" t="Include">
           <e p="ColorProfile.cs" t="Include" />
+          <e p="CustomerProfile.cs" t="Include" />
           <e p="DifficultyLevelProfile.cs" t="Include" />
           <e p="ImageProfile.cs" t="Include" />
           <e p="ManufacturerProfile.cs" t="Include" />
@@ -161,18 +305,21 @@
           <e p="OrderProfile.cs" t="Include" />
           <e p="PuzzleProfile.cs" t="Include" />
           <e p="PuzzleTypeProfile.cs" t="Include" />
+          <e p="ReviewProfile.cs" t="Include" />
           <e p="RoleProfile.cs" t="Include" />
           <e p="UserProfile.cs" t="Include" />
         </e>
         <e p="PuzzleShop.Core.csproj" t="IncludeRecursive" />
         <e p="Repository" t="Include">
           <e p="Impl" t="Include">
+            <e p="ImageRepository.cs" t="Include" />
             <e p="OrderRepository.cs" t="Include" />
             <e p="PuzzleRepository.cs" t="Include" />
             <e p="Repository.cs" t="Include" />
           </e>
           <e p="Interfaces" t="Include">
             <e p="IEfCoreRepository.cs" t="Include" />
+            <e p="IImageRepository.cs" t="Include" />
             <e p="IOrderRepository.cs" t="Include" />
             <e p="IPuzzleRepository.cs" t="Include" />
             <e p="IRepository.cs" t="Include" />
@@ -204,6 +351,7 @@
           <e p="OrderStatusId.cs" t="Include" />
           <e p="Puzzle.cs" t="Include" />
           <e p="PuzzleType.cs" t="Include" />
+          <e p="Review.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -227,6 +375,7 @@
           <e p="PuzzleColorConfiguration.cs" t="Include" />
           <e p="PuzzleConfiguration.cs" t="Include" />
           <e p="PuzzleTypeConfiguration.cs" t="Include" />
+          <e p="ReviewConfiguration.cs" t="Include" />
           <e p="UserConfiguration.cs" t="Include" />
         </e>
         <e p="DbContext" t="Include">
@@ -248,6 +397,26 @@
           <e p="20200327171233_AddUniqueConstraintToEmailMigration.Designer.cs" t="Include" />
           <e p="20200402141719_MovedDifficultyLevelsToEnumMigration.cs" t="Include" />
           <e p="20200402141719_MovedDifficultyLevelsToEnumMigration.Designer.cs" t="Include" />
+          <e p="20200417161154_AddDeleteBehaviourInPuzzleImagesRel_Migration.cs" t="Include" />
+          <e p="20200417161154_AddDeleteBehaviourInPuzzleImagesRel_Migration.Designer.cs" t="Include" />
+          <e p="20200418211429_AddIsRubicsCubeField_Migration.cs" t="Include" />
+          <e p="20200418211429_AddIsRubicsCubeField_Migration.Designer.cs" t="Include" />
+          <e p="20200418212118_RemoveIsRCfromPuzzleAddIsRubicsCubeToPuzzleType_Migration.cs" t="Include" />
+          <e p="20200418212118_RemoveIsRCfromPuzzleAddIsRubicsCubeToPuzzleType_Migration.Designer.cs" t="Include" />
+          <e p="20200419081856_MoveIsWcaTOPuzzleType_AddIsMagneticAndRatingToPuzzle_Migration.cs" t="Include" />
+          <e p="20200419081856_MoveIsWcaTOPuzzleType_AddIsMagneticAndRatingToPuzzle_Migration.Designer.cs" t="Include" />
+          <e p="20200419092729_MoveDifficultyLevelToPuzzleType_Migration.cs" t="Include" />
+          <e p="20200419092729_MoveDifficultyLevelToPuzzleType_Migration.Designer.cs" t="Include" />
+          <e p="20200424144121_AddQuantityFieldInOrderItem_Migration.cs" t="Include" />
+          <e p="20200424144121_AddQuantityFieldInOrderItem_Migration.Designer.cs" t="Include" />
+          <e p="20200424151616_AddAvailableInStockFieldToPuzzle_Migration.cs" t="Include" />
+          <e p="20200424151616_AddAvailableInStockFieldToPuzzle_Migration.Designer.cs" t="Include" />
+          <e p="20200428084739_AddCustomerContactToOrderEntity_Migration.cs" t="Include" />
+          <e p="20200428084739_AddCustomerContactToOrderEntity_Migration.Designer.cs" t="Include" />
+          <e p="20200501094222_AddReviewsToPuzzle_Migration.cs" t="Include" />
+          <e p="20200501094222_AddReviewsToPuzzle_Migration.Designer.cs" t="Include" />
+          <e p="20200504103409_ChangeAvailableInStockToInt_Migration.cs" t="Include" />
+          <e p="20200504103409_ChangeAvailableInStockToInt_Migration.Designer.cs" t="Include" />
           <e p="PuzzleShopContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
