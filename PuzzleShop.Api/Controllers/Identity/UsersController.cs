@@ -20,7 +20,7 @@ namespace PuzzleShop.Api.Controllers.Identity
         }
 
         [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
-        [HttpPost("GetPagedUsers")]
+        [HttpPost("pagedUsers")]
         public async Task<IActionResult> GetUsers([FromBody] PagedRequest request)
         {
             var pagedUsers = await _userManagementService.GetAllAsync(request);
@@ -31,8 +31,15 @@ namespace PuzzleShop.Api.Controllers.Identity
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserWithRolesDto>> GetUser(long userId)
         {
-            var user = await _userManagementService.GetUserAsync(userId);
-            
+            var user = await _userManagementService.GetUserWithRolesAsync(userId);
+            return Ok(user);
+        }
+
+        [Authorize]
+        [HttpGet("plainUser/{userId}")]
+        public async Task<ActionResult<UserDto>> GetPlainUser(long userId)
+        {
+            var user = await _userManagementService.GetPlainUserAsync(userId);
             return Ok(user);
         }
 

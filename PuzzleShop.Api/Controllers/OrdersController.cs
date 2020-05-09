@@ -24,12 +24,10 @@ namespace PuzzleShop.Api.Controllers
     public class OrdersController : BaseController
     {
         private readonly IOrderingService _orderingService;
-        //private readonly IMapper _mapper;
 
         public OrdersController(IMapper mapper, 
             IOrderingService orderingService) : base(mapper)
         {
-            //_mapper = mapper;
             _orderingService = orderingService;
         }
 
@@ -73,7 +71,7 @@ namespace PuzzleShop.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("removeOrderItem/{userId}/{itemId}")]
+        [HttpDelete("orderItem/{userId}/{itemId}")]
         public async Task<IActionResult> RemoveOrderItem(long userId, long itemId)
         {
             await _orderingService.RemoveOrderItemAsync(userId, itemId);

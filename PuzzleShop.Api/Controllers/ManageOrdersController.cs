@@ -18,15 +18,13 @@ namespace PuzzleShop.Api.Controllers
 	public class ManageOrdersController : BaseController
 	{
 		private readonly IOrderingService _orderingService;
-		//private readonly IMapper _mapper;
 
 		public ManageOrdersController(IOrderingService orderingService, IMapper mapper) : base(mapper)
 		{
 			_orderingService = orderingService;
-			//_mapper = mapper;
 		}
 
-		[HttpPost("getOrdersPaged")]
+		[HttpPost("ordersPaged")]
 		public async Task<IActionResult> GetOrdersPaged([FromBody] PagedRequest request)
 		{
 			var orders = await _orderingService.GetPagedOrdersAsync(request);

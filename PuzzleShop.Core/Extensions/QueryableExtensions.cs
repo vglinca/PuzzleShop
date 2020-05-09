@@ -30,6 +30,7 @@ namespace PuzzleShop.Core.Extensions
         private static IQueryable<T> ApplyFilters<T>(this IQueryable<T> src, RequestFilters filters) where T : class
         {
             var predicate = new StringBuilder();
+            var firstAppended = false;
 
             for (var i = 0; i < filters.Filters.Count; i++)
             {
@@ -37,15 +38,22 @@ namespace PuzzleShop.Core.Extensions
                 {
                     predicate.Append($" {filters.Operator} ");
                 }
+                //if (!string.IsNullOrWhiteSpace(filters.Filters[i].PropertyName) && !string.IsNullOrWhiteSpace(filters.Filters[i].PropertyValue))
+                //{
 
-                if (!string.IsNullOrWhiteSpace(filters.Filters[i].PropertyName))
-                {
-                    predicate.Append($"{filters.Filters[i].PropertyName}.{nameof(string.Contains)}(@{i})");
-                }
+
+
+                //    if (!firstAppended)
+                //    {
+                //        firstAppended = true;
+                //    }
+                //}
+                predicate.Append($"{filters.Filters[i].PropertyName}.{nameof(string.Contains)}(@{i})");
             }
 
-            if (filters.Filters.Count > 0 && 
-                filters.Filters.All(f => !string.IsNullOrWhiteSpace(f.PropertyValue)))
+            if (filters.Filters.Any()
+                //filters.Filters.All(f => !string.IsNullOrWhiteSpace(f.PropertyValue))
+                )
             {
                 var propertyValues = filters.Filters.Select(f => f.PropertyValue).ToArray();
                 src = src.Where(predicate.ToString(), propertyValues);

@@ -15,12 +15,10 @@ namespace PuzzleShop.Api.Controllers
     public class ColorsController: BaseController
     {
         private readonly IRepository<Color> _colorRepository;
-        //private readonly IMapper _mapper;
 
         public ColorsController(IRepository<Color> colorRepository, IMapper mapper) : base(mapper)
         {
             _colorRepository = colorRepository;
-            //_mapper = mapper;
         }
         
         [HttpGet]

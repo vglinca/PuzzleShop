@@ -16,13 +16,11 @@ namespace PuzzleShop.Api.Controllers
     public class MaterialTypeController : BaseController
     {
         private readonly IRepository<MaterialType> _materialTypeRepository;
-        //private readonly IMapper _mapper;
 
         public MaterialTypeController(IRepository<MaterialType> materialTypeRepository, 
             IMapper mapper) : base(mapper)
         {
             _materialTypeRepository = materialTypeRepository;
-            //_mapper = mapper;
         }
 
         [HttpGet]

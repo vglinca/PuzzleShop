@@ -16,12 +16,10 @@ namespace PuzzleShop.Api.Controllers
     public class ManufacturersController : BaseController
     {
         private readonly IRepository<Manufacturer> _manufacturersRepository;
-        //private readonly IMapper _mapper;
         public ManufacturersController(IRepository<Manufacturer> manufacturersRepository, 
             IMapper mapper) : base(mapper)
         {
             _manufacturersRepository = manufacturersRepository;
-            //_mapper = mapper;
         }
 
         [HttpGet]

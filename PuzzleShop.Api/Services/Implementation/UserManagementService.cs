@@ -30,7 +30,18 @@ namespace PuzzleShop.Api.Services.Implementation
             return await users.CreatePagedResultAsync<User, UserWithRolesDto>(pagedRequest, _mapper);
         }
 
-        public async Task<UserWithRolesDto> GetUserAsync(long userId)
+        public async Task<UserDto> GetPlainUserAsync(long userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                throw new EntityNotFoundException($"User with Id {userId} not found.");
+            }
+            var model = _mapper.Map<UserDto>(user);
+            return model;
+        }
+
+        public async Task<UserWithRolesDto> GetUserWithRolesAsync(long userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)

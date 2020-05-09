@@ -16,13 +16,11 @@ namespace PuzzleShop.Api.Controllers
     public class PuzzleTypesController : BaseController
     {
         private readonly IRepository<PuzzleType> _puzzleTypeRepository;
-        //private readonly IMapper _mapper;
 
         public PuzzleTypesController(IRepository<PuzzleType> puzzleTypeRepository, 
             IMapper mapper) : base(mapper)
         {
             _puzzleTypeRepository = puzzleTypeRepository;
-            //_mapper = mapper;
         }
 
         [HttpGet]
@@ -41,7 +39,7 @@ namespace PuzzleShop.Api.Controllers
             return Ok(model);
         }
 
-        [HttpGet("getPuzzleTypeFriendly/{puzzleTypeId}")]
+        [HttpGet("puzzleTypeFriendly/{puzzleTypeId}")]
         public async Task<ActionResult<PuzzleTypeTableRowDto>> GetPuzzleTypeFriendly(long puzzleTypeId)
         {
             var puzzleTypeEntity = await _puzzleTypeRepository.FindByIdAsync(puzzleTypeId);

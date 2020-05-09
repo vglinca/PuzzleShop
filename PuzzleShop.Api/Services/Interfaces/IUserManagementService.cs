@@ -9,7 +9,8 @@ namespace PuzzleShop.Api.Services.Interfaces
     public interface IUserManagementService
     {
         Task<PagedResponse<UserWithRolesDto>> GetAllAsync(PagedRequest pagedRequest);
-        Task<UserWithRolesDto> GetUserAsync(long userId);
+        Task<UserWithRolesDto> GetUserWithRolesAsync(long userId);
+        Task<UserDto> GetPlainUserAsync(long userId);
         Task EditUserRolesAsync(long userId, IEnumerable<string> roles);
         Task BanUser(long userId);
         Task UnbanUser(long userId);

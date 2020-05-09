@@ -25,7 +25,7 @@ namespace PuzzleShop.Api.Controllers
 			_puzzleService = puzzleService;
 		}
 
-		[HttpPost(nameof(GetPuzzles))]
+		[HttpPost("pagedPuzzles")]
 		public async Task<ActionResult<IEnumerable<PuzzleTableRowDto>>> GetPuzzles([FromBody] PagedRequest pagedRequest)
 		{
 			var puzzlesPagedResponse = await _puzzleService.GetPuzzlesAsync(pagedRequest);
@@ -39,7 +39,7 @@ namespace PuzzleShop.Api.Controllers
 			return Ok(model);
 		}
 
-		[HttpGet("getPuzzleFriendly/{puzzleId}")]
+		[HttpGet("puzzleFriendly/{puzzleId}")]
 		public async Task<ActionResult<PuzzleTableRowDto>> GetPuzzleFriendly(long puzzleId)
 		{
 			var model = await _puzzleService.GetPuzzleAsync<PuzzleTableRowDto>(puzzleId);
