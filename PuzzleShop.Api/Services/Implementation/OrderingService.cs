@@ -70,6 +70,7 @@ namespace PuzzleShop.Api.Services.Implementation
                 order = new Domain.Entities.Order
                 {
                     OrderStatusId = OrderStatusId.Pending,
+                    OrderStatusTitle = OrderStatusId.Pending.ToString(),
                     OrderDate = DateTimeOffset.Now,
                     UserId = userId,
                     TotalCost = 0,
@@ -124,6 +125,7 @@ namespace PuzzleShop.Api.Services.Implementation
         {
             var order = await _ordersRepository.FindByIdAsync(orderId);
             order.OrderStatusId = orderStatusId;
+            order.OrderStatusTitle = orderStatusId.ToString();
             await _ordersRepository.UpdateEntityAsync(order);
         }
 
@@ -131,6 +133,7 @@ namespace PuzzleShop.Api.Services.Implementation
         {
             var orderWithOldStatus = await _ordersRepository.FindByUserIdAndStatusAsync(userId, oldStatus);
             orderWithOldStatus.OrderStatusId = newStatus;
+            orderWithOldStatus.OrderStatusTitle = newStatus.ToString();
 
             await _ordersRepository.UpdateEntityAsync(orderWithOldStatus);
         }
@@ -142,6 +145,7 @@ namespace PuzzleShop.Api.Services.Implementation
             _mapper.Map(customerDetails, pendingOrder);
 
             pendingOrder.OrderStatusId = OrderStatusId.AwaitingPayment;
+            pendingOrder.OrderStatusTitle = OrderStatusId.AwaitingPayment.ToString();
 
             await _ordersRepository.UpdateEntityAsync(pendingOrder);
         }
@@ -209,6 +213,7 @@ namespace PuzzleShop.Api.Services.Implementation
                 }
 
                 order.OrderStatusId = OrderStatusId.ConfirmedPayment;
+                order.OrderStatusTitle = OrderStatusId.ConfirmedPayment.ToString();
                 await _ordersRepository.UpdateEntityAsync(order);
             }
             catch (Exception ex)

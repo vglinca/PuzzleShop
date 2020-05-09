@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using PuzzleShop.Domain.Entities.Auth;
+using System.Text;
 
-// ReSharper disable All
-
-namespace PuzzleShop.Domain.Entities
+namespace PuzzleShop.Core.Dtos.Orders
 {
-    public class Order : BaseEntity
-    {
+	public abstract class OrderBaseDto
+	{
+        public long Id { get; set; }
         public long UserId { get; set; }
-        public virtual User User { get; set; }
         public DateTimeOffset OrderDate { get; set; }
         public string ContactEmail { get; set; }
         public string CustomerFirstName { get; set; }
@@ -21,9 +19,7 @@ namespace PuzzleShop.Domain.Entities
         public string Phone { get; set; }
         public int TotalItems { get; set; }
         public decimal TotalCost { get; set; }
-        public virtual ICollection<OrderItem> OrderItems { get; set; }
         public string OrderStatusTitle { get; set; }
-        public OrderStatusId OrderStatusId { get; set; }
-        public virtual OrderStatus OrderStatus { get; set; }
+        public long OrderStatusId { get; set; }
     }
 }
