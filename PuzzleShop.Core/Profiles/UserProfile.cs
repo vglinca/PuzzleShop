@@ -9,13 +9,13 @@ namespace PuzzleShop.Core.Profiles
     {
         public UserProfile()
         {
-            CreateMap<UserForRegistrationDto, User>()
-                .ForMember(dest => dest.Age,
-                    opt => opt.MapFrom(
-                        src => src.BirthDate.GetCurrentAge()));
+            CreateMap<UserForRegistrationDto, User>();
             CreateMap<UserForUpdateDto, User>();
             CreateMap<User, UserDto>();
-            CreateMap<User, UserWithRolesDto>();
+            CreateMap<User, UserWithRolesDto>()
+                .ForMember(dest => dest.Age,
+                    opt => opt.MapFrom(
+                        src => src.BirthDate));
         }
     }
 }

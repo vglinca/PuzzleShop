@@ -41,6 +41,17 @@ namespace PuzzleShop.Api.Services.Implementation
             return model;
         }
 
+        public async Task UpdateUserProfileAsync(long userId, UserForUpdateDto model)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                throw new EntityNotFoundException($"User with Id {userId} not found.");
+            }
+            _mapper.Map(model, user);
+            await _userManager.UpdateAsync(user);
+        }
+
         public async Task<UserWithRolesDto> GetUserWithRolesAsync(long userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());

@@ -19,7 +19,7 @@ namespace PuzzleShop.Core.Dtos.Users
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
         [Required(ErrorMessage = "BirthDate is required.")]
-        public DateTimeOffset BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
      
     }
 }

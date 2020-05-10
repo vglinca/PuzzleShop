@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using PuzzleShop.Domain.Entities.Auth;
@@ -33,7 +34,7 @@ namespace PuzzleShop.Api.Helpers
                 var adminUser = new User
                 {
                     FirstName = "Vitaly", LastName = "Glinka", Email = "example@mail.com",
-                    Address = "address", Age = 21, UserName = "administrator"
+                    Address = "address", BirthDate = new DateTime(1998, 2, 17), UserName = "administrator"
                 };
                 var result = await userManager.CreateAsync(adminUser, "Admin12345!");
                 if (result.Succeeded)

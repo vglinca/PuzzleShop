@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PuzzleShop.Persistance.DbContext;
 
 namespace PuzzleShop.Persistance.Migrations
 {
     [DbContext(typeof(PuzzleShopContext))]
-    partial class PuzzleShopContextModelSnapshot : ModelSnapshot
+    [Migration("20200510121046_AddBirthDateRemoveAgeFieldInUser_Migration")]
+    partial class AddBirthDateRemoveAgeFieldInUser_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

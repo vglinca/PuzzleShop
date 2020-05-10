@@ -43,6 +43,13 @@ namespace PuzzleShop.Api.Controllers.Identity
             return Ok(user);
         }
 
+        [HttpPut("profile/{userId}")]
+        public async Task<IActionResult> UpdateUserProfile(long userId, [FromBody] UserForUpdateDto model)
+        {
+            await _userManagementService.UpdateUserProfileAsync(userId, model);
+            return NoContent();
+        }
+
         [RoleAuthorize(AuthorizeRole.Administrator)]
         [HttpPut("manageroles/{userId}")]
         public async Task<IActionResult> EditUserRoles(long userId, [FromBody] IEnumerable<string> roles)

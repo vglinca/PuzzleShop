@@ -11,6 +11,7 @@ namespace PuzzleShop.Api.Services.Interfaces
         Task<PagedResponse<UserWithRolesDto>> GetAllAsync(PagedRequest pagedRequest);
         Task<UserWithRolesDto> GetUserWithRolesAsync(long userId);
         Task<UserDto> GetPlainUserAsync(long userId);
+        Task UpdateUserProfileAsync(long userId, UserForUpdateDto model);
         Task EditUserRolesAsync(long userId, IEnumerable<string> roles);
         Task BanUser(long userId);
         Task UnbanUser(long userId);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace PuzzleShop.Domain.Entities.Auth
@@ -8,7 +9,7 @@ namespace PuzzleShop.Domain.Entities.Auth
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
-        public int? Age { get; set; }
+        public DateTime? BirthDate { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }
