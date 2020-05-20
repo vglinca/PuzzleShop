@@ -15,4 +15,10 @@
       <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.23" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="C:\Users\Azathoth\.nuget\packages\nlog.config\4.7.2\contentFiles\any\any\NLog.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 namespace PuzzleShop.Api.Controllers
 {
 	[AllowAnonymous]
-	public class ReviewsController : BaseController
+	[ApiController]
+	[Route("api/{puzzleId}/[controller]")]
+	public class ReviewsController : ControllerBase
 	{
 		private readonly IPuzzleReviewService _reviewService;
 		public ReviewsController(IPuzzleReviewService reviewService)

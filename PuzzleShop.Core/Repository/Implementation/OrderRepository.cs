@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.Extensions;
@@ -18,6 +19,7 @@ namespace PuzzleShop.Core.Repository.Implementation
     public class OrderRepository : IOrderRepository
     {
         private readonly PuzzleShopContext _ctx;
+        private readonly ILogger<OrderRepository> _logger;
 
         public OrderRepository(PuzzleShopContext ctx)
         {
@@ -41,6 +43,7 @@ namespace PuzzleShop.Core.Repository.Implementation
             var entity = await _ctx.FindAsync<Order>(id);
             if (entity == null)
             {
+                _logger.LogError($"Order with {id} not found.");
                 throw new EntityNotFoundException(
                     $"{typeof(Order).ToString().Split('.').Last()} with Id {id} not found.");
             }
@@ -51,6 +54,7 @@ namespace PuzzleShop.Core.Repository.Implementation
         {
             if (entity == null)
             {
+                _logger.LogError("Order is not provided.");
                 throw new BadRequestException($"{nameof(entity)} is null.");
             }
             _ctx.Set<Order>().Add(entity);
@@ -62,6 +66,7 @@ namespace PuzzleShop.Core.Repository.Implementation
         {
             if (entity == null)
             {
+                _logger.LogError("Order is not provided.");
                 throw new BadRequestException($"{nameof(entity)} is null.");
             }
 
@@ -73,12 +78,14 @@ namespace PuzzleShop.Core.Repository.Implementation
         {
             if (entity == null)
             {
+                _logger.LogError("Order is not provided.");
                 throw new BadRequestException($"{nameof(entity)} is null.");
             }
 
             var entityToDel = _ctx.FindAsync<Order>(entity.Id);
             if (entityToDel == null)
             {
+                _logger.LogError($"Order with {entity.Id} not found.");
                 throw new EntityNotFoundException(
                     $"{typeof(Order).ToString().Split('.').Last()} with Id {entity.Id} not found.");
             }
@@ -92,6 +99,7 @@ namespace PuzzleShop.Core.Repository.Implementation
                 .FirstOrDefaultAsync(o => o.UserId == userId && o.OrderStatusId == statusId);
             if (order == null && statusId != OrderStatusId.Pending)
             {
+                _logger.LogError("Requested order doesn't exist.");
                 throw new EntityNotFoundException($"Order not found.");
             }
 

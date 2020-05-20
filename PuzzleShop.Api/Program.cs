@@ -13,6 +13,7 @@ using PuzzleShop.Api.Extensions;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Domain.Entities.Auth;
 using PuzzleShop.Persistance.DbContext;
+using Serilog;
 // ReSharper disable All
 
 namespace PuzzleShop.Api
@@ -44,13 +45,16 @@ namespace PuzzleShop.Api
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 			Host
 			.CreateDefaultBuilder(args)
-			.ConfigureLogging((hostingCtx, logger) =>
-			{
-				logger.ClearProviders();
-				logger.AddConfiguration(hostingCtx.Configuration.GetSection("Logging"));
-				logger.AddConsole();
-				logger.AddEventSourceLogger();
+			.UseSerilog((ctx, cfg) => {
+				cfg.ReadFrom.Configuration(ctx.Configuration);
 			})
+			//.ConfigureLogging((hostingCtx, logger) =>
+			//{
+			//	logger.ClearProviders();
+			//	logger.AddConfiguration(hostingCtx.Configuration.GetSection("Logging"));
+			//	logger.AddConsole();
+			//	logger.AddEventSourceLogger();
+			//})
 			.ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
 	}
 }

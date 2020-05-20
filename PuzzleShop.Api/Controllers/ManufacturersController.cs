@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PuzzleShop.Api.Dtos.Manufacturers;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
@@ -16,10 +17,12 @@ namespace PuzzleShop.Api.Controllers
     public class ManufacturersController : BaseController
     {
         private readonly IRepository<Manufacturer> _manufacturersRepository;
+        private readonly ILogger<ManufacturersController> _logger;
         public ManufacturersController(IRepository<Manufacturer> manufacturersRepository, 
-            IMapper mapper) : base(mapper)
+            IMapper mapper, ILogger<ManufacturersController> logger) : base(mapper)
         {
             _manufacturersRepository = manufacturersRepository;
+            _logger = logger;
         }
 
         [HttpGet]

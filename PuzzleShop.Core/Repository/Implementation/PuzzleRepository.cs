@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PuzzleShop.Core.Dtos.Puzzles;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.Extensions;
@@ -16,10 +17,12 @@ namespace PuzzleShop.Core.Repository.Implementation
     public sealed class PuzzleRepository : IPuzzleRepository
     {
         private readonly PuzzleShopContext _ctx;
+        private readonly ILogger<PuzzleRepository> _logger;
 
-        public PuzzleRepository(PuzzleShopContext ctx)
+        public PuzzleRepository(PuzzleShopContext ctx, ILogger<PuzzleRepository> logger)
         {
             _ctx = ctx;
+            _logger = logger;
         }
 
         public async Task<PagedResponse<PuzzleTableRowDto>> GetAllAsync(PagedRequest pagedRequest, IMapper mapper)
@@ -36,6 +39,7 @@ namespace PuzzleShop.Core.Repository.Implementation
 
             if (puzzle == null)
             {
+                _logger.LogError($"Puzzle with id {id} not found.");
                 throw new EntityNotFoundException($"Puzzle with Id {id} not found.");
             }
 
@@ -46,6 +50,7 @@ namespace PuzzleShop.Core.Repository.Implementation
         {
             if (puzzle == null)
             {
+                _logger.LogError("Provided puzzle is null.");
                 throw new BadRequestException($"{nameof(puzzle)} is null.");
             }
 
@@ -79,6 +84,7 @@ namespace PuzzleShop.Core.Repository.Implementation
         {
             if (puzzle == null)
             {
+                _logger.LogError("Provided puzzle for update is null.");
                 throw new BadRequestException($"{nameof(puzzle)} is null.");
             }
 
@@ -90,9 +96,9 @@ namespace PuzzleShop.Core.Repository.Implementation
         {
             if (entity == null)
             {
+                _logger.LogError("Provided puzzle for deletion is null.");
                 throw new BadRequestException($"{nameof(entity)} is null.");
             }
-            
             var puzzleToDelete = await _ctx.Puzzles.FirstOrDefaultAsync(p => p.Id == entity.Id);
             if (puzzleToDelete == null)
             {

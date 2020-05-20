@@ -20,6 +20,7 @@ using PuzzleShop.Core.Repository.Implementation;
 using PuzzleShop.Core.Repository.Interfaces;
 using PuzzleShop.Domain.Entities.Auth;
 using PuzzleShop.Persistance.DbContext;
+using Serilog;
 // ReSharper disable All
 
 namespace PuzzleShop.Api
@@ -130,6 +131,8 @@ namespace PuzzleShop.Api
                 app.UseClientExceptionPage();
             }
 
+            app.UseSerilogRequestLogging();
+
             app.UseStaticFiles();
 
             app.UseSwagger();
@@ -140,8 +143,6 @@ namespace PuzzleShop.Api
 
             app.UseSession();
             
-            //app.UseTokenInsertionMiddleware();
-            
             app.UseRouting();
             
             app.UseAuthentication();
@@ -149,8 +150,6 @@ namespace PuzzleShop.Api
             app.UseAuthorization();
             
             app.UseCors(b => b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-            //app.UseLoggingMiddleware();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

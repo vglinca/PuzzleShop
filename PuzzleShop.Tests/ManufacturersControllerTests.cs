@@ -33,7 +33,7 @@ namespace PuzzleShop.Tests
 		{
 			var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new ManufacturerProfile()));
 			_mapper = mockMapper.CreateMapper();
-			_manufacturersController = new ManufacturersController(_repository, _mapper);
+			//_manufacturersController = new ManufacturersController(_repository, _mapper);
 		}
 
 		[TestCase]

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.Extensions;
 using PuzzleShop.Domain.Entities;
@@ -16,10 +17,11 @@ namespace PuzzleShop.Core
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly PuzzleShopContext _ctx;
-
-        public Repository(PuzzleShopContext ctx)
+        private readonly ILogger<Repository<TEntity>> _logger;
+        public Repository(PuzzleShopContext ctx, ILogger<Repository<TEntity>> logger)
         {
             _ctx = ctx;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, bool>>[] wherePredicate)
@@ -38,6 +40,7 @@ namespace PuzzleShop.Core
             var entity = await _ctx.FindAsync<TEntity>(id);
             if (entity == null)
             {
+                _logger.LogError($"{typeof(TEntity).ToString().Split('.').Last()} with id {id} not found.");
                 throw new EntityNotFoundException(
                     $"{typeof(TEntity).ToString().Split('.').Last()} with Id {id} not found.");
             }
@@ -49,6 +52,7 @@ namespace PuzzleShop.Core
         {
             if (entity == null)
             {
+                _logger.LogError($"Bad request. {typeof(TEntity).ToString().Split('.').Last()} not provided.");
                 throw new BadRequestException($"{nameof(entity)} is null.");
             }
             _ctx.Set<TEntity>().Add(entity);
@@ -60,6 +64,7 @@ namespace PuzzleShop.Core
         {
             if (entity == null)
             {
+                _logger.LogError($"Bad request. {typeof(TEntity).ToString().Split('.').Last()} not provided.");
                 throw new BadRequestException($"{nameof(entity)} is null.");
             }
 
@@ -77,6 +82,7 @@ namespace PuzzleShop.Core
             var entityToDel = _ctx.FindAsync<TEntity>(entity.Id);
             if (entityToDel == null)
             {
+                _logger.LogError($"{typeof(TEntity).ToString().Split('.').Last()} with id {entity.Id} not found.");
                 throw new EntityNotFoundException(
                     $"{typeof(TEntity).ToString().Split('.').Last()} with Id {entity.Id} not found.");
             }

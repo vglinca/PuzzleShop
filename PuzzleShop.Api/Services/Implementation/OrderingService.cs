@@ -155,6 +155,10 @@ namespace PuzzleShop.Api.Services.Implementation
             var order = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
             
             var orderItem = await _orderItemRepository.FindByIdAsync(itemId);
+
+            order.TotalCost -= orderItem.Cost;
+            order.TotalItems -= orderItem.Quantity;
+            
             await _orderItemRepository.DeleteEntityAsync(orderItem);
 
             if (order.OrderItems.Any())
@@ -193,7 +197,7 @@ namespace PuzzleShop.Api.Services.Implementation
 
                 var chargeOptions = new ChargeCreateOptions
                 {
-                    Amount = ((long) order.TotalCost) * 100,
+                    Amount = (long) (order.TotalCost * 100),
                     Description = $"Charge for {customerInfo.ContactEmail}",
                     Customer = customer.Id,
                     Currency = "USD"
