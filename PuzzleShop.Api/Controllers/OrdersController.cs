@@ -48,10 +48,10 @@ namespace PuzzleShop.Api.Controllers
         }
         
         [HttpPost(nameof(AddToCart))]
-        public async Task<IActionResult> AddToCart([FromBody] OrderItemForCreationDto orderItemForCreationDto)
+        public async Task<IActionResult> AddToCart([FromBody] OrderItemForCreationDto orderItemForCreationDto, [FromQuery] int addedFromCollections)
         {
             var orderItem = _mapper.Map<OrderItem>(orderItemForCreationDto);
-            await _orderingService.EditCartAsync(orderItem, orderItemForCreationDto.UserId);
+            await _orderingService.EditCartAsync(orderItem, orderItemForCreationDto.UserId, addedFromCollections);
 
             return Ok();
         }

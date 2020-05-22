@@ -13,7 +13,7 @@ namespace PuzzleShop.Api.Services.Interfaces
         Task<PagedResponse<OrderTableRowDto>> GetPagedOrdersAsync(PagedRequest request);
         Task<IEnumerable<Order>> GetUserOrdersAsync(long userId);
         Task<Order> GetOrderByIdASync(long orderId);
-        Task EditCartAsync(OrderItem orderItem, long userId);
+        Task EditCartAsync(OrderItem orderItem, long userId, int? addedFromCollections = null);
         Task UpdateOrderStatusAsync(long orderId, OrderStatusId orderStatusId);
         Task ConfirmOrderAsync(long userId, CustomerInfoForOrderDto customerDetails);
         Task CheckoutAsync(long userId, long orderId, CustomerInfoForOrderDto customerInfo);

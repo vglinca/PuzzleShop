@@ -19,18 +19,17 @@ namespace PuzzleShop.Core.Extensions
         {
             var entities = src.ProjectTo<TDto>(mapper.ConfigurationProvider);
             entities = entities.ApplyFilters(request.RequestFilters);
-            var itemsCount = await entities.CountAsync();
+            var count = await entities.CountAsync();
             entities = entities.ApplySort(request.OrderBy, request.OrderByDirection);
             entities = entities.Paginate(request.PageNumber, request.PageSize);
             var puzzlesList = await entities.ToListAsync();
 
-            return new PagedResponse<TDto>(request.PageNumber, request.PageSize, itemsCount, puzzlesList);
+            return new PagedResponse<TDto>(request.PageNumber, request.PageSize, count, puzzlesList);
         }
 
         private static IQueryable<T> ApplyFilters<T>(this IQueryable<T> src, RequestFilters filters) where T : class
         {
             var predicate = new StringBuilder();
-            var firstAppended = false;
 
             for (var i = 0; i < filters.Filters.Count; i++)
             {
@@ -41,13 +40,6 @@ namespace PuzzleShop.Core.Extensions
                 //if (!string.IsNullOrWhiteSpace(filters.Filters[i].PropertyName) && !string.IsNullOrWhiteSpace(filters.Filters[i].PropertyValue))
                 //{
 
-
-
-                //    if (!firstAppended)
-                //    {
-                //        firstAppended = true;
-                //    }
-                //}
                 predicate.Append($"{filters.Filters[i].PropertyName}.{nameof(string.Contains)}(@{i})");
             }
 
