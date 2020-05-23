@@ -48,13 +48,6 @@ namespace PuzzleShop.Api
 			.UseSerilog((ctx, cfg) => {
 				cfg.ReadFrom.Configuration(ctx.Configuration);
 			})
-			//.ConfigureLogging((hostingCtx, logger) =>
-			//{
-			//	logger.ClearProviders();
-			//	logger.AddConfiguration(hostingCtx.Configuration.GetSection("Logging"));
-			//	logger.AddConsole();
-			//	logger.AddEventSourceLogger();
-			//})
 			.ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
 	}
 }

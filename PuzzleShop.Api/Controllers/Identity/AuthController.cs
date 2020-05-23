@@ -20,7 +20,6 @@ namespace PuzzleShop.Api.Controllers.Identity
     public class AuthController : BaseController
     {
         private readonly AuthOptions _authOptions;
-        //private readonly IMapper _mapper;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ISigningInService _signingInService;
@@ -31,7 +30,6 @@ namespace PuzzleShop.Api.Controllers.Identity
             UserManager<User> userManager, 
             ISigningInService signingInService) : base(mapper)
         {
-            //_mapper = mapper;
             _signInManager = signInManager;
             _userManager = userManager;
             _signingInService = signingInService;
@@ -45,7 +43,7 @@ namespace PuzzleShop.Api.Controllers.Identity
             var result = await _userManager.CreateAsync(user, userForRegistrationDto.Password);
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "user");
+                await _userManager.AddToRoleAsync(user, AuthorizeRole.User);
                 return Ok();
             }
             return StatusCode(StatusCodes.Status422UnprocessableEntity, result.Errors);

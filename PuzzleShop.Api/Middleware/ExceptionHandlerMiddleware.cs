@@ -25,31 +25,31 @@ namespace PuzzleShop.Api.Middleware
 			}
 			catch (EntityNotFoundException e)
 			{
-				await HandleException(ctx, e, HttpStatusCode.NotFound);
+				await HandleExceptionAsync(ctx, e, HttpStatusCode.NotFound);
 			}
 			catch (BadRequestException e)
 			{
-				await HandleException(ctx, e, HttpStatusCode.BadRequest);
+				await HandleExceptionAsync(ctx, e, HttpStatusCode.BadRequest);
 			}
 			catch (UnauthorizedException e)
 			{
-				await HandleException(ctx, e, HttpStatusCode.Unauthorized);
+				await HandleExceptionAsync(ctx, e, HttpStatusCode.Unauthorized);
 			}
 			catch (AuthenticationFailedException e)
 			{
-				await HandleException(ctx, e, HttpStatusCode.Unauthorized);
+				await HandleExceptionAsync(ctx, e, HttpStatusCode.Unauthorized);
 			}
 			catch(InternalServerErrorException e)
 			{
-				await HandleException(ctx, e, HttpStatusCode.InternalServerError);
+				await HandleExceptionAsync(ctx, e, HttpStatusCode.InternalServerError);
 			}
 			catch (Exception e)
 			{
-				await HandleException(ctx, e, HttpStatusCode.InternalServerError);
+				await HandleExceptionAsync(ctx, e, HttpStatusCode.InternalServerError);
 			}
 		}
 
-		private async Task HandleException(HttpContext ctx, Exception ex, HttpStatusCode statusCode)
+		private async Task HandleExceptionAsync(HttpContext ctx, Exception ex, HttpStatusCode statusCode)
 		{
 			var response = ctx.Response;
 			response.ContentType = "application/problem+json";

@@ -11,21 +11,21 @@ namespace PuzzleShop.Api.Helpers
     {
         public static async Task InitializeAsync(RoleManager<Role> roleManager, UserManager<User> userManager)
         {
-            if (await roleManager.FindByNameAsync("admin") == null)
+            if (await roleManager.FindByNameAsync(AuthorizeRole.Administrator) == null)
             {
-                await roleManager.CreateAsync(new Role("admin"));
+                await roleManager.CreateAsync(new Role(AuthorizeRole.Administrator));
             }
-            if (await roleManager.FindByNameAsync("moderator") == null)
+            if (await roleManager.FindByNameAsync(AuthorizeRole.Moderator) == null)
             {
-                await roleManager.CreateAsync(new Role("moderator"));
+                await roleManager.CreateAsync(new Role(AuthorizeRole.Moderator));
             }
-            if (await roleManager.FindByNameAsync("user") == null)
+            if (await roleManager.FindByNameAsync(AuthorizeRole.User) == null)
             {
-                await roleManager.CreateAsync(new Role("user"));
+                await roleManager.CreateAsync(new Role(AuthorizeRole.User));
             }
-            if (await roleManager.FindByNameAsync("banished") == null)
+            if (await roleManager.FindByNameAsync(AuthorizeRole.Banished) == null)
             {
-                await roleManager.CreateAsync(new Role("banished"));
+                await roleManager.CreateAsync(new Role(AuthorizeRole.Banished));
             }
 
             var user = await userManager.FindByNameAsync("administrator");
@@ -40,7 +40,7 @@ namespace PuzzleShop.Api.Helpers
                 if (result.Succeeded)
                 {
                     await userManager.AddToRolesAsync(adminUser, 
-                        new List<string> {"admin", "moderator", "user"});
+                        new List<string> { AuthorizeRole.Administrator, AuthorizeRole.Moderator, AuthorizeRole.User});
                 }
             }
         }

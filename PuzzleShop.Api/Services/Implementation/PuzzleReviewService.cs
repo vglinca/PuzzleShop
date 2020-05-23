@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using PuzzleShop.Api.Services.Interfaces;
@@ -43,8 +44,10 @@ namespace PuzzleShop.Api.Services.Implementation
 			{
 				throw new EntityNotFoundException($"Puzzle with id {puzzleId} not found.");
 			}
-			var reviewEntity = _mapper.Map<Domain.Entities.Review>(review);
+			var reviewEntity = _mapper.Map<Review>(review);
 			puzzle.Reviews.Add(reviewEntity);
+			var rating = puzzle.Reviews.Sum(r => r.Rating) / puzzle.Reviews.Count();
+			puzzle.Rating = rating;
 			await _puzzleRepository.UpdateEntityAsync(puzzle);
 		}
 	}

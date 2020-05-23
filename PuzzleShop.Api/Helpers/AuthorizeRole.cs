@@ -10,5 +10,6 @@ namespace PuzzleShop.Api.Helpers
 		public const string Administrator = "admin";
 		public const string Moderator = "moderator";
 		public const string User = "user";
+		public const string Banished = "banished";
 	}
 }

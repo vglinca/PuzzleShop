@@ -59,32 +59,5 @@ namespace PuzzleShop.Api.Controllers.Identity
 
             return NoContent();
         }
-
-        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
-        [HttpPut("ban/{userId}")]
-        public async Task<IActionResult> BanUser(long userId)
-        {
-            await _userManagementService.BanUser(userId);
-
-            return NoContent();
-        }
-
-        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
-        [HttpPut("unban/{userId}")]
-        public async Task<IActionResult> UnbanUser(long userId)
-        {
-            await _userManagementService.UnbanUser(userId);
-
-            return NoContent();
-        }
-
-        [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
-        [HttpDelete("{userId}")]
-        public async Task<IActionResult> DeleteUser(long userId)
-        {
-            await _userManagementService.DeleteUser(userId);
-           
-            return NoContent();
-        }
     }
 }
