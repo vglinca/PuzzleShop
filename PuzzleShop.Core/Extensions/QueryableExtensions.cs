@@ -37,15 +37,10 @@ namespace PuzzleShop.Core.Extensions
                 {
                     predicate.Append($" {filters.Operator} ");
                 }
-                //if (!string.IsNullOrWhiteSpace(filters.Filters[i].PropertyName) && !string.IsNullOrWhiteSpace(filters.Filters[i].PropertyValue))
-                //{
-
                 predicate.Append($"{filters.Filters[i].PropertyName}.{nameof(string.Contains)}(@{i})");
             }
 
-            if (filters.Filters.Any()
-                //filters.Filters.All(f => !string.IsNullOrWhiteSpace(f.PropertyValue))
-                )
+            if (filters.Filters.Any())
             {
                 var propertyValues = filters.Filters.Select(f => f.PropertyValue).ToArray();
                 src = src.Where(predicate.ToString(), propertyValues);

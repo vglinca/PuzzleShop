@@ -39,69 +39,29 @@ namespace PuzzleShop.Api
         {
             var connString = Configuration["ConnectionStrings:PuzzleShopDbConnString"];
             services.AddDbContext<PuzzleShopContext>(opt => opt.UseSqlServer(connString));
-            
-           services.AddDistributedMemoryCache();
+
+            services.AddDistributedMemoryCache();
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
+
+            services.ConfigureIdentity();
             
-            services.AddIdentity<User, Role>(o =>
-            {
-                o.Password.RequiredLength = 8;
-                o.User.RequireUniqueEmail = true;
-            })
-                .AddRoles<Role>()
-                .AddEntityFrameworkStores<PuzzleShopContext>()
-                .AddRoleManager<RoleManager<Role>>()
-                .AddErrorDescriber<IdentityErrorDescriber>();
-            
-            services.Configure<IdentityOptions>(o =>
-            {});
+            services.Configure<IdentityOptions>(o =>{});
             
             services.AddCors();
 
             var authOptions = services.ConfigureAuthOptions(Configuration);
             services.AddJwtBearerAuthentication(authOptions);
-
             services.AddAuthorization();
-            
-            services.AddControllers(cfg =>
-                {
-                    cfg.Filters.Add(new AuthorizeFilter());
-                    cfg.ReturnHttpNotAcceptable = true;
-                })
-                .AddNewtonsoftJson(cfg =>
-                {
-                    cfg.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    cfg.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                })
-                .ConfigureApiBehaviorOptions(cfg =>
-                {
-                    cfg.InvalidModelStateResponseFactory = ctx =>
-                    {
-                        var problemDetails = new ValidationProblemDetails(ctx.ModelState)
-                        {
-                            Title = "One or more validation problems has occured.",
-                            Status = StatusCodes.Status422UnprocessableEntity,
-                            Detail = "See the 'errors' property for details.",
-                            Instance = ctx.HttpContext.Request.Path
-                        };
-                        problemDetails.Extensions.Add("traceId", ctx.HttpContext.TraceIdentifier);
 
-                        return new UnprocessableEntityObjectResult(problemDetails)
-                        {
-                            ContentTypes = { "application/problem+json" }
-                        };
-                    };
-                });
+            services.ConfigureControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IPuzzleRepository, PuzzleRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
-            
             services.AddTransient<IUserManagementService, UserManagementService>();
             services.AddTransient<ISigningInService, SigningInService>();
             services.AddTransient<IPuzzleService, PuzzleService>();

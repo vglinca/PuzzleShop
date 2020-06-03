@@ -4,11 +4,66 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PuzzleShop.Api.Helpers;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using PuzzleShop.Domain.Entities.Auth;
+using PuzzleShop.Persistance.DbContext;
+using Microsoft.AspNetCore.Identity;
 
 namespace PuzzleShop.Api.Extensions
 {
     public static class ServiceExtensions
     {
+
+        public static void ConfigureControllers(this IServiceCollection services)
+        {
+            services.AddControllers(cfg =>
+            {
+                cfg.Filters.Add(new AuthorizeFilter());
+                cfg.ReturnHttpNotAcceptable = true;
+            })
+                .AddNewtonsoftJson(cfg =>
+                {
+                    cfg.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    cfg.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
+                .ConfigureApiBehaviorOptions(cfg =>
+                {
+                    cfg.InvalidModelStateResponseFactory = ctx =>
+                    {
+                        var problemDetails = new ValidationProblemDetails(ctx.ModelState)
+                        {
+                            Title = "One or more validation problems has occured.",
+                            Status = StatusCodes.Status422UnprocessableEntity,
+                            Detail = "See the 'errors' property for details.",
+                            Instance = ctx.HttpContext.Request.Path
+                        };
+                        problemDetails.Extensions.Add("traceId", ctx.HttpContext.TraceIdentifier);
+
+                        return new UnprocessableEntityObjectResult(problemDetails)
+                        {
+                            ContentTypes = { "application/problem+json" }
+                        };
+                    };
+                });
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            services.AddIdentity<User, Role>(o =>
+            {
+                o.Password.RequiredLength = 8;
+                o.User.RequireUniqueEmail = true;
+            })
+                .AddRoles<Role>()
+                .AddEntityFrameworkStores<PuzzleShopContext>()
+                .AddRoleManager<RoleManager<Role>>()
+                .AddErrorDescriber<IdentityErrorDescriber>();
+        }
+
         public static void AddJwtBearerAuthentication(this IServiceCollection services, AuthOptions authOptions)
         {
             services.AddAuthentication(cfg =>

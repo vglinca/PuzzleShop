@@ -78,12 +78,5 @@ namespace PuzzleShop.Api.Controllers
             
             return NoContent();
         }
-        
-        //[NonAction]
-        //private async Task<User> GetCurrentUser()
-        //{
-        //    var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        //    return await _userManager.FindByIdAsync(userId);
-        //}
     }
 }
