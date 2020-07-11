@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using PuzzleShop.Core.Dtos.Customers;
 using PuzzleShop.Core.Dtos.Orders;
+using PuzzleShop.Core.Entities;
 using PuzzleShop.Core.PaginationModels;
-using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Services.Interfaces
 {

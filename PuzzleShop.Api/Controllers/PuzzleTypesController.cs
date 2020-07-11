@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.PuzzleTypes;
-using PuzzleShop.Domain.Entities;
+using PuzzleShop.Core.Entities;
+
 namespace PuzzleShop.Api.Controllers
 {
     [AllowAnonymous]
@@ -52,7 +50,7 @@ namespace PuzzleShop.Api.Controllers
         public async Task<ActionResult<PuzzleTypeDto>> AddPuzzleType(
             [FromBody] PuzzleTypeForCreationDto puzzleTypeForCreationDto)
         {
-            var newPuzzleType = _mapper.Map<Domain.Entities.PuzzleType>(puzzleTypeForCreationDto);
+            var newPuzzleType = _mapper.Map<PuzzleType>(puzzleTypeForCreationDto);
             await _puzzleTypeRepository.AddEntityAsync(newPuzzleType);
 
             var model = _mapper.Map<PuzzleTypeDto>(newPuzzleType);

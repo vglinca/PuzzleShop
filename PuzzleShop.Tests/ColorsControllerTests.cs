@@ -6,11 +6,9 @@ using PuzzleShop.Api.Controllers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Colors;
 using PuzzleShop.Core.Profiles;
-using PuzzleShop.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Tests
 {

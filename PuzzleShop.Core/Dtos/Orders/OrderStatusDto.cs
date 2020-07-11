@@ -1,5 +1,4 @@
-﻿using PuzzleShop.Domain.Entities;
-
+﻿using PuzzleShop.Core.Entities;
 namespace PuzzleShop.Core.Dtos.Orders
 {
     public class OrderStatusDto

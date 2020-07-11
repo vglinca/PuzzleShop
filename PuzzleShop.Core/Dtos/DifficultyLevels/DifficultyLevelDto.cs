@@ -1,6 +1,6 @@
 ﻿// ReSharper disable All
 
-using PuzzleShop.Domain.Entities;
+using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Core.Dtos.DifficultyLevels
 {

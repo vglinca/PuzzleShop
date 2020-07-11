@@ -5,10 +5,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Users;
+using PuzzleShop.Core.Entities.Auth;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.Extensions;
 using PuzzleShop.Core.PaginationModels;
-using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Services.Implementation
 {

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using PuzzleShop.Domain.Entities.Auth;
+using PuzzleShop.Core.Entities.Auth;
+
 // ReSharper disable All
 
 namespace PuzzleShop.Api.Helpers

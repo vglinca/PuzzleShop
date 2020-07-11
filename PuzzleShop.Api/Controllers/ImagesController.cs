@@ -1,17 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
-using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Images;
-using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PuzzleShop.Api.Controllers

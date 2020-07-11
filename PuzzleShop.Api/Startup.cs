@@ -16,10 +16,9 @@ using PuzzleShop.Api.Extensions;
 using PuzzleShop.Api.Services.Implementation;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
-using PuzzleShop.Core.Repository.Implementation;
 using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Domain.Entities.Auth;
 using PuzzleShop.Persistance.DbContext;
+using PuzzleShop.Persistance.Repository;
 using Serilog;
 // ReSharper disable All
 

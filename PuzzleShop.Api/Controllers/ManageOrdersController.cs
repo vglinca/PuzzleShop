@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Orders;
-using PuzzleShop.Core.Dtos.Users;
 using PuzzleShop.Core.PaginationModels;
-using PuzzleShop.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using PuzzleShop.Core.Entities;
 using System.Threading.Tasks;
 
 namespace PuzzleShop.Api.Controllers

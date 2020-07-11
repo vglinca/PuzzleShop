@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Services.Interfaces;
-using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Customers;
 using PuzzleShop.Core.Dtos.OrderItems;
 using PuzzleShop.Core.Dtos.Orders;
-using PuzzleShop.Core.Dtos.Users;
-using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Domain.Entities;
-using PuzzleShop.Domain.Entities.Auth;
+using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {

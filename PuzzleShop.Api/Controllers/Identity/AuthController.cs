@@ -11,8 +11,8 @@ using Microsoft.Extensions.Options;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Users;
-using PuzzleShop.Domain.Entities.Auth;
 using System.Linq;
+using PuzzleShop.Core.Entities.Auth;
 
 namespace PuzzleShop.Api.Controllers.Identity
 {

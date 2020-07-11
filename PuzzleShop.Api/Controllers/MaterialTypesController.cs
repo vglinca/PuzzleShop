@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.MaterialTypes;
-using PuzzleShop.Domain.Entities;
+using PuzzleShop.Core.Entities;
+
 // ReSharper disable All
 
 namespace PuzzleShop.Api.Controllers

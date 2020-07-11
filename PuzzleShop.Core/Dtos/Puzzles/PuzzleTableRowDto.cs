@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using PuzzleShop.Core.Dtos.Images;
-using PuzzleShop.Domain.Entities;
+﻿
 // ReSharper disable All
 
 namespace PuzzleShop.Core.Dtos.Puzzles

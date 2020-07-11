@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Colors;
-using PuzzleShop.Domain.Entities;
+using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {

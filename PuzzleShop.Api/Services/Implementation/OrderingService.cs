@@ -13,7 +13,7 @@ using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Domain.Entities;
+using PuzzleShop.Core.Entities;
 using Stripe;
 
 namespace PuzzleShop.Api.Services.Implementation
@@ -21,14 +21,14 @@ namespace PuzzleShop.Api.Services.Implementation
 	public class OrderingService : IOrderingService
 	{
 		private readonly IOrderRepository _ordersRepository;
-		private readonly IRepository<Domain.Entities.OrderItem> _orderItemRepository;
+		private readonly IRepository<Core.Entities.OrderItem> _orderItemRepository;
 		private readonly IMapper _mapper;
 		private readonly IConfiguration _configuration;
 		private readonly IPuzzleRepository _puzzleRepository;
 		private readonly StripeApiSecret _stripeApiSecret;
 
 		public OrderingService(IOrderRepository orderRepository,
-			IRepository<Domain.Entities.OrderItem> orderItemRepository,
+			IRepository<Core.Entities.OrderItem> orderItemRepository,
 			IMapper mapper,
 			IConfiguration configuration,
 			IPuzzleRepository puzzleRepository,
@@ -42,7 +42,7 @@ namespace PuzzleShop.Api.Services.Implementation
 			_stripeApiSecret = stripeApiSecret.Value;
 		}
 
-		public async Task<Domain.Entities.Order> GetOrderByStatusAsync(long userId, OrderStatusId orderStatusId)
+		public async Task<Core.Entities.Order> GetOrderByStatusAsync(long userId, OrderStatusId orderStatusId)
 		{
 			return await _ordersRepository.FindByUserIdAndStatusAsync(userId, orderStatusId);
 		}
@@ -52,22 +52,22 @@ namespace PuzzleShop.Api.Services.Implementation
 			return await _ordersRepository.GetPagedOrders(request, _mapper);
 		}
 
-		public async Task<IEnumerable<Domain.Entities.Order>> GetUserOrdersAsync(long userId)
+		public async Task<IEnumerable<Core.Entities.Order>> GetUserOrdersAsync(long userId)
 		{
 			return await _ordersRepository.FindAllOrdersByUserIdAsync(userId);
 		}
 
-		public async Task<Domain.Entities.Order> GetOrderByIdASync(long orderId)
+		public async Task<Core.Entities.Order> GetOrderByIdASync(long orderId)
 		{
 			return await _ordersRepository.FindByIdAsync(orderId);
 		}
 
-		public async Task EditCartAsync(Domain.Entities.OrderItem orderItem, long userId, int? addedFromCollections = null)
+		public async Task EditCartAsync(Core.Entities.OrderItem orderItem, long userId, int? addedFromCollections = null)
 		{
 			var order = await _ordersRepository.FindByUserIdAndStatusAsync(userId, OrderStatusId.Pending);
 			if (order == null)
 			{
-				order = new Domain.Entities.Order
+				order = new Core.Entities.Order
 				{
 					OrderStatusId = OrderStatusId.Pending,
 					OrderStatusTitle = OrderStatusId.Pending.ToString(),

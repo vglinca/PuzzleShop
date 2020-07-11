@@ -11,7 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PuzzleShop.Api.Extensions;
 using PuzzleShop.Api.Helpers;
-using PuzzleShop.Domain.Entities.Auth;
+using PuzzleShop.Core.Entities.Auth;
 using PuzzleShop.Persistance.DbContext;
 using Serilog;
 // ReSharper disable All

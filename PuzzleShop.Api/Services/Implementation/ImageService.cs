@@ -7,8 +7,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Images;
+using PuzzleShop.Core.Entities;
 using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Services.Implementation
 {

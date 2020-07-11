@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using PuzzleShop.Api.Dtos.Manufacturers;
 using PuzzleShop.Core.Dtos.Manufacturers;
-using PuzzleShop.Domain.Entities;
+using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Core.Profiles
 {

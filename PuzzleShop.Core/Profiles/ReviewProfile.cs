@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.Reviews;
-using PuzzleShop.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Core.Profiles
 {

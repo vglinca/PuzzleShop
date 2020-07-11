@@ -5,9 +5,9 @@ using AutoMapper;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Reviews;
+using PuzzleShop.Core.Entities;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Domain.Entities;
 
 namespace PuzzleShop.Api.Services.Implementation
 {

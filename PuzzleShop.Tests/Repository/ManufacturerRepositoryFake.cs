@@ -1,12 +1,11 @@
 ﻿using PuzzleShop.Core;
 using PuzzleShop.Core.Exceptions;
-using PuzzleShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
+using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Tests.Repository
 {

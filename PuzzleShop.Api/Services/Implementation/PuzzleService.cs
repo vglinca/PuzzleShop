@@ -8,7 +8,7 @@ using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Puzzles;
 using PuzzleShop.Core.PaginationModels;
 using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Domain.Entities;
+using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Api.Services.Implementation
 {
@@ -51,7 +51,7 @@ namespace PuzzleShop.Api.Services.Implementation
 			var i = 1;
 			foreach (var img in puzzle.Images)
 			{
-				var fileName = Guid.NewGuid().ToString() + ".jpg";
+				var fileName = Guid.NewGuid() + ".jpg";
 				var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
 				entityToAdd.Images.Add(new Image { FileName = fileName, Title = $"{entityToAdd.Name}-img{i++}" });
 				using (var fStream = new FileStream(filePath, FileMode.Create))

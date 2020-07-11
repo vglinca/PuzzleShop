@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +8,7 @@ using PuzzleShop.Api.Dtos.Manufacturers;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
 using PuzzleShop.Core.Dtos.Manufacturers;
-using PuzzleShop.Domain.Entities;
+using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Api.Controllers
 {

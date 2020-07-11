@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using PuzzleShop.Core.Dtos.Roles;
-using PuzzleShop.Domain.Entities.Auth;
+using PuzzleShop.Core.Entities.Auth;
 
 namespace PuzzleShop.Core.Profiles
 {

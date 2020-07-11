@@ -7,7 +7,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Core.PaginationModels;
-using PuzzleShop.Domain.Entities;
 // ReSharper disable All
 
 namespace PuzzleShop.Core.Extensions
@@ -15,7 +14,9 @@ namespace PuzzleShop.Core.Extensions
     public static class QueryableExtensions
     {
         public static async Task<PagedResponse<TDto>> CreatePagedResultAsync<TEntity, TDto>(this IQueryable<TEntity> src,
-            PagedRequest request, IMapper mapper) where TEntity : class where TDto : class
+            PagedRequest request, IMapper mapper) 
+            where TEntity : class 
+            where TDto : class
         {
             var entities = src.ProjectTo<TDto>(mapper.ConfigurationProvider);
             entities = entities.ApplyFilters(request.RequestFilters);

@@ -8,8 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Users;
+using PuzzleShop.Core.Entities.Auth;
 using PuzzleShop.Core.Exceptions;
-using PuzzleShop.Domain.Entities.Auth;
 
 namespace PuzzleShop.Api.Services.Implementation
 {

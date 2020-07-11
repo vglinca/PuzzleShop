@@ -9,9 +9,9 @@ using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using PuzzleShop.Domain.Entities.Auth;
 using PuzzleShop.Persistance.DbContext;
 using Microsoft.AspNetCore.Identity;
+using PuzzleShop.Core.Entities.Auth;
 
 namespace PuzzleShop.Api.Extensions
 {
