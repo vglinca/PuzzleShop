@@ -1,72 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Helpers;
-using PuzzleShop.Api.Services.Interfaces;
+using PuzzleShop.Api.Models.Puzzles;
+using PuzzleShop.Core.Commands.Puzzles;
 using PuzzleShop.Core.Dtos.Puzzles;
 using PuzzleShop.Core.PaginationModels;
-using PuzzleShop.Core.Repository.Interfaces;
-using PuzzleShop.Domain.Entities;
+using PuzzleShop.Core.Queries.Puzzles;
 
 namespace PuzzleShop.Api.Controllers
 {
 	[AllowAnonymous]
 	public class PuzzlesController : BaseController
 	{
-		private readonly IPuzzleService _puzzleService;
+		private readonly IMediator _mediator;
 
-		public PuzzlesController(IPuzzleService puzzleService)
+		public PuzzlesController(IMediator mediator, IMapper mapper) : base(mapper)
 		{
-			_puzzleService = puzzleService;
+			_mediator = mediator;
 		}
 
 		[HttpPost("pagedPuzzles")]
 		public async Task<ActionResult<IEnumerable<PuzzleTableRowDto>>> GetPuzzles([FromBody] PagedRequest pagedRequest)
 		{
-			var puzzlesPagedResponse = await _puzzleService.GetPuzzlesAsync(pagedRequest);
-			return Ok(puzzlesPagedResponse);
+			var puzzles = await _mediator.Send(new GetPuzzlesPagedQuery {PagedRequest = pagedRequest});
+			return Ok(puzzles);
 		}
 
 		[HttpGet("{puzzleId}")]
 		public async Task<ActionResult<PuzzleDto>> GetPuzzle(long puzzleId)
 		{
-			var model = await _puzzleService.GetPuzzleAsync<PuzzleDto>(puzzleId);
-			return Ok(model);
+			var puzzle = await _mediator.Send(new GetPuzzleQuery {Id = puzzleId});
+			return Ok(puzzle);
 		}
 
 		[HttpGet("puzzleFriendly/{puzzleId}")]
 		public async Task<ActionResult<PuzzleTableRowDto>> GetPuzzleFriendly(long puzzleId)
 		{
-			var model = await _puzzleService.GetPuzzleAsync<PuzzleTableRowDto>(puzzleId);
-			return Ok(model);
+			var puzzle = await _mediator.Send(new GetFriendlyPuzzleQuery {Id = puzzleId});
+			return Ok(puzzle);
 		}
 
 		[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
 		[HttpPost]
-		public async Task<ActionResult<PuzzleDto>> AddPuzzle([FromForm] PuzzleForCreationDto puzzleForCreationDto)
+		public async Task<ActionResult<PuzzleDto>> AddPuzzle([FromForm] PuzzleCreateModel puzzleForCreationModel)
 		{
-			var createdModel = await _puzzleService.AddPuzzleAsync(puzzleForCreationDto);
-			return CreatedAtAction(nameof(GetPuzzle), new { puzzleId = createdModel.Id }, createdModel);
+			var command = _mapper.Map<AddPuzzleCommand>(puzzleForCreationModel);
+			var puzzle = await _mediator.Send(command);
+			return CreatedAtAction(nameof(GetPuzzle), new { puzzleId = puzzle.Id }, puzzle);
 		}
 
 		[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
 		[HttpPut("{puzzleId}")]
-		public async Task<IActionResult> UpdatePuzzle(long puzzleId, [FromBody] PuzzleForUpdateDto puzzleForUpdateDto)
+		public async Task<IActionResult> UpdatePuzzle(long puzzleId, [FromBody] PuzzleUpdateModel puzzleForUpdateModel)
 		{
-			await _puzzleService.UpdatePuzzleAsync(puzzleId, puzzleForUpdateDto);
-			return NoContent();
+			var command = _mapper.Map<UpdatePuzzleCommand>(puzzleForUpdateModel);
+			command.PuzzleId = puzzleId;
+			await _mediator.Send(command);
+			return Ok();
 		}
 
 		[RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
 		[HttpDelete("{puzzleId}")]
 		public async Task<IActionResult> DeletePuzzle(long puzzleId)
 		{
-			await _puzzleService.DeletePuzzleAsync(puzzleId);
+			await _mediator.Send(new DeletePuzzleCommand {Id = puzzleId});
 			return NoContent();
 		}
 	}

@@ -1,17 +1,13 @@
 using System;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using PuzzleShop.Api.Extensions;
 using PuzzleShop.Api.Services.Implementation;
 using PuzzleShop.Api.Services.Interfaces;
@@ -57,6 +53,7 @@ namespace PuzzleShop.Api
             services.ConfigureControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IPuzzleRepository, PuzzleRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();

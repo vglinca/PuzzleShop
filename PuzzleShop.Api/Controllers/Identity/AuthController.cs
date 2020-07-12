@@ -12,7 +12,7 @@ using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
 using PuzzleShop.Core.Dtos.Users;
 using System.Linq;
-using PuzzleShop.Core.Entities.Auth;
+using PuzzleShop.Core.Domain.Auth;
 
 namespace PuzzleShop.Api.Controllers.Identity
 {

@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Api.Services.Interfaces;
+using PuzzleShop.Core.Domain.Auth;
 using PuzzleShop.Core.Dtos.Users;
-using PuzzleShop.Core.Entities.Auth;
 using PuzzleShop.Core.Exceptions;
 
 namespace PuzzleShop.Api.Services.Implementation

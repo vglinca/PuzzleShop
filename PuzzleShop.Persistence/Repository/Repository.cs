@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Domain;
 using PuzzleShop.Core.Entities;
 using PuzzleShop.Core.Exceptions;
 using PuzzleShop.Persistance.DbContext;

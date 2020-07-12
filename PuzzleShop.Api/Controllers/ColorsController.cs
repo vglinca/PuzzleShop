@@ -1,58 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Helpers;
-using PuzzleShop.Core;
-using PuzzleShop.Core.Dtos.Colors;
-using PuzzleShop.Core.Entities;
+using PuzzleShop.Api.Models.Colors;
+using PuzzleShop.Core.Commands.Colors;
+using PuzzleShop.Core.Queries.Colors;
 
 namespace PuzzleShop.Api.Controllers
 {
     [AllowAnonymous]
     public class ColorsController: BaseController
     {
-        private readonly IRepository<Color> _colorRepository;
+        private readonly IMediator _mediator;
 
-        public ColorsController(IRepository<Color> colorRepository, IMapper mapper) : base(mapper)
+        public ColorsController(IMapper mapper, IMediator mediator) : base(mapper)
         {
-            _colorRepository = colorRepository;
+            _mediator = mediator;
         }
         
         [HttpGet]
         public async Task<IActionResult> GetColors()
         {
-            var colorsFromRepo = await _colorRepository.GetAllAsync();
-            return Ok(_mapper.Map <IEnumerable<ColorDto>>(colorsFromRepo));
+            var colors = await _mediator.Send(new GetColorsQuery());
+            return Ok(_mapper.Map<IEnumerable<ColorModel>>(colors));
         }
 
         [HttpGet("{colorId}")]
         public async Task<IActionResult> GetColor(long colorId)
         {
-            var colorFromRepo = await _colorRepository.FindByIdAsync(colorId);
-            return Ok(_mapper.Map<ColorDto>(colorFromRepo));
+            var color = await _mediator.Send(new GetSingleColorQuery {Id = colorId});
+            return Ok(_mapper.Map<ColorModel>(color));
         }
 
         [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpPost]
-        public async Task<IActionResult> AddColor([FromBody] ColorForCreateDto colorForCreateDto)
+        public async Task<IActionResult> AddColor([FromBody] ColorCreateModel colorForCreateModel)
         {
-            var colorEntity = _mapper.Map<Color>(colorForCreateDto);
-            await _colorRepository.AddEntityAsync(colorEntity);
-
-            return CreatedAtAction(nameof(GetColor), new {colorId = colorEntity.Id}, 
-                _mapper.Map<ColorDto>(colorEntity));
+            var command = _mapper.Map<AddColorCommand>(colorForCreateModel);
+            var color = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetColor), new {colorId = color.Id}, color);
         }
 
         [RoleAuthorize(AuthorizeRole.Administrator, AuthorizeRole.Moderator)]
         [HttpPut("{colorId}")]
-        public async Task<IActionResult> UpdateColor(long colorId, [FromBody] ColorForCreateDto colorForUpdateDto)
+        public async Task<IActionResult> UpdateColor(long colorId, [FromBody] ColorCreateModel colorForUpdateModel)
         {
-            var colorEntity = await _colorRepository.FindByIdAsync(colorId);
-            _mapper.Map(colorForUpdateDto, colorEntity);
-            await _colorRepository.UpdateEntityAsync(colorEntity);
+            var command = _mapper.Map<UpdateColorCommand>(colorForUpdateModel);
+            command.Id = colorId;
+            await _mediator.Send(command);
             return Ok();
         }
 
@@ -60,8 +58,7 @@ namespace PuzzleShop.Api.Controllers
         [HttpDelete("{colorId}")]
         public async Task<IActionResult> DeleteColor(long colorId)
         {
-            var colorToDelete = await _colorRepository.FindByIdAsync(colorId);
-            await _colorRepository.DeleteEntityAsync(colorToDelete);
+            await _mediator.Send(new DeleteColorCommand {Id = colorId});
             return NoContent();
         }
     }

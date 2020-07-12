@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using PuzzleShop.Core.Domain;
 using PuzzleShop.Core.Entities;
 using PuzzleShop.Core.Interfaces;
 using PuzzleShop.Core.Repository.Interfaces;

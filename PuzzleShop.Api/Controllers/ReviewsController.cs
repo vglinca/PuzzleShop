@@ -6,6 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
+using PuzzleShop.Api.Models.Reviews;
+using PuzzleShop.Core.Commands.Reviews;
+using PuzzleShop.Core.Queries.Reviews;
 
 namespace PuzzleShop.Api.Controllers
 {
@@ -14,23 +19,27 @@ namespace PuzzleShop.Api.Controllers
 	[Route("api/{puzzleId}/[controller]")]
 	public class ReviewsController : ControllerBase
 	{
-		private readonly IPuzzleReviewService _reviewService;
-		public ReviewsController(IPuzzleReviewService reviewService)
+		private readonly IMediator _mediator;
+		private readonly IMapper _mapper;
+		public ReviewsController(IMediator mediator, IMapper mapper)
 		{
-			_reviewService = reviewService;
+			_mediator = mediator;
+			_mapper = mapper;
 		}
 
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews(long puzzleId)
 		{
-			var reviews = await _reviewService.GetAllReviewsAsync(puzzleId);
+			var reviews = await _mediator.Send(new GetReviewsQuery {PuzzleId = puzzleId});
 			return Ok(reviews);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AddReview(long puzzleId, [FromBody] ReviewForCreationDto review)
+		public async Task<IActionResult> AddReview(long puzzleId, [FromBody] ReviewCreateModel review)
 		{
-			await _reviewService.AddReviewAsync(puzzleId, review);
+			var command = _mapper.Map<AddReviewCommand>(review);
+			command.PuzzleId = puzzleId;
+			await _mediator.Send(command);
 			return Ok();
 		}
 	}

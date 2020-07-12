@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PuzzleShop.Api.Helpers;
 using PuzzleShop.Core;
+using PuzzleShop.Core.Domain.Auth;
 using PuzzleShop.Core.Dtos.DifficultyLevels;
 using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.Dtos.Roles;
 using PuzzleShop.Core.Entities;
-using PuzzleShop.Core.Entities.Auth;
 
 namespace PuzzleShop.Api.Controllers
 {

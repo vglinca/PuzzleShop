@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PuzzleShop.Core.Commands.Puzzles;
 using PuzzleShop.Core.Dtos.Puzzles;
 using PuzzleShop.Core.Entities;
 
@@ -24,6 +25,11 @@ namespace PuzzleShop.Core.Profiles
             CreateMap<PuzzleForCreationDto, Puzzle>()
                 .ForMember(dest => dest.Images, opt => opt.Ignore());
             CreateMap<PuzzleForUpdateDto, Puzzle>()
+                .ForMember(dest => dest.Images, opt => opt.Ignore());
+
+            CreateMap<AddPuzzleCommand, Puzzle>()
+                .ForMember(dest => dest.Images, opt => opt.Ignore());
+            CreateMap<UpdatePuzzleCommand, Puzzle>()
                 .ForMember(dest => dest.Images, opt => opt.Ignore());
         }
     }

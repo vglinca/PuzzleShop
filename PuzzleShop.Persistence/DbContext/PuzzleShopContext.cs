@@ -8,8 +8,8 @@ using System.Reflection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PuzzleShop.Core.Domain.Auth;
 using PuzzleShop.Core.Entities;
-using PuzzleShop.Core.Entities.Auth;
 using PuzzleShop.Persistance.Helpers;
 using PuzzleShop.Persistance.Schema;
 

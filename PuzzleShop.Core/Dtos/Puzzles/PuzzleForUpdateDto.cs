@@ -21,7 +21,8 @@ namespace PuzzleShop.Core.Dtos.Puzzles
         public long PuzzleTypeId { get; set; }
         [Required(ErrorMessage = "ColorId is required.")]
         public long ColorId { get; set; }
-    
+        [Required(ErrorMessage = "Weight is required.")]
+        public double Weight { get; set; }
         [Required(ErrorMessage = "MaterialTypeId is required.")]
         public long MaterialTypeId { get; set; }
         public double? Rating { get; set; }

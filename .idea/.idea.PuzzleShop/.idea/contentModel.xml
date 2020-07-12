@@ -48,10 +48,48 @@
           <e p="RoleInitializer.cs" t="Include" />
           <e p="StripeApiSecret.cs" t="Include" />
         </e>
-        <e p="log-Date20200711.log" t="Include" />
+        <e p="log-Date20200712.log" t="Include" />
+        <e p="MappingProfiles" t="Include">
+          <e p="ColorsProfile.cs" t="Include" />
+          <e p="IMagesProfile.cs" t="Include" />
+          <e p="MaterialTypeProfile.cs" t="Include" />
+          <e p="OrdersProfile.cs" t="Include" />
+          <e p="PuzzleProfile.cs" t="Include" />
+          <e p="PuzzleTypeProfile.cs" t="Include" />
+          <e p="ReviewProfile.cs" t="Include" />
+        </e>
         <e p="Middleware" t="Include">
           <e p="ExceptionHandlerMiddleware.cs" t="Include" />
           <e p="LoggingMiddleware.cs" t="Include" />
+        </e>
+        <e p="Models" t="Include">
+          <e p="Colors" t="Include">
+            <e p="ColorCreateModel.cs" t="Include" />
+            <e p="ColorModel.cs" t="Include" />
+          </e>
+          <e p="Images" t="Include">
+            <e p="ImageModel.cs" t="Include" />
+            <e p="ImageUpdateModel.cs" t="Include" />
+          </e>
+          <e p="Manufacturers" t="Include" />
+          <e p="MaterialTypes" t="Include">
+            <e p="MaterialTypeCreateModel.cs" t="Include" />
+          </e>
+          <e p="Orders" t="Include">
+            <e p="OrderModel.cs" t="Include" />
+            <e p="OrderTableModel.cs" t="Include" />
+          </e>
+          <e p="Puzzles" t="Include">
+            <e p="PuzzleCreateModel.cs" t="Include" />
+            <e p="PuzzleUpdateModel.cs" t="Include" />
+          </e>
+          <e p="PuzzleTypes" t="Include">
+            <e p="PuzzleTypeCreateModel.cs" t="Include" />
+            <e p="PuzzleTypeUpdateModel.cs" t="Include" />
+          </e>
+          <e p="Reviews" t="Include">
+            <e p="ReviewCreateModel.cs" t="Include" />
+          </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -212,8 +250,101 @@
       </e>
       <e p="PuzzleShop.Core" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
-        <e p="CommandHandlers" t="Include" />
-        <e p="Commands" t="Include" />
+        <e p="CommandHandlers" t="Include">
+          <e p="ColorsCommandHandlers" t="Include">
+            <e p="AddColorCommandHandler.cs" t="Include" />
+            <e p="DeleteColorCommandHandler.cs" t="Include" />
+            <e p="UpdateColorCommandHandler.cs" t="Include" />
+          </e>
+          <e p="ImagesCommandHandlers" t="Include">
+            <e p="AddImageCommandHandler.cs" t="Include" />
+            <e p="DeleteImagesCommandHandler.cs" t="Include" />
+          </e>
+          <e p="ManufacturersCommandHandlers" t="Include">
+            <e p="ManufacturerCommandHandler.cs" t="Include" />
+          </e>
+          <e p="MaterialTypesCommandHandlers" t="Include">
+            <e p="AddMaterialTypeCommandHandler.cs" t="Include" />
+            <e p="DeleteMaterialTypeCommandHandler.cs" t="Include" />
+          </e>
+          <e p="OrderCommandHandlers" t="Include">
+            <e p="OrderCommandHandler.cs" t="Include" />
+          </e>
+          <e p="PuzzlesCommandHandlers" t="Include">
+            <e p="AddPuzzleCommandHandler.cs" t="Include" />
+            <e p="DeletePuzzleCommandHandler.cs" t="Include" />
+            <e p="UpdatePuzzleCommandHandler.cs" t="Include" />
+          </e>
+          <e p="PuzzleTypesCommandHandlers" t="Include">
+            <e p="AddPuzzleTypeCommandHandler.cs" t="Include" />
+            <e p="DeletePuzzleTypeCommandHandler.cs" t="Include" />
+            <e p="UpdatePuzzleTypeCommandHandler.cs" t="Include" />
+          </e>
+          <e p="ReviewsCommandHandlers" t="Include">
+            <e p="AddReviewCommandHandler.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Commands" t="Include">
+          <e p="Colors" t="Include">
+            <e p="AddColorCommand.cs" t="Include" />
+            <e p="DeleteColorCommand.cs" t="Include" />
+            <e p="UpdateColorCommand.cs" t="Include" />
+          </e>
+          <e p="Images" t="Include">
+            <e p="AddImageCommand.cs" t="Include" />
+            <e p="DeleteImagesCommand.cs" t="Include" />
+          </e>
+          <e p="Manufacturers" t="Include">
+            <e p="AddManufacturerCommand.cs" t="Include" />
+            <e p="DeleteManufacturerCommand.cs" t="Include" />
+            <e p="UpdateManufacturerCommand.cs" t="Include" />
+          </e>
+          <e p="MaterialTypes" t="Include">
+            <e p="AddMaterialTypeCommand.cs" t="Include" />
+            <e p="DeleteMaterialTypeCommand.cs" t="Include" />
+          </e>
+          <e p="Orders" t="Include">
+            <e p="ChangeOrderStatusCommand.cs" t="Include" />
+          </e>
+          <e p="Puzzles" t="Include">
+            <e p="AddPuzzleCommand.cs" t="Include" />
+            <e p="DeletePuzzleCommand.cs" t="Include" />
+            <e p="UpdatePuzzleCommand.cs" t="Include" />
+          </e>
+          <e p="PuzzleTypes" t="Include">
+            <e p="AddPuzzleTypeCommand.cs" t="Include" />
+            <e p="DeletePuzzleTypeCommand.cs" t="Include" />
+            <e p="UpdatePuzzleTypeCommand.cs" t="Include" />
+          </e>
+          <e p="Reviews" t="Include">
+            <e p="AddReviewCommand.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Domain" t="Include">
+          <e p="Auth" t="Include">
+            <e p="Role.cs" t="Include" />
+            <e p="RoleClaim.cs" t="Include" />
+            <e p="User.cs" t="Include" />
+            <e p="UserClaim.cs" t="Include" />
+            <e p="UserLogin.cs" t="Include" />
+            <e p="UserRole.cs" t="Include" />
+            <e p="UserToken.cs" t="Include" />
+          </e>
+          <e p="BaseEntity.cs" t="Include" />
+          <e p="Color.cs" t="Include" />
+          <e p="DifficultyLevel.cs" t="Include" />
+          <e p="DifficultyLevelId.cs" t="Include" />
+          <e p="Image.cs" t="Include" />
+          <e p="Manufacturer.cs" t="Include" />
+          <e p="MaterialType.cs" t="Include" />
+          <e p="Order.cs" t="Include" />
+          <e p="OrderItem.cs" t="Include" />
+          <e p="OrderStatus.cs" t="Include" />
+          <e p="OrderStatusId.cs" t="Include" />
+          <e p="Puzzle.cs" t="Include" />
+          <e p="PuzzleType.cs" t="Include" />
+          <e p="Review.cs" t="Include" />
+        </e>
         <e p="Dtos" t="Include">
           <e p="Colors" t="Include">
             <e p="ColorDto.cs" t="Include" />
@@ -280,31 +411,6 @@
             <e p="UserWithRolesDto.cs" t="Include" />
           </e>
         </e>
-        <e p="Entities" t="Include">
-          <e p="Auth" t="Include">
-            <e p="Role.cs" t="Include" />
-            <e p="RoleClaim.cs" t="Include" />
-            <e p="User.cs" t="Include" />
-            <e p="UserClaim.cs" t="Include" />
-            <e p="UserLogin.cs" t="Include" />
-            <e p="UserRole.cs" t="Include" />
-            <e p="UserToken.cs" t="Include" />
-          </e>
-          <e p="BaseEntity.cs" t="Include" />
-          <e p="Color.cs" t="Include" />
-          <e p="DifficultyLevel.cs" t="Include" />
-          <e p="DifficultyLevelId.cs" t="Include" />
-          <e p="Image.cs" t="Include" />
-          <e p="Manufacturer.cs" t="Include" />
-          <e p="MaterialType.cs" t="Include" />
-          <e p="Order.cs" t="Include" />
-          <e p="OrderItem.cs" t="Include" />
-          <e p="OrderStatus.cs" t="Include" />
-          <e p="OrderStatusId.cs" t="Include" />
-          <e p="Puzzle.cs" t="Include" />
-          <e p="PuzzleType.cs" t="Include" />
-          <e p="Review.cs" t="Include" />
-        </e>
         <e p="Exceptions" t="Include">
           <e p="AuthenticationFailedException.cs" t="Include" />
           <e p="BadREquestException.cs" t="Include" />
@@ -357,8 +463,68 @@
           <e p="UserProfile.cs" t="Include" />
         </e>
         <e p="PuzzleShop.Core.csproj" t="IncludeRecursive" />
-        <e p="Queries" t="Include" />
-        <e p="QueryHandlers" t="Include" />
+        <e p="Queries" t="Include">
+          <e p="Colors" t="Include">
+            <e p="GetColorsQuery.cs" t="Include" />
+            <e p="GetSingleColorQuery.cs" t="Include" />
+          </e>
+          <e p="Images" t="Include">
+            <e p="GetImagesQuery.cs" t="Include" />
+          </e>
+          <e p="Manufacturers" t="Include">
+            <e p="GetManufacturerQuery.cs" t="Include" />
+            <e p="GetManufacturersQuery.cs" t="Include" />
+          </e>
+          <e p="MaterialTypes" t="Include">
+            <e p="GetMaterialTypeQuery.cs" t="Include" />
+            <e p="GetMaterialTypesQuery.cs" t="Include" />
+          </e>
+          <e p="Orders" t="Include">
+            <e p="GetOrderQuery.cs" t="Include" />
+            <e p="GetOrdersQuery.cs" t="Include" />
+            <e p="GetPagedOrdersQuery.cs" t="Include" />
+          </e>
+          <e p="Puzzles" t="Include">
+            <e p="GetFriendlyPuzzleQuery.cs" t="Include" />
+            <e p="GetPuzzleQuery.cs" t="Include" />
+            <e p="GetPuzzlesPagedQuery.cs" t="Include" />
+          </e>
+          <e p="PuzzleTypes" t="Include">
+            <e p="GetFriendlyPuzzleTypeQuery.cs" t="Include" />
+            <e p="GetPuzzleTypeQuery.cs" t="Include" />
+            <e p="GetPuzzleTypesQuery.cs" t="Include" />
+          </e>
+          <e p="Reviews" t="Include">
+            <e p="GetReviewsQuery.cs" t="Include" />
+          </e>
+        </e>
+        <e p="QueryHandlers" t="Include">
+          <e p="ColorsQueryHandlers" t="Include">
+            <e p="GetColorsQueryHandler.cs" t="Include" />
+            <e p="GetSingleColorQueryHandler.cs" t="Include" />
+          </e>
+          <e p="ImagesQueryHandlers" t="Include">
+            <e p="GetImagesQueryHandler.cs" t="Include" />
+          </e>
+          <e p="MAnufacturersQueryHandlers" t="Include">
+            <e p="ManufacturersQueryHandler.cs" t="Include" />
+          </e>
+          <e p="MaterialTypesQueryHandlers" t="Include">
+            <e p="MaterialTypeQueryHandler.cs" t="Include" />
+          </e>
+          <e p="OrdersQueryHandlers" t="Include">
+            <e p="OrdersQueryHandler.cs" t="Include" />
+          </e>
+          <e p="PuzzlesQueryHandlers" t="Include">
+            <e p="PuzzlesQueryHandler.cs" t="Include" />
+          </e>
+          <e p="PuzzleTypesQueryHandlers" t="Include">
+            <e p="PuzzleTypesQueryHandler.cs" t="Include" />
+          </e>
+          <e p="ReviewsQueryHandlers" t="Include">
+            <e p="GetReviewsQueryHandler.cs" t="Include" />
+          </e>
+        </e>
       </e>
       <e p="PuzzleShop.Persistence" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />

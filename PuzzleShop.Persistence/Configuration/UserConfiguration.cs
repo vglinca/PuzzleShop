@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PuzzleShop.Core.Entities.Auth;
+using PuzzleShop.Core.Domain.Auth;
 
 // ReSharper disable All
 

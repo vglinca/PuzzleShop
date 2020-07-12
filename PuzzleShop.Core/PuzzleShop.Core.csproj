@@ -20,11 +20,4 @@
       </None>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="CommandHandlers" />
-      <Folder Include="Commands" />
-      <Folder Include="Queries" />
-      <Folder Include="QueryHandlers" />
-    </ItemGroup>
-
 </Project>

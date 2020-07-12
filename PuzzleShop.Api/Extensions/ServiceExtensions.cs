@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using PuzzleShop.Persistance.DbContext;
 using Microsoft.AspNetCore.Identity;
-using PuzzleShop.Core.Entities.Auth;
+using PuzzleShop.Core.Domain.Auth;
 
 namespace PuzzleShop.Api.Extensions
 {

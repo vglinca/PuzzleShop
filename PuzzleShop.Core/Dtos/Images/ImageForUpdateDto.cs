@@ -10,7 +10,7 @@ namespace PuzzleShop.Core.Dtos.Images
 	{
 		public long? Id { get; set; }
 		public string Title { get; set; }
-		[Required]
+		// [Required]
 		public IFormFile File { get; set; }
 	}
 }

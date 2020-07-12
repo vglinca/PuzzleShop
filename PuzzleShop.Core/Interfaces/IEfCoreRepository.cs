@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using PuzzleShop.Core.Domain;
 using PuzzleShop.Core.Entities;
 
 namespace PuzzleShop.Core.Interfaces
