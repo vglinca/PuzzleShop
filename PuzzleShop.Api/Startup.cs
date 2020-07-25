@@ -91,7 +91,11 @@ namespace PuzzleShop.Api
 
             app.UseStaticFiles();
 
-            app.UseSwagger();
+            app.UseOpenApi();
+
+            app.UseSwaggerUi3();
+
+            //app.UseSwagger();
 
             app.UseSwaggerUIMiddleware();
 

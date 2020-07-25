@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PuzzleShop.Api.Services.Interfaces;
@@ -8,6 +9,7 @@ using PuzzleShop.Core.Dtos.Customers;
 using PuzzleShop.Core.Dtos.OrderItems;
 using PuzzleShop.Core.Dtos.Orders;
 using PuzzleShop.Core.Entities;
+using PuzzleShop.Core.Queries.UserOrders;
 
 namespace PuzzleShop.Api.Controllers
 {
@@ -15,27 +17,31 @@ namespace PuzzleShop.Api.Controllers
     public class OrdersController : BaseController
     {
         private readonly IOrderingService _orderingService;
+        private readonly IMediator _mediator;
 
         public OrdersController(IMapper mapper, 
-            IOrderingService orderingService) : base(mapper)
+            IOrderingService orderingService, IMediator mediator) : base(mapper)
         {
             _orderingService = orderingService;
+            _mediator = mediator;
         }
 
         [HttpGet("getCart/{userId}")]
         public async Task<IActionResult> GetCart(long userId)
         {
-            var pendingOrder = await _orderingService.GetOrderByStatusAsync(userId, OrderStatusId.Pending);
-
-            return Ok(_mapper.Map<OrderDto>(pendingOrder));
+            // var pendingOrder = await _orderingService.GetOrderByStatusAsync(userId, OrderStatusId.Pending);
+            var order = await _mediator.Send(new GetUserOrderByStatusQuery
+                {UserId = userId, OrderStatusId = OrderStatusId.Pending});
+            return Ok(order);
         }
 
         [HttpGet("orders/{userId}")]
         public async Task<IActionResult> GetAllOrders(long userId)
         {
-            var orders = await _orderingService.GetUserOrdersAsync(userId);
-            var models = _mapper.Map<IEnumerable<OrderDto>>(orders);
-            return Ok(models);
+            var orders = await _mediator.Send(new GetUserOrdersQuery {UserId = userId});
+            // var orders = await _orderingService.GetUserOrdersAsync(userId);
+            // var models = _mapper.Map<IEnumerable<OrderDto>>(orders);
+            return Ok(orders);
         }
         
         [HttpPost(nameof(AddToCart))]

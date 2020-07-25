@@ -48,7 +48,6 @@
           <e p="RoleInitializer.cs" t="Include" />
           <e p="StripeApiSecret.cs" t="Include" />
         </e>
-        <e p="log-Date20200712.log" t="Include" />
         <e p="MappingProfiles" t="Include">
           <e p="ColorsProfile.cs" t="Include" />
           <e p="IMagesProfile.cs" t="Include" />
@@ -268,7 +267,7 @@
             <e p="DeleteMaterialTypeCommandHandler.cs" t="Include" />
           </e>
           <e p="OrderCommandHandlers" t="Include">
-            <e p="OrderCommandHandler.cs" t="Include" />
+            <e p="ChangeOrderStatusCommandHandler.cs" t="Include" />
           </e>
           <e p="PuzzlesCommandHandlers" t="Include">
             <e p="AddPuzzleCommandHandler.cs" t="Include" />
@@ -283,6 +282,7 @@
           <e p="ReviewsCommandHandlers" t="Include">
             <e p="AddReviewCommandHandler.cs" t="Include" />
           </e>
+          <e p="UserOrdersCommandHandlers" t="Include" />
         </e>
         <e p="Commands" t="Include">
           <e p="Colors" t="Include">
@@ -318,6 +318,9 @@
           </e>
           <e p="Reviews" t="Include">
             <e p="AddReviewCommand.cs" t="Include" />
+          </e>
+          <e p="UserOrders" t="Include">
+            <e p="IncreaseOrderItemsCommand.cs" t="Include" />
           </e>
         </e>
         <e p="Domain" t="Include">
@@ -497,6 +500,10 @@
           <e p="Reviews" t="Include">
             <e p="GetReviewsQuery.cs" t="Include" />
           </e>
+          <e p="UserOrders" t="Include">
+            <e p="GetUserOrderByStatusQuery.cs" t="Include" />
+            <e p="GetUserOrdersQuery.cs" t="Include" />
+          </e>
         </e>
         <e p="QueryHandlers" t="Include">
           <e p="ColorsQueryHandlers" t="Include">
@@ -523,6 +530,10 @@
           </e>
           <e p="ReviewsQueryHandlers" t="Include">
             <e p="GetReviewsQueryHandler.cs" t="Include" />
+          </e>
+          <e p="UserOrdersQueryHandlers" t="Include">
+            <e p="GetUserOrderByStatusQueryHandler.cs" t="Include" />
+            <e p="GetUserOrdersQueryHandler.cs" t="Include" />
           </e>
         </e>
       </e>

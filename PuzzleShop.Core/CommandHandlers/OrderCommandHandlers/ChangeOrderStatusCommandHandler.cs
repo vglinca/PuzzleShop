@@ -6,11 +6,11 @@ using PuzzleShop.Core.Repository.Interfaces;
 
 namespace PuzzleShop.Core.CommandHandlers.OrderCommandHandlers
 {
-    public class OrderCommandHandler : IRequestHandler<ChangeOrderStatusCommand, Unit>
+    public class ChangeOrderStatusCommandHandler : IRequestHandler<ChangeOrderStatusCommand, Unit>
     {
         private readonly IOrderRepository _ordersRepository;
 
-        public OrderCommandHandler(IOrderRepository ordersRepository)
+        public ChangeOrderStatusCommandHandler(IOrderRepository ordersRepository)
         {
             _ordersRepository = ordersRepository;
         }

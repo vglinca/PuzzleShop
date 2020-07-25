@@ -14,6 +14,14 @@
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.5" />
+      <PackageReference Include="NSwag.AspNetCore" Version="13.6.2" />
+      <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.6.2" />
+      <PackageReference Include="NSwag.CodeGeneration.TypeScript" Version="13.6.2" />
+      <PackageReference Include="NSwag.Generation.WebApi" Version="13.6.2" />
+      <PackageReference Include="NSwag.MSBuild" Version="13.6.2">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
       <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
       <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
@@ -32,5 +40,8 @@
       </None>
     </ItemGroup>
 
+  <Target Name="NSwag" AfterTargets="Build">
+    <Exec Command="$(NSwagExe_Core31) run PuzzleShop.Angular.nswag /variables:Configuration=$(Configuration)" />
+  </Target>
 
 </Project>
